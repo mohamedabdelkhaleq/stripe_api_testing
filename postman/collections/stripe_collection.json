@@ -55,7 +55,32 @@
 		},
 		{
 			"name": "Charges",
-			"item": [],
+			"item": [
+				{
+					"name": "New Request",
+					"id": "8f374c5b-5081-475b-9be7-86496d99fc02",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "7f072342-2eb5-4d84-9729-0cea4d326194",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "44b7c3ec-d8b2-46e0-92fb-804cc69f6517"
 		}
 	],
