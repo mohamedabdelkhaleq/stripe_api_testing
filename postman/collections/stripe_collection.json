@@ -9,40 +9,46 @@
 			"name": "Customers",
 			"item": [
 				{
-					"name": "Create Customer",
-					"id": "977d7fe7-ca13-4f6a-9002-f23bf4adfad3",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{api_key}}"
-							}
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "jennyrosen@example.com",
-									"type": "text",
-									"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+					"name": "Create Customers",
+					"item": [
+						{
+							"name": "Create Customer",
+							"id": "977d7fe7-ca13-4f6a-9002-f23bf4adfad3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
 								},
-								{
-									"key": "name",
-									"value": "Jenny Rosen",
-									"type": "text",
-									"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
-								}
-							]
-						},
-						"url": "{{base_url}}/v1/customers"
-					},
-					"response": []
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "jennyrosen@example.com",
+											"type": "text",
+											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+										},
+										{
+											"key": "name",
+											"value": "Jenny Rosen",
+											"type": "text",
+											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/customers"
+							},
+							"response": []
+						}
+					],
+					"id": "acc1f0f5-3ca4-44da-9d5b-aba0c19d6aff"
 				}
 			],
 			"id": "03cc6b74-92d6-4fea-bf47-41d7a11bc3c6"
