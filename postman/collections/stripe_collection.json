@@ -25,7 +25,20 @@
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": []
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "jennyrosen@example.com",
+									"type": "text",
+									"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+								},
+								{
+									"key": "name",
+									"value": "Jenny Rosen",
+									"type": "text",
+									"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+								}
+							]
 						},
 						"url": "{{base_url}}/v1/customers"
 					},
