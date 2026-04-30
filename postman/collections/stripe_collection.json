@@ -21,15 +21,18 @@
 										"exec": [
 											"const jsonData = pm.response.json();\r",
 											"\r",
+											"// Status Code\r",
 											"pm.test(\"Status is 200 OK\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
+											"// Customer id exists and valid format\r",
 											"pm.test(\"Customer has valid ID\", function () {\r",
 											"    pm.expect(jsonData).to.have.property(\"id\");\r",
 											"    pm.expect(jsonData.id).to.include(\"cus_\");\r",
 											"});\r",
 											"\r",
+											"// Object type\r",
 											"pm.test(\"Object type is customer\", function () {\r",
 											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
 											"});"
