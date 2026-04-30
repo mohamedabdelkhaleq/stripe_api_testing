@@ -19,16 +19,18 @@
 									"script": {
 										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
 										"exec": [
-											"pm.test(\"TC01 - Status is 200 OK\", function (){\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"TC01 - Status is 200 OK\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Has customer ID\", function () {\r",
-											"    const jsonData = pm.response.json();\r",
+											"pm.test(\"TC01 - Response has valid customer ID\", function () {\r",
+											"    pm.expect(jsonData).to.have.property(\"id\");\r",
 											"    pm.expect(jsonData.id).to.include(\"cus_\");\r",
 											"});\r",
 											"\r",
-											"pm.environment.set(\"customer_id\", pm.response.json().id);"
+											"pm.environment.set(\"customer_id\", jsonData.id);"
 										],
 										"type": "text/javascript",
 										"packages": {},
