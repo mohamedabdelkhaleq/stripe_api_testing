@@ -29,7 +29,7 @@
 											"// Customer id exists and valid format\r",
 											"pm.test(\"Customer has valid ID\", function () {\r",
 											"    pm.expect(jsonData).to.have.property(\"id\");\r",
-											"    pm.expect(jsonData.id).to.include(\"cus_\");\r",
+											"    pm.expect(jsonData.id).to.match(/^cus_/);\r",
 											"});\r",
 											"\r",
 											"// Object type\r",
