@@ -44,7 +44,6 @@
 											"// 4. Save the ID for TC06, TC09, etc.\r",
 											"if (pm.response.code === 200 && jsonData.id) {\r",
 											"    pm.environment.set(\"customer_id\", jsonData.id);\r",
-											"    console.log(\"Success: customer_id \" + jsonData.id + \" saved to environment.\");\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -97,18 +96,29 @@
 										"exec": [
 											"const jsonData = pm.response.json();\r",
 											"\r",
+											"// 1. Status Code Validation\r",
 											"pm.test(\"Status is 200 OK\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Customer has valid ID\", function () {\r",
-											"    pm.expect(jsonData).to.have.property(\"id\");\r",
-											"    pm.expect(jsonData.id).to.include(\"cus_\");\r",
+											"// 2. Data Format & ID Validation\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^cus_/);\r",
+											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Object type is customer\", function () {\r",
-											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
-											"});"
+											"// 3. Data Integrity (Comparing Response to Request)\r",
+											"pm.test(\"Response name and email match the request\", function () {\r",
+											"    const sentEmail = pm.request.body.urlencoded.get(\"email\");\r",
+											"\r",
+											"    pm.expect(jsonData.name).to.be.null;\r",
+											"    pm.expect(jsonData.email).to.eql(sentEmail);\r",
+											"});\r",
+											"\r",
+											"// 4. Save the ID for TC06, TC09, etc.\r",
+											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"    pm.environment.set(\"customer_id\", jsonData.id);\r",
+											"}"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -137,12 +147,6 @@
 											"value": "jennyrosen@example.com",
 											"type": "text",
 											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
-										},
-										{
-											"key": "name",
-											"value": "Jenny Rosen",
-											"type": "text",
-											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
 										}
 									]
 								},
