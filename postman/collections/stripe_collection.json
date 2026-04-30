@@ -35,7 +35,9 @@
 											"// Object type\r",
 											"pm.test(\"Object type is customer\", function () {\r",
 											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
-											"});"
+											"});\r",
+											"\r",
+											"pm.environment.set(\"customer_id\", jsonData.id)"
 										],
 										"type": "text/javascript",
 										"packages": {},
