@@ -7,7 +7,31 @@
 	"item": [
 		{
 			"name": "Customers",
-			"item": [],
+			"item": [
+				{
+					"name": "Create Customer",
+					"id": "977d7fe7-ca13-4f6a-9002-f23bf4adfad3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{api_key}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": "{{base_url}}/v1/customers"
+					},
+					"response": []
+				}
+			],
 			"id": "03cc6b74-92d6-4fea-bf47-41d7a11bc3c6"
 		}
 	]
