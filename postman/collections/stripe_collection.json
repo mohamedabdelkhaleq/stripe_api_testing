@@ -164,18 +164,21 @@
 										"exec": [
 											"const jsonData = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", () => { \r",
+											"    pm.response.to.have.status(200); \r",
 											"});\r",
 											"\r",
-											"pm.test(\"Customer has valid ID\", function () {\r",
-											"    pm.expect(jsonData).to.have.property(\"id\");\r",
-											"    pm.expect(jsonData.id).to.include(\"cus_\");\r",
+											"// 2. Data Integrity Check (Optional Fields)\r",
+											"pm.test(\"Optional fields match request\", () => {\r",
+											"    const body = pm.request.body.urlencoded;\r",
+											"    \r",
+											"    pm.expect(jsonData.description).to.eql(body.get(\"description\"));\r",
+											"    pm.expect(jsonData.phone).to.eql(body.get(\"phone\"));\r",
+											"    pm.expect(jsonData.metadata.order_id).to.eql(body.get(\"metadata[order_id]\"));\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Object type is customer\", function () {\r",
-											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
-											"});"
+											"pm.environment.set(\"customer_id\", jsonData.id);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -210,6 +213,30 @@
 											"value": "Jenny Rosen",
 											"type": "text",
 											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+										},
+										{
+											"key": "phone",
+											"value": "+201234567890",
+											"type": "text",
+											"uuid": "fc0b82e7-94c0-4303-966c-8e7d6a1492a6"
+										},
+										{
+											"key": "description",
+											"value": "This is a test for optional fields",
+											"type": "text",
+											"uuid": "8274b082-03d3-4896-b6eb-c8c748ccd19c"
+										},
+										{
+											"key": "metadata[order_id]",
+											"value": "67890",
+											"type": "text",
+											"uuid": "2d7dc2c3-ea7a-48e4-9076-0e70185cb2e7"
+										},
+										{
+											"key": "metadata[priority]",
+											"value": "high",
+											"type": "text",
+											"uuid": "cbf6ffdb-a761-4d9f-b84f-345f9ec968e3"
 										}
 									]
 								},
