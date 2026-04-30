@@ -47,5 +47,37 @@
 			],
 			"id": "03cc6b74-92d6-4fea-bf47-41d7a11bc3c6"
 		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{api_key}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8286b4db-c3cb-4a5d-b8de-1ec075b679be",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "25e97c79-1819-42d2-a461-a598df4ef75c",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
 	]
 }
