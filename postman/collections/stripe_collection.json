@@ -4,5 +4,11 @@
 		"name": "Stripe API Testing",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
-	"item": []
+	"item": [
+		{
+			"name": "New Folder",
+			"item": [],
+			"id": "03cc6b74-92d6-4fea-bf47-41d7a11bc3c6"
+		}
+	]
 }
