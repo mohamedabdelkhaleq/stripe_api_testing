@@ -394,9 +394,24 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"method": "GET",
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
 								"header": [],
-								"url": "{{base_url}}/v1/"
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"customer\": \"cus_URG3C7ZqcjrJDQ\",  \r\n  \"amount\": 2000,\r\n  \"currency\": \"usd\",\r\n  \"source\": \"tok_visa\",\r\n  \"description\": \"Test charge\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/v1/charges"
 							},
 							"response": []
 						}
