@@ -417,63 +417,7 @@
 						},
 						{
 							"name": "TC-PI-002",
-							"id": "3605cc0c-46f4-4a5a-9c7d-359c00376ef0",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"customer\": \"cus_URG3C7ZqcjrJDQ\",  \r\n  \"amount\": 2000,\r\n  \"currency\": \"usd\",\r\n  \"source\": \"tok_visa\",\r\n  \"description\": \"Test charge\"\r\n}\r\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{base_url}}/v1/charges"
-							},
-							"response": []
-						},
-						{
-							"name": "TC-PI-002",
 							"id": "8cee308a-918a-4a1c-8624-dd0f9bac2247",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"customer\": \"cus_URG3C7ZqcjrJDQ\",  \r\n  \"amount\": 2000,\r\n  \"currency\": \"usd\",\r\n  \"source\": \"tok_visa\",\r\n  \"description\": \"Test charge\"\r\n}\r\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{base_url}}/v1/charges"
-							},
-							"response": []
-						},
-						{
-							"name": "TC-PI-003",
-							"id": "ef71f0e1-e633-4763-86a0-2bf3817c7879",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
