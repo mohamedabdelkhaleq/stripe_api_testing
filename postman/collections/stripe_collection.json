@@ -889,7 +889,43 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": ""
+											"value": "pi_3TSPChAEI1vBJD0T1AP09bn2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PI-011",
+							"id": "4eef3bbb-c06c-4aaa-85f5-cbdc5ce42d63",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/payment_intents/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"payment_intents",
+										":id"
+									],
+									"variable": [
+										{
+											"id": "c43388f3-d943-440b-bc07-251043c54abf",
+											"key": "id",
+											"value": "pi_3TSPChAEI1vBJD0T1AP09bn2"
 										}
 									]
 								}
