@@ -724,8 +724,50 @@
 							"response": []
 						},
 						{
-							"name": "TC-PI-004 Copy",
+							"name": "TC-PI-008",
 							"id": "250cf465-8713-48d7-9882-1057a81654b7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currency",
+											"value": "usd",
+											"type": "text",
+											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
+										},
+										{
+											"key": "customer",
+											"value": "cus_URH5IiEJozUYum",
+											"type": "text",
+											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
+										},
+										{
+											"key": "description",
+											"value": "Test charge",
+											"type": "text",
+											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_intents"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PI-009",
+							"id": "41057584-7a52-423c-9eb3-7fcb29e50cd0",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
