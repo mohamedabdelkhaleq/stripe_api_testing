@@ -883,6 +883,42 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "TC-PI-012",
+							"id": "3c0d1b2b-761e-4614-964c-4d0bc0b68db8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/payment_intents/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"payment_intents",
+										":id"
+									],
+									"variable": [
+										{
+											"id": "c43388f3-d943-440b-bc07-251043c54abf",
+											"key": "id",
+											"value": "pi_3TSPChAEI1vBJD0T1AP09bn2"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"id": "a9a2d1eb-7924-4a22-902d-0bd76d2f43f1"
@@ -891,7 +927,7 @@
 					"name": "Update payment",
 					"item": [
 						{
-							"name": "TC-PI-012",
+							"name": "TC-PI-013",
 							"id": "1b5979c0-9419-402d-ac1e-3d118a353782",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -955,7 +991,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PI-013",
+							"name": "TC-PI-014",
 							"id": "180a0e04-8966-4e61-b75c-5699bcc59b89",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
