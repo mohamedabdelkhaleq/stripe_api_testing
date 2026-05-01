@@ -812,6 +812,54 @@
 								"url": "{{base_url}}/v1/payment_intents"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-PI-009 Copy",
+							"id": "2c6a4b4c-f13b-492f-917d-86bbae1a1ca2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "amount",
+											"value": "2000",
+											"type": "text",
+											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
+										},
+										{
+											"key": "currency",
+											"value": "usd",
+											"type": "text",
+											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
+										},
+										{
+											"key": "customer",
+											"value": "cus_URH5IiEJozUYum",
+											"type": "text",
+											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
+										},
+										{
+											"key": "description",
+											"value": "Test charge",
+											"type": "text",
+											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_intents"
+							},
+							"response": []
 						}
 					],
 					"id": "1de19f84-4ff8-48c9-afb5-8587220746f7"
