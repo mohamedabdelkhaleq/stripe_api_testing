@@ -382,10 +382,10 @@
 			"id": "03cc6b74-92d6-4fea-bf47-41d7a11bc3c6"
 		},
 		{
-			"name": "Charges",
+			"name": "paymenintent",
 			"item": [
 				{
-					"name": "Create Charges",
+					"name": "Create paymentintent",
 					"item": [
 						{
 							"name": "TC-PI-001",
@@ -1079,44 +1079,32 @@
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "amount",
-											"value": "6000",
+											"key": "payment_method_options",
+											"value": "card",
 											"type": "text",
 											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
 										},
 										{
-											"key": "currency",
-											"value": "usd",
+											"key": "receipt_email",
+											"value": "hamde@gmail.com",
 											"type": "text",
 											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
-										},
-										{
-											"key": "customer",
-											"value": "cus_URH5IiEJozUYum",
-											"type": "text",
-											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
-										},
-										{
-											"key": "description",
-											"value": "update payment\n",
-											"type": "text",
-											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{base_url}}/v1/payment_intents/:id",
+									"raw": "{{base_url}}/v1/payment_intents/:id/confirm",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"v1",
 										"payment_intents",
-										":id"
+										":id",
+										"confirm"
 									],
 									"variable": [
 										{
-											"id": "d2f80e2f-fba9-4b47-bc3b-dc6346b3b49c",
 											"key": "id",
 											"value": "pi_3TSPChAEI1vBJD0T1AP09bn2"
 										}
