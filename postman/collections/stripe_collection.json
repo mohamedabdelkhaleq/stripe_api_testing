@@ -956,6 +956,25 @@
 								"url": "{{base_url}}/v1/payment_intents"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-PI-013",
+							"id": "180a0e04-8966-4e61-b75c-5699bcc59b89",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/payment_intents"
+							},
+							"response": []
 						}
 					],
 					"id": "fb760e20-0bd9-450c-83af-ac7f0737a685"
