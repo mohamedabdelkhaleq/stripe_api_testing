@@ -860,7 +860,43 @@
 				},
 				{
 					"name": "Retrieve Payment",
-					"item": [],
+					"item": [
+						{
+							"name": "TC-PI-010",
+							"id": "53b8fcb2-213b-4211-a6b0-072abf78c8c8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/payment_intents/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"payment_intents",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
 					"id": "a9a2d1eb-7924-4a22-902d-0bd76d2f43f1"
 				}
 			],
