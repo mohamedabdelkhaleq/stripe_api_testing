@@ -436,7 +436,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PI-001 Copy",
+							"name": "TC-PI-002",
 							"id": "0f7e2981-1acd-4c4e-8740-b5224d248bb2",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -484,7 +484,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PI-001 Copy 2",
+							"name": "TC-PI-003",
 							"id": "72925290-f29c-445a-a711-33c08a4a1cee",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
