@@ -388,14 +388,15 @@
 					"name": "Create Charges",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "TC-CH-001",
 							"id": "5b7c5405-5ce2-438c-82dc-349ade129b39",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": "{{base_url}}/v1/"
 							},
 							"response": []
 						}
