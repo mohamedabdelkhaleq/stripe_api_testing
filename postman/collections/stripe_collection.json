@@ -790,12 +790,6 @@
 											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
 										},
 										{
-											"key": "currency",
-											"value": "usd",
-											"type": "text",
-											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
-										},
-										{
 											"key": "customer",
 											"value": "cus_URH5IiEJozUYum",
 											"type": "text",
@@ -863,6 +857,11 @@
 						}
 					],
 					"id": "1de19f84-4ff8-48c9-afb5-8587220746f7"
+				},
+				{
+					"name": "Retrieve Payment",
+					"item": [],
+					"id": "a9a2d1eb-7924-4a22-902d-0bd76d2f43f1"
 				}
 			],
 			"id": "44b7c3ec-d8b2-46e0-92fb-804cc69f6517"
