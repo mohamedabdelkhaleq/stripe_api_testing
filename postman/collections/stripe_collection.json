@@ -1228,6 +1228,84 @@
 						}
 					],
 					"id": "8790a44c-b4f9-4399-bc07-23c7805f205e"
+				},
+				{
+					"name": "all payments",
+					"item": [
+						{
+							"name": "TC-PI-019",
+							"id": "da7ce4d1-b69a-4f83-bdab-a8efc7b191f3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/payment_intents/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"payment_intents",
+										":id"
+									],
+									"variable": [
+										{
+											"id": "e1853be7-fe10-4c6c-951d-f4c9bf107a66",
+											"key": "id",
+											"value": "pi_3TSPChAEI1vBJD0T1AP09bn2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PI-020",
+							"id": "e139fa60-4faf-4a84-b1a3-b9286d9a8dbe",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/payment_intents/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"payment_intents",
+										":id"
+									],
+									"variable": [
+										{
+											"id": "e1853be7-fe10-4c6c-951d-f4c9bf107a66",
+											"key": "id",
+											"value": "pi_3TSPChAEI1vBJD0T1AP09bn2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "f5c6839c-7d15-4654-b2a1-8a8d7ac21d06"
 				}
 			],
 			"id": "44b7c3ec-d8b2-46e0-92fb-804cc69f6517"
