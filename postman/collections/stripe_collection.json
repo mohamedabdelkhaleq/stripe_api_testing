@@ -2486,18 +2486,18 @@
 											"const jsonData = pm.response.json();\r",
 											"\r",
 											"// 1. Status Code Validation\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status is 404 Not Found\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
 											"});\r",
 											"\r",
-											"// 2. Deleted is true\r",
-											"pm.test(\"Product is deleted\", function () {\r",
-											"    pm.expect(jsonData.deleted).to.be.true;\r",
+											"// 2. Error type validation\r",
+											"pm.test(\"Error type is invalid_request_error\", function () {\r",
+											"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
 											"});\r",
 											"\r",
-											"// 3. ID matches deleted product\r",
-											"pm.test(\"Deleted product ID matches\", function () {\r",
-											"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"product_id\"));\r",
+											"// 3. Error message validation\r",
+											"pm.test(\"Error message mentions no such product\", function () {\r",
+											"    pm.expect(jsonData.error.message).to.include(\"No such product\");\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -2513,7 +2513,7 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
-								"url": "{{base_url}}/v1/products/{{product_id}}"
+								"url": "{{base_url}}/v1/products/invalidprod"
 							},
 							"response": []
 						}
