@@ -2265,7 +2265,7 @@
 					"name": "List all Products",
 					"item": [
 						{
-							"name": "TC-PR-010 - GET /v1/products - List all Active Products",
+							"name": "TC-PR-010 - GET /v1/products - List all Products",
 							"event": [
 								{
 									"listen": "test",
@@ -2294,12 +2294,7 @@
 											"    pm.expect(jsonData.object).to.eql(\"list\");\r",
 											"});\r",
 											"\r",
-											"// 3. All products are inactive\r",
-											"pm.test(\"All returned products are active\", function () {\r",
-											"    jsonData.data.forEach(product => {\r",
-											"        pm.expect(product.active).to.be.true;\r",
-											"    });\r",
-											"});"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -2314,23 +2309,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{base_url}}/v1/products?active=true",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"v1",
-										"products"
-									],
-									"query": [
-										{
-											"key": "active",
-											"value": "true",
-											"type": "text"
-										}
-									]
-								}
+								"url": "{{base_url}}/v1/products"
 							},
 							"response": []
 						},
@@ -2396,6 +2375,71 @@
 						}
 					],
 					"id": "6bcf59ba-1b5d-4340-824d-a7e5018fa03d"
+				},
+				{
+					"name": "Delete a Product",
+					"item": [
+						{
+							"name": "TC-PR-012 - DELETE /v1/products/{id} - Delete Existing Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Response is array\r",
+											"pm.test(\"Response data is an array\", function () {\r",
+											"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+											"});\r",
+											"\r",
+											"// 3. All products are inactive\r",
+											"pm.test(\"All returned products are inactive\", function () {\r",
+											"    jsonData.data.forEach(product => {\r",
+											"        pm.expect(product.active).to.be.false;\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "99eae43a-39d1-4f6e-82c0-7083f3e92f5c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/products?active=false",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "active",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "10c015eb-9924-4f5a-8498-f48fab859b1a"
 				}
 			],
 			"id": "eda27e6a-24e4-48b8-b167-00c94411d39e"
