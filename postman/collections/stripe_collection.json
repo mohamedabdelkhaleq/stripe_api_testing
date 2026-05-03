@@ -1549,6 +1549,18 @@
 						"url": "{{base_url}}/v1/account"
 					},
 					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "24c69aba-c517-42ad-9a32-021b9ad247cd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "b7efd175-1f96-4cf0-9fa7-e0b838445017"
