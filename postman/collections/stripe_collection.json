@@ -2122,7 +2122,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-007 - POST /v1/products/{id} - Update Name Copy",
+							"name": "TC-PR-008 - POST /v1/products/{id} - Update Description",
 							"event": [
 								{
 									"listen": "test",
@@ -2156,7 +2156,12 @@
 											"    pm.expect(jsonData.active).to.eql(true);\r",
 											"});\r",
 											"\r",
-											"// 6. Save product_id for next requests\r",
+											"// 6. Description validation\r",
+											"pm.test(\"Description is saved correctly\", function () {\r",
+											"    pm.expect(jsonData.description).to.eql(\"This is a test description.\");\r",
+											"});\r",
+											"\r",
+											"// 7. Save product_id for next requests\r",
 											"pm.environment.set(\"product_id\", jsonData.id);"
 										],
 										"type": "text/javascript",
@@ -2183,7 +2188,24 @@
 										}
 									]
 								},
-								"url": "{{base_url}}/v1/products/{{product_id}}"
+								"url": {
+									"raw": "{{base_url}}/v1/products/{{product_id}}?description=Updated Description",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"products",
+										"{{product_id}}"
+									],
+									"query": [
+										{
+											"key": "description",
+											"value": "Updated Description",
+											"type": "text"
+										}
+									]
+								}
 							},
 							"response": []
 						}
