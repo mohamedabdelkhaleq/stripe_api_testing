@@ -2275,18 +2275,23 @@
 											"const jsonData = pm.response.json();\r",
 											"\r",
 											"// 1. Status Code Validation\r",
-											"pm.test(\"Status is 404 Not Found\", function () {\r",
-											"    pm.response.to.have.status(404);\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"// 2. Error type validation\r",
-											"pm.test(\"Error type is invalid_request_error\", function () {\r",
-											"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+											"// 2. Response is array\r",
+											"pm.test(\"Response data is an array\", function () {\r",
+											"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
 											"});\r",
 											"\r",
-											"// 3. Error message validation\r",
-											"pm.test(\"Error message mentions no such product\", function () {\r",
-											"    pm.expect(jsonData.error.message).to.include(\"No such product\");\r",
+											"// 3. Array is not empty\r",
+											"pm.test(\"Products list is not empty\", function () {\r",
+											"    pm.expect(jsonData.data.length).to.be.above(0);\r",
+											"});\r",
+											"\r",
+											"// 4. Object type validation\r",
+											"pm.test(\"Object type is list\", function () {\r",
+											"    pm.expect(jsonData.object).to.eql(\"list\");\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -2302,7 +2307,54 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/products/prod_invalid123"
+								"url": "{{base_url}}/v1/products"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PR-010 - GET /v1/products/{id} - List Active Products Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Response is array\r",
+											"pm.test(\"Response data is an array\", function () {\r",
+											"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+											"});\r",
+											"\r",
+											"// 3. Array is not empty\r",
+											"pm.test(\"Products list is not empty\", function () {\r",
+											"    pm.expect(jsonData.data.length).to.be.above(0);\r",
+											"});\r",
+											"\r",
+											"// 4. Object type validation\r",
+											"pm.test(\"Object type is list\", function () {\r",
+											"    pm.expect(jsonData.object).to.eql(\"list\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "59aed6b0-be96-464a-9a75-fba1dcbde966",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/products"
 							},
 							"response": []
 						}
