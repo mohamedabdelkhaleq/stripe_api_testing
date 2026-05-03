@@ -389,6 +389,25 @@
 					"item": [
 						{
 							"name": "TC-PI-001",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e1c1ccea-b49b-4966-9a16-340c81215264",
+										"exec": [
+											"\r",
+											" const jsonData = pm.response.json();\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "5b7c5405-5ce2-438c-82dc-349ade129b39",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
