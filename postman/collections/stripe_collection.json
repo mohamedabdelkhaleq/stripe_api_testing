@@ -2193,7 +2193,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-008 - POST /v1/products/{id} - Update Description Co",
+							"name": "TC-PR-009 - POST /v1/products/{id} - Deactivate Product",
 							"event": [
 								{
 									"listen": "test",
@@ -2224,15 +2224,10 @@
 											"\r",
 											"// 5. Active Product validation\r",
 											"pm.test(\"Product name is correct\", function () {\r",
-											"    pm.expect(jsonData.active).to.eql(true);\r",
+											"    pm.expect(jsonData.active).to.be.false;\r",
 											"});\r",
 											"\r",
-											"// 6. Description validation\r",
-											"pm.test(\"Description is saved correctly\", function () {\r",
-											"    pm.expect(jsonData.description).to.eql(\"Updated Description\");\r",
-											"});\r",
-											"\r",
-											"// 7. Save product_id for next requests\r",
+											"// 6. Save product_id for next requests\r",
 											"pm.environment.set(\"product_id\", jsonData.id);"
 										],
 										"type": "text/javascript",
@@ -2252,8 +2247,8 @@
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "description",
-											"value": "Updated Description",
+											"key": "active",
+											"value": "false",
 											"type": "text",
 											"uuid": "75e8389c-6c16-459b-ac95-6730c4bd2e6e"
 										}
