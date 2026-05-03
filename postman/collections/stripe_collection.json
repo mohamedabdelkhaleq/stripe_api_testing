@@ -1325,8 +1325,34 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{api_key}}"
+							}
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "",
+									"type": "text",
+									"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "text",
+									"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6",
+									"disabled": true
+								}
+							]
+						},
+						"url": "{{base_url}}/v1/account"
 					},
 					"response": []
 				}
