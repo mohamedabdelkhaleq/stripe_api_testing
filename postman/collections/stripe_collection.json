@@ -12,7 +12,7 @@
 					"name": "Create Customers",
 					"item": [
 						{
-							"name": "TC01 - POST /v1/customers - Create Customer (Valid)",
+							"name": "TC-CUS-001 - POST /v1/customers - Create Customer (Valid)",
 							"event": [
 								{
 									"listen": "test",
