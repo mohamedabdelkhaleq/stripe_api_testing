@@ -391,8 +391,50 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{api_key}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "type",
+									"value": "card",
+									"type": "text",
+									"uuid": "a03e1537-77f2-4746-b517-e4e52d428a72"
+								},
+								{
+									"key": "card[number]",
+									"value": "4242424242424242",
+									"type": "text",
+									"uuid": "14271e2b-2233-45b2-ac16-ce7c7124999e"
+								},
+								{
+									"key": "exp_month",
+									"value": "12",
+									"type": "text",
+									"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
+								},
+								{
+									"key": "exp_year",
+									"value": "2026",
+									"type": "text",
+									"uuid": "f0ab963c-3288-4973-9a0a-b3a58fe20e2a"
+								},
+								{
+									"key": "cvc",
+									"value": "123",
+									"type": "text",
+									"uuid": "8f54dcf4-9ffe-4397-a379-7177e8b2a25f"
+								}
+							]
+						},
+						"url": "{{base_url}}/v1/payment_methods"
 					},
 					"response": []
 				}
@@ -1669,7 +1711,12 @@
 											"    pm.expect(jsonData.name).to.eql(\"Test Product\");\r",
 											"});\r",
 											"\r",
-											"// 5. Save product_id for next requests\r",
+											"// 5. Active Product validation\r",
+											"pm.test(\"Product name is correct\", function () {\r",
+											"    pm.expect(jsonData.active).to.eql(\"true\");\r",
+											"});\r",
+											"\r",
+											"// 6. Save product_id for next requests\r",
 											"pm.environment.set(\"product_id\", jsonData.id);"
 										],
 										"type": "text/javascript",
