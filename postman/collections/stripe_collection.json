@@ -1459,13 +1459,94 @@
 				},
 				{
 					"name": "TC-AUTH-003 - GET /v1/account - No API Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "65d6e5fb-7423-4f0a-8fc3-65393840ebbd",
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// 1. Status Code Validation\r",
+									"pm.test(\"Status is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"// 2. Error type validation\r",
+									"pm.test(\"Error type is invalid_request_error\", function () {\r",
+									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+									"});\r",
+									"\r",
+									"// 3. Error message validation\r",
+									"pm.test(\"Error message mentions authentication\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.include(\"You did not provide an API key\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "e5fd7003-76e8-434a-9158-4a1c6027a948",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "{{base_url}}/v1/account"
+					},
+					"response": []
+				},
+				{
+					"name": "TC-AUTH-004 - GET /v1/account - Empty Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "17daaeca-1ff1-42fa-b5ba-562224377315",
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// 1. Status Code Validation\r",
+									"pm.test(\"Status is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"// 2. Error type validation\r",
+									"pm.test(\"Error type is invalid_request_error\", function () {\r",
+									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+									"});\r",
+									"\r",
+									"// 3. Error message validation\r",
+									"pm.test(\"Error message mentions authentication\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.include(\"You did not provide an API key\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "ab7c3754-b3e1-4920-a636-34060abfa1cd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": ""
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/v1/account"
 					},
 					"response": []
 				}
