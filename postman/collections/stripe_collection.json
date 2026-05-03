@@ -2158,7 +2158,7 @@
 											"\r",
 											"// 6. Description validation\r",
 											"pm.test(\"Description is saved correctly\", function () {\r",
-											"    pm.expect(jsonData.description).to.eql(\"This is a test description.\");\r",
+											"    pm.expect(jsonData.description).to.eql(\"Updated Description\");\r",
 											"});\r",
 											"\r",
 											"// 7. Save product_id for next requests\r",
@@ -2181,31 +2181,85 @@
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "name",
-											"value": "Updated Product Name",
+											"key": "description",
+											"value": "Updated Description",
 											"type": "text",
 											"uuid": "75e8389c-6c16-459b-ac95-6730c4bd2e6e"
 										}
 									]
 								},
-								"url": {
-									"raw": "{{base_url}}/v1/products/{{product_id}}?description=Updated Description",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"v1",
-										"products",
-										"{{product_id}}"
-									],
-									"query": [
+								"url": "{{base_url}}/v1/products/{{product_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PR-008 - POST /v1/products/{id} - Update Description Co",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Product ID validation\r",
+											"pm.test(\"Response has valid product id\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^prod_/);\r",
+											"});\r",
+											"\r",
+											"// 3. Object type validation\r",
+											"pm.test(\"Object type is product\", function () {\r",
+											"    pm.expect(jsonData.object).to.eql(\"product\");\r",
+											"});\r",
+											"\r",
+											"// 4. Name validation\r",
+											"pm.test(\"Product name is updated\", function () {\r",
+											"    pm.expect(jsonData.name).to.eql(\"Updated Product Name\");\r",
+											"});\r",
+											"\r",
+											"// 5. Active Product validation\r",
+											"pm.test(\"Product name is correct\", function () {\r",
+											"    pm.expect(jsonData.active).to.eql(true);\r",
+											"});\r",
+											"\r",
+											"// 6. Description validation\r",
+											"pm.test(\"Description is saved correctly\", function () {\r",
+											"    pm.expect(jsonData.description).to.eql(\"Updated Description\");\r",
+											"});\r",
+											"\r",
+											"// 7. Save product_id for next requests\r",
+											"pm.environment.set(\"product_id\", jsonData.id);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "4f0e34b2-00c9-4cf5-b38a-ace00fcdcc06",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
 										{
 											"key": "description",
 											"value": "Updated Description",
-											"type": "text"
+											"type": "text",
+											"uuid": "75e8389c-6c16-459b-ac95-6730c4bd2e6e"
 										}
 									]
-								}
+								},
+								"url": "{{base_url}}/v1/products/{{product_id}}"
 							},
 							"response": []
 						}
