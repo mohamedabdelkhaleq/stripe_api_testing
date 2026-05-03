@@ -1343,7 +1343,7 @@
 			"name": "Authentication",
 			"item": [
 				{
-					"name": "TC01 - GET /v1/account - Valid Auth",
+					"name": "TC-AUTH-001 - GET /v1/account - Valid Auth",
 					"event": [
 						{
 							"listen": "test",
