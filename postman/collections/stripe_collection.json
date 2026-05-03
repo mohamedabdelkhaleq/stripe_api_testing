@@ -1456,6 +1456,18 @@
 						"url": "{{base_url}}/v1/account"
 					},
 					"response": []
+				},
+				{
+					"name": "TC-AUTH-003 - GET /v1/account - No API Key",
+					"id": "e5fd7003-76e8-434a-9158-4a1c6027a948",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "b7efd175-1f96-4cf0-9fa7-e0b838445017"
