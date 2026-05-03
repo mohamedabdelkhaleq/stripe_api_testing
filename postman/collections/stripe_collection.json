@@ -386,6 +386,33 @@
 			"item": [
 				{
 					"name": "TC-PM-06",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
+								"exec": [
+									"const stripe = Stripe('pk_test_your_publishable_key');\r",
+									"\r",
+									"const {paymentMethod, error} = await stripe.createPaymentMethod({\r",
+									"  type: 'card',\r",
+									"  card: {\r",
+									"    number: '4242424242424242',\r",
+									"    exp_month: 12,\r",
+									"    exp_year: 2025,\r",
+									"    cvc: '123',\r",
+									"  },\r",
+									"  billing_details: {\r",
+									"    name: 'John Doe',\r",
+									"  },\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "f82784f4-cad1-4f1e-9269-0ead5b186060",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -406,31 +433,31 @@
 									"key": "type",
 									"value": "card",
 									"type": "text",
-									"uuid": "a03e1537-77f2-4746-b517-e4e52d428a72"
+									"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
 								},
 								{
-									"key": "card[number]",
-									"value": "4242424242424242",
+									"key": "card",
+									"value": "tok_visa",
 									"type": "text",
-									"uuid": "14271e2b-2233-45b2-ac16-ce7c7124999e"
+									"uuid": "f0ab963c-3288-4973-9a0a-b3a58fe20e2a"
+								},
+								{
+									"key": "card[exp_year]",
+									"value": "29",
+									"type": "text",
+									"uuid": "8f54dcf4-9ffe-4397-a379-7177e8b2a25f"
 								},
 								{
 									"key": "card[exp_month]",
 									"value": "12",
 									"type": "text",
-									"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
-								},
-								{
-									"key": "card[exp_year]",
-									"value": "2026",
-									"type": "text",
-									"uuid": "f0ab963c-3288-4973-9a0a-b3a58fe20e2a"
+									"uuid": "ddd8caf1-f7be-4d6b-a3e7-2f1b23d3cad6"
 								},
 								{
 									"key": "card[cvc]",
 									"value": "123",
 									"type": "text",
-									"uuid": "8f54dcf4-9ffe-4397-a379-7177e8b2a25f"
+									"uuid": "017e531c-1dea-4fda-bdcf-dc33665693e5"
 								}
 							]
 						},
@@ -2394,16 +2421,14 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"// 2. Response is array\r",
-											"pm.test(\"Response data is an array\", function () {\r",
-											"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+											"// 2. Deleted is true\r",
+											"pm.test(\"Product is deleted\", function () {\r",
+											"    pm.expect(jsonData.deleted).to.be.true;\r",
 											"});\r",
 											"\r",
-											"// 3. All products are inactive\r",
-											"pm.test(\"All returned products are inactive\", function () {\r",
-											"    jsonData.data.forEach(product => {\r",
-											"        pm.expect(product.active).to.be.false;\r",
-											"    });\r",
+											"// 3. ID matches deleted product\r",
+											"pm.test(\"Deleted product ID matches\", function () {\r",
+											"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"product_id\"));\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -2419,22 +2444,7 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
-								"url": {
-									"raw": "{{base_url}}/v1/products?active=false",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"v1",
-										"products"
-									],
-									"query": [
-										{
-											"key": "active",
-											"value": "false"
-										}
-									]
-								}
+								"url": "{{base_url}}/v1/products/{{product_id}}"
 							},
 							"response": []
 						}
