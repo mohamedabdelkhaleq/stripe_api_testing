@@ -401,11 +401,30 @@
 										"id": "e1c1ccea-b49b-4966-9a16-340c81215264",
 										"exec": [
 											"\r",
-											" const jsonData = pm.response.json();\r",
-											"pm.test(\"Status code is 200\", function () {\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\",  () => {\r",
 											"    pm.response.to.have.status(200);\r",
-											"}\r",
+											"})\r",
 											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "608d572b-7c6c-4247-9517-dfb0c3e1471b",
+										"exec": [
+											"// Check that customer_id and payment_method_id exist first\r",
+											"const custId = pm.environment.get(\"customer_id\");\r",
+											"const pmId = pm.environment.get(\"payment_method_id\");\r",
+											"if (!custId || !pmId) {\r",
+											" throw new Error(\"Run Create Customer and Create PaymentMethod first!\");\r",
+											"}\r",
+											"pm.environment.set(\"timestamp\", new Date().toISOString());"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -1552,13 +1571,49 @@
 				},
 				{
 					"name": "TC-AUTH-005 - GET /v1/account - Publishable Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "41890767-c948-412b-843c-2833598d3caf",
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// 1. Status Code Validation\r",
+									"pm.test(\"Status is 403 Forbidden\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"// 2. Error type validation\r",
+									"pm.test(\"Error type is invalid_request_error\", function () {\r",
+									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+									"});\r",
+									"\r",
+									"// 3. Error message validation\r",
+									"pm.test(\"Error mentions secret key required\", function () {\r",
+									"    pm.expect(jsonData.error.code).to.include(\"secret_key_required\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "24c69aba-c517-42ad-9a32-021b9ad247cd",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "pk_test_51TRxb4DWHWMB9CM31aJOklAPapRywMMxEBpSEPWR0QJeJ7adis1z4b3M05XY39M12WOLWPtqjy80HbD60vn7JmpJ00skcRN1ua"
+							}
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "{{base_url}}/v1/account"
 					},
 					"response": []
 				}
