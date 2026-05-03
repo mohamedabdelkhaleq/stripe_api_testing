@@ -1551,7 +1551,7 @@
 					"response": []
 				},
 				{
-					"name": "TC-AUTH-005 - GET /v1/account - Live API Key",
+					"name": "TC-AUTH-005 - GET /v1/account - Publishable Key",
 					"id": "24c69aba-c517-42ad-9a32-021b9ad247cd",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
