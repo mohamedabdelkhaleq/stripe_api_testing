@@ -1961,7 +1961,7 @@
 					"name": "Retrieve a Product",
 					"item": [
 						{
-							"name": "TC-PR-005 - POST /v1/products/{id} - Valid ID",
+							"name": "TC-PR-005 - GET /v1/products/{id} - Valid ID",
 							"event": [
 								{
 									"listen": "test",
@@ -2008,7 +2008,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-006 - POST /v1/products/{id} - Invalid ID",
+							"name": "TC-PR-006 - GET /v1/products/{id} - Invalid ID",
 							"event": [
 								{
 									"listen": "test",
@@ -2260,6 +2260,54 @@
 						}
 					],
 					"id": "1053c366-59c8-4cb5-838f-8c2329c69e37"
+				},
+				{
+					"name": "List all Products",
+					"item": [
+						{
+							"name": "TC-PR-010 - GET /v1/products/{id} - List Active Products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 404 Not Found\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"// 2. Error type validation\r",
+											"pm.test(\"Error type is invalid_request_error\", function () {\r",
+											"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+											"});\r",
+											"\r",
+											"// 3. Error message validation\r",
+											"pm.test(\"Error message mentions no such product\", function () {\r",
+											"    pm.expect(jsonData.error.message).to.include(\"No such product\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "ba593f02-671c-48fe-9cc0-0373c15e6e7e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/products/prod_invalid123"
+							},
+							"response": []
+						}
+					],
+					"id": "6bcf59ba-1b5d-4340-824d-a7e5018fa03d"
 				}
 			],
 			"id": "eda27e6a-24e4-48b8-b167-00c94411d39e"
