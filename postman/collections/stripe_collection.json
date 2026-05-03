@@ -2447,6 +2447,75 @@
 								"url": "{{base_url}}/v1/products/{{product_id}}"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-PR-013 - DELETE /v1/products/{id} - Delete Product with Active Prices",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "5eadc840-9005-4032-af4e-981fe6a092c2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base_url}}/v1/products/{{product_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PR-014 - DELETE /v1/products/{id} - Delete Non-Existent Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Deleted is true\r",
+											"pm.test(\"Product is deleted\", function () {\r",
+											"    pm.expect(jsonData.deleted).to.be.true;\r",
+											"});\r",
+											"\r",
+											"// 3. ID matches deleted product\r",
+											"pm.test(\"Deleted product ID matches\", function () {\r",
+											"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"product_id\"));\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "45b08826-1361-4463-8008-854b968ee5f2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base_url}}/v1/products/{{product_id}}"
+							},
+							"response": []
 						}
 					],
 					"id": "10c015eb-9924-4f5a-8498-f48fab859b1a"
