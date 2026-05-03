@@ -1748,6 +1748,59 @@
 							"response": []
 						},
 						{
+							"name": "TC-PR-004 - POST /v1/products - Missing Name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// 2. Error type validation\r",
+											"pm.test(\"Error type is invalid_request_error\", function () {\r",
+											"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+											"});\r",
+											"\r",
+											"// 3. Error message validation\r",
+											"pm.test(\"Error message mentions name is required\", function () {\r",
+											"    pm.expect(jsonData.error.message).to.include(\"name\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "7a0ca746-ab91-4234-899e-2c08418b03ae",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "",
+											"type": "text",
+											"uuid": "62c8938c-5cb0-4e5b-a161-f280b18afd7f"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/products"
+							},
+							"response": []
+						},
+						{
 							"name": "TC-PR-002 - POST /v1/products - Name and Description",
 							"event": [
 								{
