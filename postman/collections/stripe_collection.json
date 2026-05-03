@@ -1320,6 +1320,35 @@
 			"item": [
 				{
 					"name": "TC01 - GET /v1/account - Valid Auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf491524-217a-4b1c-abd0-863b6d9a41f6",
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// 1. Status Code Validation\r",
+									"pm.test(\"Status is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// 2. Account ID Validation\r",
+									"pm.test(\"Response has valid account id\", function () {\r",
+									"    pm.expect(jsonData.id).to.match(/^acct_/);\r",
+									"});\r",
+									"\r",
+									"// 3. Object type Validation\r",
+									"pm.test(\"Object type is account\", function () {\r",
+									"    pm.expect(jsonData.object).to.eql(\"account\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "177dfbb2-ca37-4043-adca-5d80bc37ed7c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
