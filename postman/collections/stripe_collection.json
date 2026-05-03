@@ -415,19 +415,19 @@
 									"uuid": "14271e2b-2233-45b2-ac16-ce7c7124999e"
 								},
 								{
-									"key": "exp_month",
+									"key": "card[exp_month]",
 									"value": "12",
 									"type": "text",
 									"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
 								},
 								{
-									"key": "exp_year",
+									"key": "card[exp_year]",
 									"value": "2026",
 									"type": "text",
 									"uuid": "f0ab963c-3288-4973-9a0a-b3a58fe20e2a"
 								},
 								{
-									"key": "cvc",
+									"key": "card[cvc]",
 									"value": "123",
 									"type": "text",
 									"uuid": "8f54dcf4-9ffe-4397-a379-7177e8b2a25f"
@@ -1782,7 +1782,12 @@
 											"    pm.expect(jsonData.active).to.eql(true);\r",
 											"});\r",
 											"\r",
-											"// 6. Save product_id for next requests\r",
+											"// 6. Description validation\r",
+											"pm.test(\"Description is saved correctly\", function () {\r",
+											"    pm.expect(jsonData.description).to.eql(\"This is a test description.\");\r",
+											"});\r",
+											"\r",
+											"// 7. Save product_id for next requests\r",
 											"pm.environment.set(\"product_id\", jsonData.id);"
 										],
 										"type": "text/javascript",
@@ -1806,6 +1811,89 @@
 											"value": "Test Product",
 											"type": "text",
 											"uuid": "c813aff9-e9ff-4593-a820-80428b37b442"
+										},
+										{
+											"key": "description",
+											"value": "This is a test description.",
+											"type": "text",
+											"uuid": "a0107972-8db7-4bba-a0fc-bd386c6602e3"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/products"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PR-002 - POST /v1/products - Name and Description Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Product ID validation\r",
+											"pm.test(\"Response has valid product id\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^prod_/);\r",
+											"});\r",
+											"\r",
+											"// 3. Object type validation\r",
+											"pm.test(\"Object type is product\", function () {\r",
+											"    pm.expect(jsonData.object).to.eql(\"product\");\r",
+											"});\r",
+											"\r",
+											"// 4. Name validation\r",
+											"pm.test(\"Product name is correct\", function () {\r",
+											"    pm.expect(jsonData.name).to.eql(\"Test Product\");\r",
+											"});\r",
+											"\r",
+											"// 5. Active Product validation\r",
+											"pm.test(\"Product name is correct\", function () {\r",
+											"    pm.expect(jsonData.active).to.eql(true);\r",
+											"});\r",
+											"\r",
+											"// 6. Description validation\r",
+											"pm.test(\"Description is saved correctly\", function () {\r",
+											"    pm.expect(jsonData.description).to.eql(\"This is a test description.\");\r",
+											"});\r",
+											"\r",
+											"// 7. Save product_id for next requests\r",
+											"pm.environment.set(\"product_id\", jsonData.id);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "cead5ec0-1502-4a55-a98c-ee6ab0d3c054",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Test Product",
+											"type": "text",
+											"uuid": "c813aff9-e9ff-4593-a820-80428b37b442"
+										},
+										{
+											"key": "description",
+											"value": "This is a test description.",
+											"type": "text",
+											"uuid": "a0107972-8db7-4bba-a0fc-bd386c6602e3"
 										}
 									]
 								},
