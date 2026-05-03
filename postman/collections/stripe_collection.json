@@ -1314,6 +1314,11 @@
 			"name": "Charges",
 			"item": [],
 			"id": "c6e7b3e3-f100-4eb6-81e0-6d3840530c48"
+		},
+		{
+			"name": "New Folder",
+			"item": [],
+			"id": "b7efd175-1f96-4cf0-9fa7-e0b838445017"
 		}
 	],
 	"auth": {
