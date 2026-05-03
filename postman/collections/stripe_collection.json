@@ -1825,7 +1825,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-002 - POST /v1/products - Name and Description Copy",
+							"name": "TC-PR-003 - POST /v1/products - With Metadata",
 							"event": [
 								{
 									"listen": "test",
@@ -1859,9 +1859,9 @@
 											"    pm.expect(jsonData.active).to.eql(true);\r",
 											"});\r",
 											"\r",
-											"// 6. Description validation\r",
-											"pm.test(\"Description is saved correctly\", function () {\r",
-											"    pm.expect(jsonData.description).to.eql(\"This is a test description.\");\r",
+											"// 6. Metadata validation\r",
+											"pm.test(\"Metadata is saved correctly\", function () {\r",
+											"    pm.expect(jsonData.metadata.color).to.eql(\"red\");\r",
 											"});\r",
 											"\r",
 											"// 7. Save product_id for next requests\r",
@@ -1890,8 +1890,8 @@
 											"uuid": "c813aff9-e9ff-4593-a820-80428b37b442"
 										},
 										{
-											"key": "description",
-											"value": "This is a test description.",
+											"key": "metadata[color]",
+											"value": "red",
 											"type": "text",
 											"uuid": "a0107972-8db7-4bba-a0fc-bd386c6602e3"
 										}
