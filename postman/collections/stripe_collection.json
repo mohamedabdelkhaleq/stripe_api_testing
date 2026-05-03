@@ -1343,7 +1343,7 @@
 			"name": "Authentication",
 			"item": [
 				{
-					"name": "TC-AUTH-001 - GET /v1/account - Valid Auth",
+					"name": "TC-AUTH-001 - GET /v1/account - Valid Key",
 					"event": [
 						{
 							"listen": "test",
@@ -1406,6 +1406,18 @@
 							]
 						},
 						"url": "{{base_url}}/v1/account"
+					},
+					"response": []
+				},
+				{
+					"name": "TC-AUTH-002 - GET /v1/account - Invalid Key",
+					"id": "007cb772-2676-43f6-8194-1f2fcefc8636",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
