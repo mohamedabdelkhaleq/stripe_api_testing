@@ -1627,13 +1627,13 @@
 					"name": "Create Products",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "TC-PR-001 - POST /v1/products - Valid Name",
 							"id": "86eee3be-d784-4ee1-b3b4-15dffd84cd20",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": []
 							},
 							"response": []
