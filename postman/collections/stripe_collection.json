@@ -1680,7 +1680,102 @@
 			"item": [
 				{
 					"name": "Retrieve a Product",
-					"item": [],
+					"item": [
+						{
+							"name": "TC-PR-005 - POST /v1/products - Valid ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Product ID validation\r",
+											"pm.test(\"Product ID matches\", function () {\r",
+											"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"product_id\"));\r",
+											"});\r",
+											"\r",
+											"// 3. Object type validation\r",
+											"pm.test(\"Object type is product\", function () {\r",
+											"    pm.expect(jsonData.object).to.eql(\"product\");\r",
+											"});\r",
+											"\r",
+											"// 4. Product is active\r",
+											"pm.test(\"Product is active\", function () {\r",
+											"    pm.expect(jsonData.active).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "954ea3c7-4b7b-4d62-a0d2-95106d6cd6f3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/products/{{product_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PR-005 - POST /v1/products - Valid ID Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Product ID validation\r",
+											"pm.test(\"Product ID matches\", function () {\r",
+											"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"product_id\"));\r",
+											"});\r",
+											"\r",
+											"// 3. Object type validation\r",
+											"pm.test(\"Object type is product\", function () {\r",
+											"    pm.expect(jsonData.object).to.eql(\"product\");\r",
+											"});\r",
+											"\r",
+											"// 4. Product is active\r",
+											"pm.test(\"Product is active\", function () {\r",
+											"    pm.expect(jsonData.active).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "266fbc14-d7be-4561-a779-c5bb6574b4de",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/products/{{product_id}}"
+							},
+							"response": []
+						}
+					],
 					"id": "b1470f90-8068-45c0-bd65-02867b5b7b3d"
 				},
 				{
@@ -1961,18 +2056,6 @@
 						}
 					],
 					"id": "13bb54a0-56e0-49b8-8413-ba2430beeb9c"
-				},
-				{
-					"name": "New Request",
-					"id": "26a32aef-fc31-4553-bc31-989187514a2b",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
 				}
 			],
 			"id": "eda27e6a-24e4-48b8-b167-00c94411d39e"
