@@ -1713,7 +1713,7 @@
 											"\r",
 											"// 5. Active Product validation\r",
 											"pm.test(\"Product name is correct\", function () {\r",
-											"    pm.expect(jsonData.active).to.eql(\"true\");\r",
+											"    pm.expect(jsonData.active).to.eql(true);\r",
 											"});\r",
 											"\r",
 											"// 6. Save product_id for next requests\r",
@@ -1726,6 +1726,72 @@
 								}
 							],
 							"id": "86eee3be-d784-4ee1-b3b4-15dffd84cd20",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Test Product",
+											"type": "text",
+											"uuid": "c813aff9-e9ff-4593-a820-80428b37b442"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/products"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PR-002 - POST /v1/products - Name and Description",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Product ID validation\r",
+											"pm.test(\"Response has valid product id\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^prod_/);\r",
+											"});\r",
+											"\r",
+											"// 3. Object type validation\r",
+											"pm.test(\"Object type is product\", function () {\r",
+											"    pm.expect(jsonData.object).to.eql(\"product\");\r",
+											"});\r",
+											"\r",
+											"// 4. Name validation\r",
+											"pm.test(\"Product name is correct\", function () {\r",
+											"    pm.expect(jsonData.name).to.eql(\"Test Product\");\r",
+											"});\r",
+											"\r",
+											"// 5. Active Product validation\r",
+											"pm.test(\"Product name is correct\", function () {\r",
+											"    pm.expect(jsonData.active).to.eql(true);\r",
+											"});\r",
+											"\r",
+											"// 6. Save product_id for next requests\r",
+											"pm.environment.set(\"product_id\", jsonData.id);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "52129d47-fe7e-40d6-b25d-c75184e904e0",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
