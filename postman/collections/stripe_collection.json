@@ -1619,6 +1619,30 @@
 				}
 			],
 			"id": "b7efd175-1f96-4cf0-9fa7-e0b838445017"
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create Products",
+					"item": [
+						{
+							"name": "New Request",
+							"id": "86eee3be-d784-4ee1-b3b4-15dffd84cd20",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
+					"id": "13bb54a0-56e0-49b8-8413-ba2430beeb9c"
+				}
+			],
+			"id": "eda27e6a-24e4-48b8-b167-00c94411d39e"
 		}
 	],
 	"auth": {
