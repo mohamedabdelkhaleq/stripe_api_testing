@@ -1729,7 +1729,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-005 - POST /v1/products - Valid ID Copy",
+							"name": "TC-PR-006 - POST /v1/products - Invalid ID",
 							"event": [
 								{
 									"listen": "test",
@@ -1739,23 +1739,18 @@
 											"const jsonData = pm.response.json();\r",
 											"\r",
 											"// 1. Status Code Validation\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status is 404 Not Found\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
 											"});\r",
 											"\r",
-											"// 2. Product ID validation\r",
-											"pm.test(\"Product ID matches\", function () {\r",
-											"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"product_id\"));\r",
+											"// 2. Error type validation\r",
+											"pm.test(\"Error type is invalid_request_error\", function () {\r",
+											"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
 											"});\r",
 											"\r",
-											"// 3. Object type validation\r",
-											"pm.test(\"Object type is product\", function () {\r",
-											"    pm.expect(jsonData.object).to.eql(\"product\");\r",
-											"});\r",
-											"\r",
-											"// 4. Product is active\r",
-											"pm.test(\"Product is active\", function () {\r",
-											"    pm.expect(jsonData.active).to.be.true;\r",
+											"// 3. Error message validation\r",
+											"pm.test(\"Error message mentions no such product\", function () {\r",
+											"    pm.expect(jsonData.error.message).to.include(\"No such product\");\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -1771,7 +1766,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/products/{{product_id}}"
+								"url": "{{base_url}}/v1/products/prod_invalid123"
 							},
 							"response": []
 						}
