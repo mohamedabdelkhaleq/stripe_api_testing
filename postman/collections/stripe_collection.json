@@ -1317,7 +1317,20 @@
 		},
 		{
 			"name": "Authentication",
-			"item": [],
+			"item": [
+				{
+					"name": "TC01 - GET /v1/account - Valid Auth",
+					"id": "177dfbb2-ca37-4043-adca-5d80bc37ed7c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "b7efd175-1f96-4cf0-9fa7-e0b838445017"
 		}
 	],
