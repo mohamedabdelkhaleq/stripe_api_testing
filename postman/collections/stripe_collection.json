@@ -3271,6 +3271,36 @@
 					"item": [
 						{
 							"name": "TC-PRC-007: Retrieve Existing Price with Valid Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3ec33a73-dfc3-4f2d-b919-5c58a69b6ddc",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Retrieved price matches expected ID\", function() {\r",
+											"    pm.expect(data.id).to.eql(pm.environment.get('price_id'));\r",
+											"    pm.expect(data.object).to.eql('price');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Price has all required fields\", function() {\r",
+											"    pm.expect(data).to.have.property('id');\r",
+											"    pm.expect(data).to.have.property('object');\r",
+											"    pm.expect(data).to.have.property('currency');\r",
+											"    pm.expect(data).to.have.property('unit_amount');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "a9a24022-c4dd-4f0e-8376-c7e40bfdf465",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -3280,26 +3310,54 @@
 								"header": [],
 								"body": {
 									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "currency",
-											"value": "usd",
-											"type": "text",
-											"uuid": "85c38a5c-6b0c-45b0-aba5-96fe28170f88"
-										},
-										{
-											"key": "unit_amount",
-											"value": "1000",
-											"type": "text",
-											"uuid": "aa2fc67c-63a9-4183-bb71-7d8f2ddd558d"
-										},
-										{
-											"key": "product",
-											"value": "{{product_id}}",
-											"type": "text",
-											"uuid": "56d32781-751f-4c8a-9248-7def6e0d7157"
-										}
-									]
+									"urlencoded": []
+								},
+								"url": "{{base_url}}/v1/prices/{{price_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PRC-008: Retrieve Price with Invalid Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3ec33a73-dfc3-4f2d-b919-5c58a69b6ddc",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Retrieved price matches expected ID\", function() {\r",
+											"    pm.expect(data.id).to.eql(pm.environment.get('price_id'));\r",
+											"    pm.expect(data.object).to.eql('price');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Price has all required fields\", function() {\r",
+											"    pm.expect(data).to.have.property('id');\r",
+											"    pm.expect(data).to.have.property('object');\r",
+											"    pm.expect(data).to.have.property('currency');\r",
+											"    pm.expect(data).to.have.property('unit_amount');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "4d1bc296-3ec6-4a0a-8753-10fd60d8944d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
 								},
 								"url": "{{base_url}}/v1/prices/{{price_id}}"
 							},
