@@ -3702,7 +3702,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PRC-011: List All Prices Copy",
+							"name": "TC-PRC-012: List Prices for Specific Product",
 							"event": [
 								{
 									"listen": "test",
@@ -3715,16 +3715,10 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Response is a list of prices\", function() {\r",
-											"    pm.expect(data.object).to.equal('list');\r",
-											"    pm.expect(data.data).to.be.an('array');\r",
-											"    pm.expect(data.data.length).to.be.above(0);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Each price has required fields\", function() {\r",
+											"pm.test(\"All prices belong to the specified product\", function() {\r",
+											"    const productId = pm.environment.get('product_id');\r",
 											"    data.data.forEach(price => {\r",
-											"        pm.expect(price.id).to.match(/^price_/);\r",
-											"        pm.expect(price.object).to.equal('price');\r",
+											"        pm.expect(price.product).to.equal(productId);\r",
 											"    });\r",
 											"});"
 										],
@@ -3740,8 +3734,12 @@
 										"exec": [
 											"// Pre-request Script for TC-PRC-008\r",
 											"const priceId = pm.environment.get(\"price_id\");\r",
+											"const productId = pm.environment.get(\"product_id\");\r",
 											"if (!priceId) {\r",
 											"    throw new Error(\"price_id is missing! Run TC-PRC-001 first.\");\r",
+											"}\r",
+											"if (!productId) {\r",
+											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -3757,7 +3755,22 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/prices"
+								"url": {
+									"raw": "{{base_url}}/v1/prices?product={{product_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"prices"
+									],
+									"query": [
+										{
+											"key": "product",
+											"value": "{{product_id}}"
+										}
+									]
+								}
 							},
 							"response": []
 						}
