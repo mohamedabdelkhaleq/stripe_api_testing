@@ -434,33 +434,9 @@
 									"urlencoded": [
 										{
 											"key": "type",
-											"value": "card",
+											"value": "amazon_pay",
 											"type": "text",
 											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
-										},
-										{
-											"key": "card",
-											"value": "tok_visa",
-											"type": "text",
-											"uuid": "f0ab963c-3288-4973-9a0a-b3a58fe20e2a"
-										},
-										{
-											"key": "card[exp_year]",
-											"value": "29",
-											"type": "text",
-											"uuid": "8f54dcf4-9ffe-4397-a379-7177e8b2a25f"
-										},
-										{
-											"key": "card[exp_month]",
-											"value": "12",
-											"type": "text",
-											"uuid": "ddd8caf1-f7be-4d6b-a3e7-2f1b23d3cad6"
-										},
-										{
-											"key": "card[cvc]",
-											"value": "123",
-											"type": "text",
-											"uuid": "017e531c-1dea-4fda-bdcf-dc33665693e5"
 										}
 									]
 								},
@@ -476,20 +452,7 @@
 									"script": {
 										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
 										"exec": [
-											"const stripe = Stripe('pk_test_your_publishable_key');\r",
-											"\r",
-											"const {paymentMethod, error} = await stripe.createPaymentMethod({\r",
-											"  type: 'card',\r",
-											"  card: {\r",
-											"    number: '4242424242424242',\r",
-											"    exp_month: 12,\r",
-											"    exp_year: 2025,\r",
-											"    cvc: '123',\r",
-											"  },\r",
-											"  billing_details: {\r",
-											"    name: 'John Doe',\r",
-											"  },\r",
-											"});"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -515,31 +478,31 @@
 									"urlencoded": [
 										{
 											"key": "type",
-											"value": "card",
+											"value": "us_bank_account",
 											"type": "text",
 											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
 										},
 										{
-											"key": "card",
-											"value": "tok_visa",
+											"key": "us_bank_account[account_number]",
+											"value": "000123456789",
 											"type": "text",
 											"uuid": "f0ab963c-3288-4973-9a0a-b3a58fe20e2a"
 										},
 										{
-											"key": "card[exp_year]",
-											"value": "29",
+											"key": "us_bank_account[routing_number]",
+											"value": "110000000",
 											"type": "text",
 											"uuid": "8f54dcf4-9ffe-4397-a379-7177e8b2a25f"
 										},
 										{
-											"key": "card[exp_month]",
-											"value": "12",
+											"key": "us_bank_account[account_holder_type]",
+											"value": "individual",
 											"type": "text",
 											"uuid": "ddd8caf1-f7be-4d6b-a3e7-2f1b23d3cad6"
 										},
 										{
-											"key": "card[cvc]",
-											"value": "123",
+											"key": "billing_details[name]",
+											"value": "mohamed ahmed",
 											"type": "text",
 											"uuid": "017e531c-1dea-4fda-bdcf-dc33665693e5"
 										}
