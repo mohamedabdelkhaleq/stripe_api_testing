@@ -3385,7 +3385,32 @@
 				},
 				{
 					"name": "Update a price",
-					"item": [],
+					"item": [
+						{
+							"name": "TC-PRC-009: Update Price Metadata",
+							"id": "8655964c-571e-4e2c-bb9a-740f92337c37",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "metadata[env]",
+											"value": "testing",
+											"type": "text",
+											"uuid": "88f48b6c-dd0e-409e-999d-bff48412c0f1"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/prices/{{price_id}}"
+							},
+							"response": []
+						}
+					],
 					"id": "af2fee2c-3d30-4461-901c-c8c7ddedb83a"
 				},
 				{
