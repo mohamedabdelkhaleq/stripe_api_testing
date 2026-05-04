@@ -2568,7 +2568,36 @@
 									"script": {
 										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
 										"exec": [
-											""
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 400 Bad Request\", function() {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error is about active prices\", function() {\r",
+											"    pm.expect(data.error.type).to.eql('invalid_request_error');\r",
+											"    pm.expect(data.error.message).to.include('price');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7059586d-0427-4e8d-a42f-405277b35994",
+										"exec": [
+											"const productId = pm.environment.get(\"product_id\");\r",
+											"const priceId = pm.environment.get(\"price_id\");\r",
+											"\r",
+											"if (!productId) {\r",
+											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
+											"}\r",
+											"if (!priceId) {\r",
+											"    throw new Error(\"price_id is missing! Run TC-PRC-001 first.\");\r",
+											"}"
 										],
 										"type": "text/javascript",
 										"packages": {},
