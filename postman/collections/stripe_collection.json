@@ -519,6 +519,65 @@
 						}
 					],
 					"id": "7b552dec-9cdd-40b6-947d-89a930eac6f5"
+				},
+				{
+					"name": "Attach to Customer",
+					"item": [
+						{
+							"name": "TC-PM-01 Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"    });\r",
+											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
+											"    pm.expect(response.id).to.match(/^pm_/);\r",
+											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
+											"    });\r",
+											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
+											"    "
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "11cb62e6-f8e1-4b98-834a-60d6ccd875d3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "type",
+											"value": "amazon_pay",
+											"type": "text",
+											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_methods"
+							},
+							"response": []
+						}
+					],
+					"id": "3ca60b66-c98d-4dac-8ace-cb6106d43d8d"
 				}
 			],
 			"id": "e5269e50-6154-48f4-9a1b-60f63295b016"
