@@ -2195,7 +2195,7 @@
 					"name": "Update a Product",
 					"item": [
 						{
-							"name": "TC-PR-007 - Update a Product with Update Name",
+							"name": "TC-PR-007 - Update Name of Product",
 							"event": [
 								{
 									"listen": "test",
@@ -2261,7 +2261,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-008 - POST /v1/products/{id} - Update Description",
+							"name": "TC-PR-008 - Update Description of Product",
 							"event": [
 								{
 									"listen": "test",
@@ -2332,7 +2332,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-009 - POST /v1/products/{id} - Deactivate Product",
+							"name": "TC-PR-009 - Deactivate Product",
 							"event": [
 								{
 									"listen": "test",
@@ -2404,7 +2404,7 @@
 					"name": "List all Products",
 					"item": [
 						{
-							"name": "TC-PR-010 - GET /v1/products - List all Products",
+							"name": "TC-PR-010 - List all Products",
 							"event": [
 								{
 									"listen": "test",
@@ -2453,7 +2453,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-011 - GET /v1/products - List all Inactive Products",
+							"name": "TC-PR-011 - List all Inactive Products",
 							"event": [
 								{
 									"listen": "test",
@@ -2519,7 +2519,7 @@
 					"name": "Delete a Product",
 					"item": [
 						{
-							"name": "TC-PR-012 - DELETE /v1/products/{id} - Delete Existing Product",
+							"name": "TC-PR-012 - Delete Existing Product",
 							"event": [
 								{
 									"listen": "test",
@@ -2561,7 +2561,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-013 - DELETE /v1/products/{id} - Delete Product with Active Prices",
+							"name": "TC-PR-013 - Delete Product with Active Prices",
 							"event": [
 								{
 									"listen": "test",
@@ -2588,7 +2588,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-014 - DELETE /v1/products/{id} - Delete Non-Existent Product",
+							"name": "TC-PR-014 - Delete Non-Existent Product",
 							"event": [
 								{
 									"listen": "test",
