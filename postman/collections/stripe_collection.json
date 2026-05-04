@@ -2740,7 +2740,20 @@
 			"item": [
 				{
 					"name": "Create a price",
-					"item": [],
+					"item": [
+						{
+							"name": "New Request",
+							"id": "70d3a104-df74-4a3f-a20e-85d5fe36eaa4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
 					"id": "de082af4-6839-4e3c-b264-00c9f9f7804d"
 				},
 				{
