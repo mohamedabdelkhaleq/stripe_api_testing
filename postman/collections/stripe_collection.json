@@ -497,7 +497,7 @@
 					"id": "7b552dec-9cdd-40b6-947d-89a930eac6f5"
 				},
 				{
-					"name": "Attach to Customer",
+					"name": "Attach Payment Method",
 					"item": [
 						{
 							"name": "TC-PM-04",
@@ -649,6 +649,11 @@
 						}
 					],
 					"id": "3ca60b66-c98d-4dac-8ace-cb6106d43d8d"
+				},
+				{
+					"name": "Detach Payment Method",
+					"item": [],
+					"id": "7db0849f-b3d8-4c68-964f-886fa0a13145"
 				}
 			],
 			"id": "e5269e50-6154-48f4-9a1b-60f63295b016"
