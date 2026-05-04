@@ -2876,12 +2876,6 @@
 											"uuid": "aa2fc67c-63a9-4183-bb71-7d8f2ddd558d"
 										},
 										{
-											"key": "type",
-											"value": "one_time",
-											"type": "text",
-											"uuid": "5f3deb7c-b058-4f6c-a2c5-244912a34536"
-										},
-										{
 											"key": "product",
 											"value": "{{product_id}}",
 											"type": "text",
