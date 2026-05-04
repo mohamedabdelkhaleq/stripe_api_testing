@@ -577,7 +577,7 @@
 					"name": "Attach to Customer",
 					"item": [
 						{
-							"name": "TC-PM-03",
+							"name": "TC-PM-04",
 							"event": [
 								{
 									"listen": "test",
@@ -589,8 +589,10 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"pm.test(\"Response body contains payment_method_id\", () => {\r",
-											"    pm.expect(response.id).to.match(/^pm_/);\r",
 											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
+											"    console.log(response.customer);\r",
+											"    const customer_id = pm.request.body.urlencoded.get(\"customer_id\")\r",
+											"    pm.expect(response.customer_id).to.eql(customer_id);\r",
 											"});\r",
 											"pm.environment.set(\"payment_method_id\", response.id);\r",
 											""
@@ -620,6 +622,78 @@
 										{
 											"key": "customer",
 											"value": "{{customer_id}}",
+											"type": "text",
+											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/payment_methods/:PAYMENT_METHOD_ID/attach",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"payment_methods",
+										":PAYMENT_METHOD_ID",
+										"attach"
+									],
+									"variable": [
+										{
+											"key": "PAYMENT_METHOD_ID",
+											"value": "{{payment_method_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PM-04",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response body contains payment_method_id\", () => {\r",
+											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
+											"    console.log(response.customer);\r",
+											"    const customer_id = pm.request.body.urlencoded.get(\"customer_id\")\r",
+											"    pm.expect(response.customer_id).to.eql(customer_id);\r",
+											"});\r",
+											"pm.environment.set(\"payment_method_id\", response.id);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "83d7195e-ce89-4971-8656-535b39bf185c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "customer",
+											"value": "{{customer_id}}+5",
 											"type": "text",
 											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
 										}
@@ -2742,14 +2816,32 @@
 					"name": "Create a price",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "TC-PRC-001: Create One-Time Price",
 							"id": "70d3a104-df74-4a3f-a20e-85d5fe36eaa4",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Test Product",
+											"type": "text",
+											"uuid": "c813aff9-e9ff-4593-a820-80428b37b442"
+										},
+										{
+											"key": "metadata[color]",
+											"value": "red",
+											"type": "text",
+											"uuid": "a0107972-8db7-4bba-a0fc-bd386c6602e3"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/prices"
 							},
 							"response": []
 						}
