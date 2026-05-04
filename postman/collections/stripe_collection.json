@@ -519,13 +519,16 @@
 									"script": {
 										"id": "e1c1ccea-b49b-4966-9a16-340c81215264",
 										"exec": [
-											"\r",
-											"const jsonData = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Status code is 200\",  () => {\r",
-											"    pm.response.to.have.status(200);\r",
-											"})\r",
-											""
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 201\", () => {\r",
+											"    pm.response.to.have.status(201);\r",
+											"    });\r",
+											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
+											"    pm.expect(response.id).to.match(/^pm_/);\r",
+											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
+											"    });\r",
+											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
+											"  "
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -541,7 +544,7 @@
 											"const custId = pm.environment.get(\"customer_id\");\r",
 											"const pmId = pm.environment.get(\"payment_method_id\");\r",
 											"if (!custId || !pmId) {\r",
-											" throw new Error(\"Run Create Customer and Create PaymentMethod first!\");\r",
+											" throw new Error(\"Create Customer and Create PaymentMethod first!\");\r",
 											"}\r",
 											"pm.environment.set(\"timestamp\", new Date().toISOString());"
 										],
@@ -569,7 +572,7 @@
 									"urlencoded": [
 										{
 											"key": "amount",
-											"value": "2000",
+											"value": "100000",
 											"type": "text",
 											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
 										},
@@ -581,15 +584,33 @@
 										},
 										{
 											"key": "customer",
-											"value": "cus_URH5IiEJozUYum",
+											"value": "{{customer_id}}",
 											"type": "text",
 											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
 										},
 										{
 											"key": "description",
-											"value": "Test charge",
+											"value": "Test paymentintents",
 											"type": "text",
 											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
+										},
+										{
+											"key": "payment_method",
+											"value": "{{payment_method_id}}",
+											"type": "text",
+											"uuid": "e9a23a22-d067-423b-a0c0-878a19eccb2c"
+										},
+										{
+											"key": "confirm",
+											"value": "true",
+											"type": "text",
+											"uuid": "ee49f512-858c-4ac0-9b2b-a7a708f4dbaf"
+										},
+										{
+											"key": "return_url",
+											"value": "https://dashboard.stripe.com/acct_1TRxuXAEI1vBJD0T/test/payments",
+											"type": "text",
+											"uuid": "379c65da-e74f-4e97-9abc-49c7a042676d"
 										}
 									]
 								},
