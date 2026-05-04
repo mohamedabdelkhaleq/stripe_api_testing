@@ -2807,15 +2807,30 @@
 											"\r",
 											"pm.test(\"Price object has correct structure\", function() {\r",
 											"    pm.expect(data.id).to.match(/^price_/);\r",
-											"    pm.expect(data.object).to.equal('price');\r",
-											"    pm.expect(data.type).to.equal('one_time');\r",
-											"    pm.expect(data.currency).to.equal('usd');\r",
-											"    pm.expect(data.unit_amount).to.equal(1000);\r",
+											"    pm.expect(data.object).to.eql('price');\r",
+											"    pm.expect(data.type).to.eql('one_time');\r",
+											"    pm.expect(data.currency).to.eql('usd');\r",
+											"    pm.expect(data.unit_amount).to.eql(1000);\r",
 											"});\r",
 											"\r",
 											"pm.test(\"Save price_id for later tests\", function() {\r",
 											"    pm.environment.set('price_id', data.id);\r",
 											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f6b6e5ad-de31-4345-a6f4-17245bb1fa74",
+										"exec": [
+											"const productId = pm.environment.get(\"product_id\");\r",
+											"if (!productId) {\r",
+											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
+											"}"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -2829,13 +2844,7 @@
 							},
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Idempotency-Key",
-										"value": "{{$randomInt}}-{{$timestamp}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "urlencoded",
 									"urlencoded": [
