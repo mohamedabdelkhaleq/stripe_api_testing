@@ -1441,268 +1441,6 @@
 			"id": "c6e7b3e3-f100-4eb6-81e0-6d3840530c48"
 		},
 		{
-			"name": "Authentication",
-			"item": [
-				{
-					"name": "TC-AUTH-001 - GET /v1/account - Valid Key",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "cf491524-217a-4b1c-abd0-863b6d9a41f6",
-								"exec": [
-									"const jsonData = pm.response.json();\r",
-									"\r",
-									"// 1. Status Code Validation\r",
-									"pm.test(\"Status is 200 OK\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"// 2. Account ID Validation\r",
-									"pm.test(\"Response has valid account id\", function () {\r",
-									"    pm.expect(jsonData.id).to.match(/^acct_/);\r",
-									"});\r",
-									"\r",
-									"// 3. Object type Validation\r",
-									"pm.test(\"Object type is account\", function () {\r",
-									"    pm.expect(jsonData.object).to.eql(\"account\");\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"id": "177dfbb2-ca37-4043-adca-5d80bc37ed7c",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{api_key}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "",
-									"type": "text",
-									"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a",
-									"disabled": true
-								},
-								{
-									"key": "name",
-									"value": "",
-									"type": "text",
-									"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6",
-									"disabled": true
-								}
-							]
-						},
-						"url": "{{base_url}}/v1/account"
-					},
-					"response": []
-				},
-				{
-					"name": "TC-AUTH-002 - GET /v1/account - Invalid Key",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "8ac9ef52-ade2-4c3a-ab1d-f688846fbd88",
-								"exec": [
-									"const jsonData = pm.response.json();\r",
-									"\r",
-									"// 1. Status Code Validation\r",
-									"pm.test(\"Status is 401 Unauthorized\", function () {\r",
-									"    pm.response.to.have.status(401);\r",
-									"});\r",
-									"\r",
-									"// 2. Error type validation\r",
-									"pm.test(\"Error type is invalid_request_error\", function () {\r",
-									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
-									"});\r",
-									"\r",
-									"// 3. Error message validation\r",
-									"pm.test(\"Error message mentions invalid API key\", function () {\r",
-									"    pm.expect(jsonData.error.message).to.include(\"Invalid API Key provided\");\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"id": "007cb772-2676-43f6-8194-1f2fcefc8636",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "invalidkey123"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{base_url}}/v1/account"
-					},
-					"response": []
-				},
-				{
-					"name": "TC-AUTH-003 - GET /v1/account - No API Key",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "65d6e5fb-7423-4f0a-8fc3-65393840ebbd",
-								"exec": [
-									"const jsonData = pm.response.json();\r",
-									"\r",
-									"// 1. Status Code Validation\r",
-									"pm.test(\"Status is 401 Unauthorized\", function () {\r",
-									"    pm.response.to.have.status(401);\r",
-									"});\r",
-									"\r",
-									"// 2. Error type validation\r",
-									"pm.test(\"Error type is invalid_request_error\", function () {\r",
-									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
-									"});\r",
-									"\r",
-									"// 3. Error message validation\r",
-									"pm.test(\"Error message mentions authentication\", function () {\r",
-									"    pm.expect(jsonData.error.message).to.include(\"You did not provide an API key\");\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"id": "e5fd7003-76e8-434a-9158-4a1c6027a948",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{base_url}}/v1/account"
-					},
-					"response": []
-				},
-				{
-					"name": "TC-AUTH-004 - GET /v1/account - Empty Key",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "17daaeca-1ff1-42fa-b5ba-562224377315",
-								"exec": [
-									"const jsonData = pm.response.json();\r",
-									"\r",
-									"// 1. Status Code Validation\r",
-									"pm.test(\"Status is 401 Unauthorized\", function () {\r",
-									"    pm.response.to.have.status(401);\r",
-									"});\r",
-									"\r",
-									"// 2. Error type validation\r",
-									"pm.test(\"Error type is invalid_request_error\", function () {\r",
-									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
-									"});\r",
-									"\r",
-									"// 3. Error message validation\r",
-									"pm.test(\"Error message mentions authentication\", function () {\r",
-									"    pm.expect(jsonData.error.message).to.include(\"You did not provide an API key\");\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"id": "ab7c3754-b3e1-4920-a636-34060abfa1cd",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": ""
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{base_url}}/v1/account"
-					},
-					"response": []
-				},
-				{
-					"name": "TC-AUTH-005 - GET /v1/account - Publishable Key",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "41890767-c948-412b-843c-2833598d3caf",
-								"exec": [
-									"const jsonData = pm.response.json();\r",
-									"\r",
-									"// 1. Status Code Validation\r",
-									"pm.test(\"Status is 403 Forbidden\", function () {\r",
-									"    pm.response.to.have.status(403);\r",
-									"});\r",
-									"\r",
-									"// 2. Error type validation\r",
-									"pm.test(\"Error type is invalid_request_error\", function () {\r",
-									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
-									"});\r",
-									"\r",
-									"// 3. Error message validation\r",
-									"pm.test(\"Error mentions secret key required\", function () {\r",
-									"    pm.expect(jsonData.error.code).to.include(\"secret_key_required\");\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"id": "24c69aba-c517-42ad-9a32-021b9ad247cd",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "pk_test_51TRxb4DWHWMB9CM31aJOklAPapRywMMxEBpSEPWR0QJeJ7adis1z4b3M05XY39M12WOLWPtqjy80HbD60vn7JmpJ00skcRN1ua"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{base_url}}/v1/account"
-					},
-					"response": []
-				}
-			],
-			"id": "b7efd175-1f96-4cf0-9fa7-e0b838445017"
-		},
-		{
 			"name": "Products",
 			"item": [
 				{
@@ -2522,6 +2260,273 @@
 				}
 			],
 			"id": "eda27e6a-24e4-48b8-b167-00c94411d39e"
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "TC-AUTH-001 - GET /v1/account - Valid Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf491524-217a-4b1c-abd0-863b6d9a41f6",
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// 1. Status Code Validation\r",
+									"pm.test(\"Status is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// 2. Account ID Validation\r",
+									"pm.test(\"Response has valid account id\", function () {\r",
+									"    pm.expect(jsonData.id).to.match(/^acct_/);\r",
+									"});\r",
+									"\r",
+									"// 3. Object type Validation\r",
+									"pm.test(\"Object type is account\", function () {\r",
+									"    pm.expect(jsonData.object).to.eql(\"account\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "177dfbb2-ca37-4043-adca-5d80bc37ed7c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{api_key}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "",
+									"type": "text",
+									"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "text",
+									"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6",
+									"disabled": true
+								}
+							]
+						},
+						"url": "{{base_url}}/v1/account"
+					},
+					"response": []
+				},
+				{
+					"name": "TC-AUTH-002 - GET /v1/account - Invalid Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ac9ef52-ade2-4c3a-ab1d-f688846fbd88",
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// 1. Status Code Validation\r",
+									"pm.test(\"Status is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"// 2. Error type validation\r",
+									"pm.test(\"Error type is invalid_request_error\", function () {\r",
+									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+									"});\r",
+									"\r",
+									"// 3. Error message validation\r",
+									"pm.test(\"Error message mentions invalid API key\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.include(\"Invalid API Key provided\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "007cb772-2676-43f6-8194-1f2fcefc8636",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "invalidkey123"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/v1/account"
+					},
+					"response": []
+				},
+				{
+					"name": "TC-AUTH-003 - GET /v1/account - No API Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "65d6e5fb-7423-4f0a-8fc3-65393840ebbd",
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// 1. Status Code Validation\r",
+									"pm.test(\"Status is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"// 2. Error type validation\r",
+									"pm.test(\"Error type is invalid_request_error\", function () {\r",
+									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+									"});\r",
+									"\r",
+									"// 3. Error message validation\r",
+									"pm.test(\"Error message mentions authentication\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.include(\"You did not provide an API key\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "e5fd7003-76e8-434a-9158-4a1c6027a948",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/v1/account"
+					},
+					"response": []
+				},
+				{
+					"name": "TC-AUTH-004 - GET /v1/account - Empty Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "17daaeca-1ff1-42fa-b5ba-562224377315",
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// 1. Status Code Validation\r",
+									"pm.test(\"Status is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"// 2. Error type validation\r",
+									"pm.test(\"Error type is invalid_request_error\", function () {\r",
+									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+									"});\r",
+									"\r",
+									"// 3. Error message validation\r",
+									"pm.test(\"Error message mentions authentication\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.include(\"You did not provide an API key\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "ab7c3754-b3e1-4920-a636-34060abfa1cd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": ""
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/v1/account"
+					},
+					"response": []
+				},
+				{
+					"name": "TC-AUTH-005 - GET /v1/account - Publishable Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "41890767-c948-412b-843c-2833598d3caf",
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// 1. Status Code Validation\r",
+									"pm.test(\"Status is 403 Forbidden\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"// 2. Error type validation\r",
+									"pm.test(\"Error type is invalid_request_error\", function () {\r",
+									"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+									"});\r",
+									"\r",
+									"// 3. Error message validation\r",
+									"pm.test(\"Error mentions secret key required\", function () {\r",
+									"    pm.expect(jsonData.error.code).to.include(\"secret_key_required\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "24c69aba-c517-42ad-9a32-021b9ad247cd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "pk_test_51TRxb4DWHWMB9CM31aJOklAPapRywMMxEBpSEPWR0QJeJ7adis1z4b3M05XY39M12WOLWPtqjy80HbD60vn7JmpJ00skcRN1ua"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/v1/account"
+					},
+					"response": []
+				}
+			],
+			"id": "b7efd175-1f96-4cf0-9fa7-e0b838445017"
+		},
+		{
+			"name": "Prices",
+			"item": [],
+			"id": "4bee5087-b2dd-4c29-acd0-09467eedb973"
 		}
 	],
 	"auth": {
