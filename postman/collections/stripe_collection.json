@@ -1821,7 +1821,7 @@
 					"name": "Create a Product",
 					"item": [
 						{
-							"name": "TC-PR-001 - POST /v1/products - Valid Name",
+							"name": "TC-PR-001 - Create Product with Valid Name",
 							"event": [
 								{
 									"listen": "test",
@@ -1887,7 +1887,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-002 - POST /v1/products - Name and Description",
+							"name": "TC-PR-002 - Create Product with Name and Description",
 							"event": [
 								{
 									"listen": "test",
@@ -1964,7 +1964,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-003 - POST /v1/products - With Metadata",
+							"name": "TC-PR-003 - Create Product With Metadata",
 							"event": [
 								{
 									"listen": "test",
