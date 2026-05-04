@@ -3267,14 +3267,51 @@
 					"id": "de082af4-6839-4e3c-b264-00c9f9f7804d"
 				},
 				{
+					"name": "Retrieve a price",
+					"item": [
+						{
+							"name": "TC-PRC-007: Retrieve Existing Price with Valid Id",
+							"id": "a9a24022-c4dd-4f0e-8376-c7e40bfdf465",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currency",
+											"value": "usd",
+											"type": "text",
+											"uuid": "85c38a5c-6b0c-45b0-aba5-96fe28170f88"
+										},
+										{
+											"key": "unit_amount",
+											"value": "1000",
+											"type": "text",
+											"uuid": "aa2fc67c-63a9-4183-bb71-7d8f2ddd558d"
+										},
+										{
+											"key": "product",
+											"value": "{{product_id}}",
+											"type": "text",
+											"uuid": "56d32781-751f-4c8a-9248-7def6e0d7157"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/prices/{{price_id}}"
+							},
+							"response": []
+						}
+					],
+					"id": "3f15f637-4d6b-440f-b8e7-a48eb46ddcb9"
+				},
+				{
 					"name": "Update a price",
 					"item": [],
 					"id": "af2fee2c-3d30-4461-901c-c8c7ddedb83a"
-				},
-				{
-					"name": "Retrieve a price",
-					"item": [],
-					"id": "3f15f637-4d6b-440f-b8e7-a48eb46ddcb9"
 				},
 				{
 					"name": "List all prices",
