@@ -3388,6 +3388,46 @@
 					"item": [
 						{
 							"name": "TC-PRC-009: Update Price Metadata",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a05821f6-19b9-4464-8627-76570d512039",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Metadata is updated correctly\", function() {\r",
+											"    pm.expect(data.metadata.order_id).to.eql('12345');\r",
+											"    pm.expect(data.metadata.tier).to.eql('premium');\r",
+											"    pm.expect(data.metadata.env).to.eql('testing');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f34a30fe-a017-4a8a-bf23-15e007431718",
+										"exec": [
+											"// Pre-request Script for TC-PRC-008\r",
+											"const priceId = pm.environment.get(\"price_id\");\r",
+											"if (!priceId) {\r",
+											"    throw new Error(\"price_id is missing! Run TC-PRC-001 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "8655964c-571e-4e2c-bb9a-740f92337c37",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -3403,6 +3443,18 @@
 											"value": "testing",
 											"type": "text",
 											"uuid": "88f48b6c-dd0e-409e-999d-bff48412c0f1"
+										},
+										{
+											"key": "metadata[order_id]",
+											"value": "12345",
+											"type": "text",
+											"uuid": "b0a20c7a-afd6-4b1d-bfc7-ae05a64a4707"
+										},
+										{
+											"key": "metadata[tier]",
+											"value": "premium",
+											"type": "text",
+											"uuid": "2a79f793-1888-47f4-a201-333ae58d175d"
 										}
 									]
 								},
