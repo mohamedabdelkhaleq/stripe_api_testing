@@ -605,8 +605,7 @@
 											"});\r",
 											"\r",
 											"pm.test(\"Error message indicates customer not found\", () => {\r",
-											"    pm.expect(response.error.message.toLowerCase()).to.include(\"customer\");\r",
-											"    pm.expect(response.error.message.toLowerCase()).to.include(\"no such\");\r",
+											"    pm.expect(response.error.message.toLowerCase()).to.include(\"no such customer\");\r",
 											"});\r",
 											"pm.test(\"No payment_method object returned\", () => {\r",
 											"    pm.expect(response.object).to.not.eql(\"payment_method\");\r",
@@ -738,6 +737,24 @@
 						}
 					],
 					"id": "7db0849f-b3d8-4c68-964f-886fa0a13145"
+				},
+				{
+					"name": "Get all payment Methods",
+					"item": [
+						{
+							"name": "New Request",
+							"id": "bd138cc6-b99d-4776-aff6-44ac693c0d07",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
+					"id": "2b4a082c-70dc-482f-a1cc-684bb1b19946"
 				}
 			],
 			"id": "e5269e50-6154-48f4-9a1b-60f63295b016"
