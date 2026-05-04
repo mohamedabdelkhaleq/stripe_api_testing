@@ -3656,9 +3656,16 @@
 											"});\r",
 											"\r",
 											"pm.test(\"Response is a list of prices\", function() {\r",
-											"    pm.expect(data.object).to.eql('list');\r",
+											"    pm.expect(data.object).to.equal('list');\r",
 											"    pm.expect(data.data).to.be.an('array');\r",
 											"    pm.expect(data.data.length).to.be.above(0);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Each price has required fields\", function() {\r",
+											"    data.data.forEach(price => {\r",
+											"        pm.expect(price.id).to.match(/^price_/);\r",
+											"        pm.expect(price.object).to.equal('price');\r",
+											"    });\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -3690,18 +3697,67 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "active",
-											"value": "false",
-											"type": "text",
-											"uuid": "2a79f793-1888-47f4-a201-333ae58d175d"
-										}
-									]
+								"url": "{{base_url}}/v1/prices"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PRC-011: List All Prices Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a05821f6-19b9-4464-8627-76570d512039",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is a list of prices\", function() {\r",
+											"    pm.expect(data.object).to.equal('list');\r",
+											"    pm.expect(data.data).to.be.an('array');\r",
+											"    pm.expect(data.data.length).to.be.above(0);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Each price has required fields\", function() {\r",
+											"    data.data.forEach(price => {\r",
+											"        pm.expect(price.id).to.match(/^price_/);\r",
+											"        pm.expect(price.object).to.equal('price');\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
 								},
-								"url": "{{base_url}}/v1/prices/"
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f34a30fe-a017-4a8a-bf23-15e007431718",
+										"exec": [
+											"// Pre-request Script for TC-PRC-008\r",
+											"const priceId = pm.environment.get(\"price_id\");\r",
+											"if (!priceId) {\r",
+											"    throw new Error(\"price_id is missing! Run TC-PRC-001 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "7f7765bb-dd95-43c1-a146-516415714f37",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/prices"
 							},
 							"response": []
 						}
