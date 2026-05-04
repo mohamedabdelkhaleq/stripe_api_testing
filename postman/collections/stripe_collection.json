@@ -2968,16 +2968,15 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Price object has correct structure\", function() {\r",
-											"    pm.expect(data.id).to.match(/^price_/);\r",
-											"    pm.expect(data.object).to.eql('price');\r",
-											"    pm.expect(data.type).to.eql('one_time');\r",
-											"    pm.expect(data.currency).to.eql('usd');\r",
+											"pm.test(\"Monthly recurring price is correct\", function() {\r",
+											"    pm.expect(data.type).to.eql('recurring');\r",
+											"    pm.expect(data.recurring.interval).to.eql('year');\r",
+											"    pm.expect(data.recurring.interval_count).to.eql(1);\r",
 											"    pm.expect(data.unit_amount).to.eql(1000);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Save price_id for later tests\", function() {\r",
-											"    pm.environment.set('price_id', data.id);\r",
+											"pm.test(\"Save price_id_monthly for later\", function() {\r",
+											"    pm.environment.set('price_id_yearly', data.id);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -3028,6 +3027,12 @@
 											"value": "{{product_id}}",
 											"type": "text",
 											"uuid": "56d32781-751f-4c8a-9248-7def6e0d7157"
+										},
+										{
+											"key": "recurring[interval]",
+											"value": "year",
+											"type": "text",
+											"uuid": "fc20109b-82e0-4243-a8df-06fa80e16a6b"
 										}
 									]
 								},
