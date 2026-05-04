@@ -739,7 +739,7 @@
 					"id": "7db0849f-b3d8-4c68-964f-886fa0a13145"
 				},
 				{
-					"name": "Get all payment Methods",
+					"name": "Get  payment Methods",
 					"item": [
 						{
 							"name": "New Request",
@@ -748,8 +748,43 @@
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
 								"method": "GET",
-								"header": []
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "type",
+											"value": "amazon_pay",
+											"type": "text",
+											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/customers/:id/payment_methods",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"customers",
+										":id",
+										"payment_methods"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
 							},
 							"response": []
 						}
