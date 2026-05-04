@@ -2557,16 +2557,16 @@
 		}
 	],
 	"auth": {
-		"type": "bearer",
-		"bearer": {
-			"token": "{{api_key}}"
+		"type": "basic",
+		"basic": {
+			"username": "{{api_key}}"
 		}
 	},
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "8286b4db-c3cb-4a5d-b8de-1ec075b679be",
+				"id": "6a4add60-b07f-4f7a-aec7-bed040ee5c86",
 				"type": "text/javascript",
 				"packages": {},
 				"requests": {},
@@ -2578,7 +2578,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "25e97c79-1819-42d2-a461-a598df4ef75c",
+				"id": "56e23786-ffbe-4822-b696-7da1e130e89f",
 				"type": "text/javascript",
 				"packages": {},
 				"requests": {},
