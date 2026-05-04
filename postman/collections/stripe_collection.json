@@ -533,7 +533,7 @@
 											"    pm.expect(response.id).to.match(/^pm_/);\r",
 											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
 											"    });\r",
-											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
+											"    pm.environment.set(\"payment_method_id\",response.id);\r",
 											"    "
 										],
 										"type": "text/javascript",
@@ -560,33 +560,9 @@
 									"urlencoded": [
 										{
 											"key": "type",
-											"value": "us_bank_account",
+											"value": "alipay",
 											"type": "text",
 											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
-										},
-										{
-											"key": "us_bank_account[account_number]",
-											"value": "000123456789",
-											"type": "text",
-											"uuid": "f0ab963c-3288-4973-9a0a-b3a58fe20e2a"
-										},
-										{
-											"key": "us_bank_account[routing_number]",
-											"value": "110000000",
-											"type": "text",
-											"uuid": "8f54dcf4-9ffe-4397-a379-7177e8b2a25f"
-										},
-										{
-											"key": "us_bank_account[account_holder_type]",
-											"value": "individual",
-											"type": "text",
-											"uuid": "ddd8caf1-f7be-4d6b-a3e7-2f1b23d3cad6"
-										},
-										{
-											"key": "billing_details[name]",
-											"value": "mohamed ahmed",
-											"type": "text",
-											"uuid": "017e531c-1dea-4fda-bdcf-dc33665693e5"
 										}
 									]
 								},
