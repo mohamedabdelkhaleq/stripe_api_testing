@@ -3299,6 +3299,22 @@
 										"packages": {},
 										"requests": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "b444e92d-a520-480c-9ab5-8bfb4f0916df",
+										"exec": [
+											"// Pre-request Script for TC-PRC-008\r",
+											"const priceId = pm.environment.get(\"price_id\");\r",
+											"if (!priceId) {\r",
+											"    throw new Error(\"price_id is missing! Run TC-PRC-001 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
 								}
 							],
 							"id": "a9a24022-c4dd-4f0e-8376-c7e40bfdf465",
@@ -3326,21 +3342,30 @@
 										"exec": [
 											"const data = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status is 200 OK\", function() {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status is 404 Not Found\", function() {\r",
+											"    pm.response.to.have.status(404);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Retrieved price matches expected ID\", function() {\r",
-											"    pm.expect(data.id).to.eql(pm.environment.get('price_id'));\r",
-											"    pm.expect(data.object).to.eql('price');\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Price has all required fields\", function() {\r",
-											"    pm.expect(data).to.have.property('id');\r",
-											"    pm.expect(data).to.have.property('object');\r",
-											"    pm.expect(data).to.have.property('currency');\r",
-											"    pm.expect(data).to.have.property('unit_amount');\r",
+											"pm.test(\"Error message mentions price not found\", function() {\r",
+											"    pm.expect(data.error.type).to.eql('invalid_request_error');\r",
+											"    pm.expect(data.error.message).to.include('No such price');\r",
 											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "2816ded6-3c53-417f-8617-c06466c9ea8d",
+										"exec": [
+											"// Pre-request Script for TC-PRC-008\r",
+											"const priceId = pm.environment.get(\"price_id\");\r",
+											"if (!priceId) {\r",
+											"    throw new Error(\"price_id is missing! Run TC-PRC-001 first.\");\r",
+											"}"
 										],
 										"type": "text/javascript",
 										"packages": {},
