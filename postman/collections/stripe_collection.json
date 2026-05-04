@@ -3044,6 +3044,77 @@
 								"url": "{{base_url}}/v1/prices"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-PRC-004: Create Price Without Product ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8138efcb-124e-4fe7-8313-696cc2302615",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 400 Bad Request\", function() {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error is about missing product\", function() {\r",
+											"    pm.expect(data.error.type).to.equal('invalid_request_error');\r",
+											"    pm.expect(data.error.message).to.include('product');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f6b6e5ad-de31-4345-a6f4-17245bb1fa74",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "deb61aba-110d-4e25-ac65-8a2488b21895",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currency",
+											"value": "usd",
+											"type": "text",
+											"uuid": "85c38a5c-6b0c-45b0-aba5-96fe28170f88"
+										},
+										{
+											"key": "unit_amount",
+											"value": "1000",
+											"type": "text",
+											"uuid": "aa2fc67c-63a9-4183-bb71-7d8f2ddd558d"
+										},
+										{
+											"key": "recurring[interval]",
+											"value": "year",
+											"type": "text",
+											"uuid": "c8c0c30b-9866-4b12-ac3c-48b813c7b9c6"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/prices"
+							},
+							"response": []
 						}
 					],
 					"id": "de082af4-6839-4e3c-b264-00c9f9f7804d"
