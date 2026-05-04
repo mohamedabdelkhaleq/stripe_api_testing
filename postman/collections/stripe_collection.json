@@ -749,7 +749,7 @@
 											"    pm.expect(response.object).to.eql(\"payment_intent\");\r",
 											"    });\r",
 											"\r",
-											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
+											"    pm.environment.set(\"payment_method_id\",response.id);\r",
 											"  "
 										],
 										"type": "text/javascript",
@@ -805,40 +805,16 @@
 											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
 										},
 										{
-											"key": "customer",
-											"value": "{{customer_id}}",
-											"type": "text",
-											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
-										},
-										{
-											"key": "description",
-											"value": "Test alip",
-											"type": "text",
-											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
-										},
-										{
-											"key": "payment_method",
-											"value": "{{payment_method_id}}",
-											"type": "text",
-											"uuid": "e9a23a22-d067-423b-a0c0-878a19eccb2c"
-										},
-										{
-											"key": "confirm",
-											"value": "true",
+											"key": "",
+											"value": "",
 											"type": "text",
 											"uuid": "ee49f512-858c-4ac0-9b2b-a7a708f4dbaf"
 										},
 										{
-											"key": "payment_method_types[]",
-											"value": "amazon_pay",
+											"key": "",
+											"value": "",
 											"type": "text",
 											"uuid": "8bd40f94-ca93-4d97-8760-2ac63217eefa"
-										},
-										{
-											"key": "return_url",
-											"value": "https://example.com",
-											"type": "text",
-											"uuid": "52b23794-01ba-4c6c-a2a3-deb5c0335c15"
 										}
 									]
 								},
