@@ -441,83 +441,6 @@
 							"response": []
 						},
 						{
-							"name": "TC-PM-02",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
-										"exec": [
-											"const response = pm.response.json();\r",
-											"pm.test(\"Status code is 200\", () => {\r",
-											"    pm.response.to.have.status(200);\r",
-											"    });\r",
-											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
-											"    pm.expect(response.id).to.match(/^pm_/);\r",
-											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
-											"    });\r",
-											"    pm.environment.set(\"payment_method_id\",response.id);\r",
-											"    "
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"id": "509d7b4a-976a-4e96-8d42-91728b696490",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "type",
-											"value": "us_bank_account",
-											"type": "text",
-											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
-										},
-										{
-											"key": "us_bank_account[account_number]",
-											"value": "000123456789",
-											"type": "text",
-											"uuid": "f0ab963c-3288-4973-9a0a-b3a58fe20e2a"
-										},
-										{
-											"key": "us_bank_account[routing_number]",
-											"value": "110000000",
-											"type": "text",
-											"uuid": "8f54dcf4-9ffe-4397-a379-7177e8b2a25f"
-										},
-										{
-											"key": "us_bank_account[account_holder_type]",
-											"value": "individual",
-											"type": "text",
-											"uuid": "ddd8caf1-f7be-4d6b-a3e7-2f1b23d3cad6"
-										},
-										{
-											"key": "billing_details[name]",
-											"value": "mohamed ahmed",
-											"type": "text",
-											"uuid": "017e531c-1dea-4fda-bdcf-dc33665693e5"
-										}
-									]
-								},
-								"url": "{{base_url}}/v1/payment_methods"
-							},
-							"response": []
-						},
-						{
 							"name": "TC-PM-03",
 							"event": [
 								{
@@ -713,53 +636,6 @@
 									"variable": [
 										{
 											"key": "PAYMENT_METHOD_ID",
-											"value": "{{payment_method_id}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "TC-PM-05 Copy",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"id": "018aed41-15e0-4fb6-9b49-ccf67236aac8",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "/v1/payment_intents/:id/verify_microdeposits",
-									"path": [
-										"v1",
-										"payment_intents",
-										":id",
-										"verify_microdeposits"
-									],
-									"variable": [
-										{
-											"key": "id",
 											"value": "{{payment_method_id}}"
 										}
 									]
