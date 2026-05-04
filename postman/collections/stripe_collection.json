@@ -518,7 +518,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PM-02 Copy",
+							"name": "TC-PM-03",
 							"event": [
 								{
 									"listen": "test",
