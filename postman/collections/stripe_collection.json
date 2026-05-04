@@ -3126,12 +3126,13 @@
 										"exec": [
 											"const data = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status is 400 Bad Request\", function() {\r",
-											"    pm.response.to.have.status(400);\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Error is about invalid unit_amount\", function() {\r",
-											"    pm.expect(data.error.param).to.equal('unit_amount');\r",
+											"pm.test(\"Free price created with zero amount\", function() {\r",
+											"    pm.expect(data.unit_amount).to.eql(0);\r",
+											"    pm.expect(data.object).to.eql('price');\r",
 											"});"
 										],
 										"type": "text/javascript",
