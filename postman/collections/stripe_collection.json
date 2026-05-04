@@ -395,20 +395,7 @@
 									"script": {
 										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
 										"exec": [
-											"const stripe = Stripe('pk_test_your_publishable_key');\r",
-											"\r",
-											"const {paymentMethod, error} = await stripe.createPaymentMethod({\r",
-											"  type: 'card',\r",
-											"  card: {\r",
-											"    number: '4242424242424242',\r",
-											"    exp_month: 12,\r",
-											"    exp_year: 2025,\r",
-											"    cvc: '123',\r",
-											"  },\r",
-											"  billing_details: {\r",
-											"    name: 'John Doe',\r",
-											"  },\r",
-											"});"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
