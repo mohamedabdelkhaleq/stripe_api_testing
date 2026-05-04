@@ -3115,6 +3115,79 @@
 								"url": "{{base_url}}/v1/prices"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-PRC-005: Create Price with Zero Amount",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8138efcb-124e-4fe7-8313-696cc2302615",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 400 Bad Request\", function() {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error is about invalid unit_amount\", function() {\r",
+											"    pm.expect(data.error.param).to.equal('unit_amount');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f6b6e5ad-de31-4345-a6f4-17245bb1fa74",
+										"exec": [
+											"const productId = pm.environment.get(\"product_id\");\r",
+											"if (!productId) {\r",
+											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "feb36647-7682-422d-b828-ea51d3e91f56",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currency",
+											"value": "usd",
+											"type": "text",
+											"uuid": "85c38a5c-6b0c-45b0-aba5-96fe28170f88"
+										},
+										{
+											"key": "unit_amount",
+											"value": "0",
+											"type": "text",
+											"uuid": "aa2fc67c-63a9-4183-bb71-7d8f2ddd558d"
+										},
+										{
+											"key": "product",
+											"value": "{{product_id}}",
+											"type": "text",
+											"uuid": "56d32781-751f-4c8a-9248-7def6e0d7157"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/prices"
+							},
+							"response": []
 						}
 					],
 					"id": "de082af4-6839-4e3c-b264-00c9f9f7804d"
