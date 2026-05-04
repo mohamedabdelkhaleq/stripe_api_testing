@@ -395,7 +395,16 @@
 									"script": {
 										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
 										"exec": [
-											""
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"    });\r",
+											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
+											"    pm.expect(response.id).to.match(/^pm_/);\r",
+											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
+											"    });\r",
+											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
+											"    "
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -439,7 +448,16 @@
 									"script": {
 										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
 										"exec": [
-											""
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"    });\r",
+											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
+											"    pm.expect(response.id).to.match(/^pm_/);\r",
+											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
+											"    });\r",
+											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
+											"    "
 										],
 										"type": "text/javascript",
 										"packages": {},
