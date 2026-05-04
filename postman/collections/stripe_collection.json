@@ -403,7 +403,7 @@
 											"    pm.expect(response.id).to.match(/^pm_/);\r",
 											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
 											"    });\r",
-											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
+											"    pm.environment.set(\"payment_method_id\",response.id);\r",
 											"    "
 										],
 										"type": "text/javascript",
@@ -587,13 +587,13 @@
 											"const response = pm.response.json();\r",
 											"pm.test(\"Status code is 200\", () => {\r",
 											"    pm.response.to.have.status(200);\r",
-											"    });\r",
-											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
+											"});\r",
+											"pm.test(\"Response body contains payment_method_id\", () => {\r",
 											"    pm.expect(response.id).to.match(/^pm_/);\r",
 											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
-											"    });\r",
-											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
-											"    "
+											"});\r",
+											"pm.environment.set(\"payment_method_id\", response.id);\r",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -618,14 +618,31 @@
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "type",
-											"value": "amazon_pay",
+											"key": "customer",
+											"value": "{{customer_id}}",
 											"type": "text",
 											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
 										}
 									]
 								},
-								"url": "{{base_url}}/v1/payment_methods"
+								"url": {
+									"raw": "{{base_url}}/v1/payment_methods/:PAYMENT_METHOD_ID/attach",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"payment_methods",
+										":PAYMENT_METHOD_ID",
+										"attach"
+									],
+									"variable": [
+										{
+											"key": "PAYMENT_METHOD_ID",
+											"value": "{{payment_method_id}}"
+										}
+									]
+								}
 							},
 							"response": []
 						}
