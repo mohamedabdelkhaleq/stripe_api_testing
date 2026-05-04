@@ -1821,7 +1821,7 @@
 					"name": "Create a Product",
 					"item": [
 						{
-							"name": "TC-PR-001 - Create Product with Valid Name",
+							"name": "TC-PR-001: Create Product with Valid Name",
 							"event": [
 								{
 									"listen": "test",
@@ -1887,7 +1887,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-002 - Create Product with Name and Description",
+							"name": "TC-PR-002: Create Product with Name and Description",
 							"event": [
 								{
 									"listen": "test",
@@ -1964,7 +1964,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-003 - Create Product With Metadata",
+							"name": "TC-PR-003: Create Product With Metadata",
 							"event": [
 								{
 									"listen": "test",
@@ -2041,7 +2041,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-004 - POST /v1/products - Missing Name",
+							"name": "TC-PR-004: Create Product with Missing Name",
 							"event": [
 								{
 									"listen": "test",
@@ -2100,7 +2100,7 @@
 					"name": "Retrieve a Product",
 					"item": [
 						{
-							"name": "TC-PR-005 - GET /v1/products/{id} - Valid ID",
+							"name": "TC-PR-005 - Get a Product with Valid ID",
 							"event": [
 								{
 									"listen": "test",
@@ -2147,7 +2147,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PR-006 - GET /v1/products/{id} - Invalid ID",
+							"name": "TC-PR-006 - Get Product with Invalid ID",
 							"event": [
 								{
 									"listen": "test",
@@ -2195,7 +2195,7 @@
 					"name": "Update a Product",
 					"item": [
 						{
-							"name": "TC-PR-007 - POST /v1/products/{id} - Update Name",
+							"name": "TC-PR-007 - Update a Product with Update Name",
 							"event": [
 								{
 									"listen": "test",
