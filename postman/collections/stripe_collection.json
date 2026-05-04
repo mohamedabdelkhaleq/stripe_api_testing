@@ -670,7 +670,7 @@
 					"name": "Detach Payment Method",
 					"item": [
 						{
-							"name": "TC-PM-05 Copy",
+							"name": "TC-PM-06",
 							"event": [
 								{
 									"listen": "test",
@@ -678,21 +678,23 @@
 										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
 										"exec": [
 											"const response = pm.response.json();\r",
-											"pm.test(\"Status code is 400\", () => {\r",
-											"    pm.response.to.have.status(400);\r",
+											"\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Error type is invalid_request_error\", () => {\r",
-											"    pm.expect(response.error.type).to.eql(\"invalid_request_error\");\r",
+											"pm.test(\"Response is a payment_method object\", () => {\r",
+											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Error message indicates customer not found\", () => {\r",
-											"    pm.expect(response.error.message.toLowerCase()).to.include(\"customer\");\r",
-											"    pm.expect(response.error.message.toLowerCase()).to.include(\"no such\");\r",
+											"pm.test(\"Payment method ID is valid\", () => {\r",
+											"    pm.expect(response.id).to.match(/^pm_/);\r",
 											"});\r",
-											"pm.test(\"No payment_method object returned\", () => {\r",
-											"    pm.expect(response.object).to.not.eql(\"payment_method\");\r",
-											"});"
+											"\r",
+											"pm.test(\"Payment method is detached (customer is null)\", () => {\r",
+											"    pm.expect(response.customer).to.be.null;\r",
+											"});\r",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -713,19 +715,8 @@
 								},
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "customer",
-											"value": "{{customer_id}}+5",
-											"type": "text",
-											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
-										}
-									]
-								},
 								"url": {
-									"raw": "{{base_url}}/v1/payment_methods/:PAYMENT_METHOD_ID/attach",
+									"raw": "{{base_url}}/v1/payment_methods/:PAYMENT_METHOD_ID/detach",
 									"host": [
 										"{{base_url}}"
 									],
@@ -733,11 +724,10 @@
 										"v1",
 										"payment_methods",
 										":PAYMENT_METHOD_ID",
-										"attach"
+										"detach"
 									],
 									"variable": [
 										{
-											"id": "a1b3a015-f54c-4b24-8635-5a7b28818954",
 											"key": "PAYMENT_METHOD_ID",
 											"value": "{{payment_method_id}}"
 										}
