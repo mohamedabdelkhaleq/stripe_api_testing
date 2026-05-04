@@ -3525,9 +3525,15 @@
 								"url": "{{base_url}}/v1/prices/{{price_id}}"
 							},
 							"response": []
-						},
+						}
+					],
+					"id": "af2fee2c-3d30-4461-901c-c8c7ddedb83a"
+				},
+				{
+					"name": "List all prices",
+					"item": [
 						{
-							"name": "TC-PRC-011: Deactivate Price (active=false) Copy",
+							"name": "TC-PRC-011: List All Prices",
 							"event": [
 								{
 									"listen": "test",
@@ -3573,7 +3579,7 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [],
 								"body": {
 									"mode": "urlencoded",
@@ -3586,16 +3592,11 @@
 										}
 									]
 								},
-								"url": "{{base_url}}/v1/prices/{{price_id}}"
+								"url": "{{base_url}}/v1/prices/"
 							},
 							"response": []
 						}
 					],
-					"id": "af2fee2c-3d30-4461-901c-c8c7ddedb83a"
-				},
-				{
-					"name": "List all prices",
-					"item": [],
 					"id": "49283973-7898-4fc6-b871-c821605b0540"
 				}
 			],
