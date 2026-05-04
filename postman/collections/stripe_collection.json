@@ -2525,7 +2525,28 @@
 		},
 		{
 			"name": "Prices",
-			"item": [],
+			"item": [
+				{
+					"name": "Create a price",
+					"item": [],
+					"id": "de082af4-6839-4e3c-b264-00c9f9f7804d"
+				},
+				{
+					"name": "Update a price",
+					"item": [],
+					"id": "af2fee2c-3d30-4461-901c-c8c7ddedb83a"
+				},
+				{
+					"name": "Retrieve a price",
+					"item": [],
+					"id": "3f15f637-4d6b-440f-b8e7-a48eb46ddcb9"
+				},
+				{
+					"name": "List all prices",
+					"item": [],
+					"id": "49283973-7898-4fc6-b871-c821605b0540"
+				}
+			],
 			"id": "4bee5087-b2dd-4c29-acd0-09467eedb973"
 		}
 	],
