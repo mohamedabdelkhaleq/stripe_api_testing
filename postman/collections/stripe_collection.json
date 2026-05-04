@@ -579,10 +579,22 @@
 									"script": {
 										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
 										"exec": [
-											"pm.test(\"Status code is 404\", () => {\r",
-											"    pm.response.to.have.status(404);\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 400\", () => {\r",
+											"    pm.response.to.have.status(400);\r",
 											"});\r",
-											""
+											"\r",
+											"pm.test(\"Error type is invalid_request_error\", () => {\r",
+											"    pm.expect(response.error.type).to.eql(\"invalid_request_error\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message indicates customer not found\", () => {\r",
+											"    pm.expect(response.error.message.toLowerCase()).to.include(\"customer\");\r",
+											"    pm.expect(response.error.message.toLowerCase()).to.include(\"no such\");\r",
+											"});\r",
+											"pm.test(\"No payment_method object returned\", () => {\r",
+											"    pm.expect(response.object).to.not.eql(\"payment_method\");\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {},
