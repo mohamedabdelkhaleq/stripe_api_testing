@@ -516,6 +516,83 @@
 								"url": "{{base_url}}/v1/payment_methods"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-PM-02 Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"    });\r",
+											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
+											"    pm.expect(response.id).to.match(/^pm_/);\r",
+											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
+											"    });\r",
+											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
+											"    "
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "358566f0-b3a6-44ea-a5bb-f258d50fe544",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "type",
+											"value": "us_bank_account",
+											"type": "text",
+											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
+										},
+										{
+											"key": "us_bank_account[account_number]",
+											"value": "000123456789",
+											"type": "text",
+											"uuid": "f0ab963c-3288-4973-9a0a-b3a58fe20e2a"
+										},
+										{
+											"key": "us_bank_account[routing_number]",
+											"value": "110000000",
+											"type": "text",
+											"uuid": "8f54dcf4-9ffe-4397-a379-7177e8b2a25f"
+										},
+										{
+											"key": "us_bank_account[account_holder_type]",
+											"value": "individual",
+											"type": "text",
+											"uuid": "ddd8caf1-f7be-4d6b-a3e7-2f1b23d3cad6"
+										},
+										{
+											"key": "billing_details[name]",
+											"value": "mohamed ahmed",
+											"type": "text",
+											"uuid": "017e531c-1dea-4fda-bdcf-dc33665693e5"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_methods"
+							},
+							"response": []
 						}
 					],
 					"id": "7b552dec-9cdd-40b6-947d-89a930eac6f5"
