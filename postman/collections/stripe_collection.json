@@ -746,7 +746,7 @@
 											"    });\r",
 											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
 											"    pm.expect(response.id).to.match(/^pi_/);\r",
-											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
+											"    pm.expect(response.object).to.eql(\"payment_intent\");\r",
 											"    });\r",
 											"\r",
 											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
@@ -830,9 +830,15 @@
 										},
 										{
 											"key": "payment_method_types[]",
-											"value": "alipay",
+											"value": "amazon_pay",
 											"type": "text",
 											"uuid": "8bd40f94-ca93-4d97-8760-2ac63217eefa"
+										},
+										{
+											"key": "return_url",
+											"value": "https://example.com",
+											"type": "text",
+											"uuid": "52b23794-01ba-4c6c-a2a3-deb5c0335c15"
 										}
 									]
 								},
