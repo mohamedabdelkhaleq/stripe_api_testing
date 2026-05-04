@@ -456,7 +456,7 @@
 											"    pm.expect(response.id).to.match(/^pm_/);\r",
 											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
 											"    });\r",
-											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
+											"    pm.environment.set(\"payment_method_id\",response.id);\r",
 											"    "
 										],
 										"type": "text/javascript",
@@ -713,6 +713,53 @@
 									"variable": [
 										{
 											"key": "PAYMENT_METHOD_ID",
+											"value": "{{payment_method_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PM-05 Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "018aed41-15e0-4fb6-9b49-ccf67236aac8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/v1/payment_intents/:id/verify_microdeposits",
+									"path": [
+										"v1",
+										"payment_intents",
+										":id",
+										"verify_microdeposits"
+									],
+									"variable": [
+										{
+											"key": "id",
 											"value": "{{payment_method_id}}"
 										}
 									]
