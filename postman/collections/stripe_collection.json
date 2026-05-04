@@ -650,13 +650,14 @@
 										"id": "e1c1ccea-b49b-4966-9a16-340c81215264",
 										"exec": [
 											"const response = pm.response.json();\r",
-											"pm.test(\"Status code is 201\", () => {\r",
-											"    pm.response.to.have.status(201);\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
 											"    });\r",
 											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
 											"    pm.expect(response.id).to.match(/^pm_/);\r",
 											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
 											"    });\r",
+											"\r",
 											"    pm.environment.set(\"p,payment_method_id\",response.id);\r",
 											"  "
 										],
@@ -702,7 +703,7 @@
 									"urlencoded": [
 										{
 											"key": "amount",
-											"value": "100000",
+											"value": "500000",
 											"type": "text",
 											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
 										},
@@ -720,7 +721,7 @@
 										},
 										{
 											"key": "description",
-											"value": "Test paymentintents",
+											"value": "Test alip",
 											"type": "text",
 											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
 										},
@@ -737,10 +738,16 @@
 											"uuid": "ee49f512-858c-4ac0-9b2b-a7a708f4dbaf"
 										},
 										{
-											"key": "return_url",
-											"value": "https://dashboard.stripe.com/acct_1TRxuXAEI1vBJD0T/test/payments",
+											"key": "automatic_payment_methods[allow_redirects]",
+											"value": "never",
 											"type": "text",
 											"uuid": "379c65da-e74f-4e97-9abc-49c7a042676d"
+										},
+										{
+											"key": "automatic_payment_methods[enabled]",
+											"value": "true",
+											"type": "text",
+											"uuid": "63ee9e04-d51a-433e-a93d-c985180b74e7"
 										}
 									]
 								},
