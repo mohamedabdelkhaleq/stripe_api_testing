@@ -745,7 +745,7 @@
 											"    pm.response.to.have.status(200);\r",
 											"    });\r",
 											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
-											"    pm.expect(response.id).to.match(/^pm_/);\r",
+											"    pm.expect(response.id).to.match(/^pi_/);\r",
 											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
 											"    });\r",
 											"\r",
@@ -829,16 +829,10 @@
 											"uuid": "ee49f512-858c-4ac0-9b2b-a7a708f4dbaf"
 										},
 										{
-											"key": "automatic_payment_methods[allow_redirects]",
-											"value": "never",
+											"key": "payment_method_types[]",
+											"value": "alipay",
 											"type": "text",
-											"uuid": "379c65da-e74f-4e97-9abc-49c7a042676d"
-										},
-										{
-											"key": "automatic_payment_methods[enabled]",
-											"value": "true",
-											"type": "text",
-											"uuid": "63ee9e04-d51a-433e-a93d-c985180b74e7"
+											"uuid": "8bd40f94-ca93-4d97-8760-2ac63217eefa"
 										}
 									]
 								},
@@ -2817,27 +2811,75 @@
 					"item": [
 						{
 							"name": "TC-PRC-001: Create One-Time Price",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8138efcb-124e-4fe7-8313-696cc2302615",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Price object has correct structure\", function() {\r",
+											"    pm.expect(data.id).to.match(/^price_/);\r",
+											"    pm.expect(data.object).to.equal('price');\r",
+											"    pm.expect(data.type).to.equal('one_time');\r",
+											"    pm.expect(data.currency).to.equal('usd');\r",
+											"    pm.expect(data.unit_amount).to.equal(1000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Save price_id for later tests\", function() {\r",
+											"    pm.environment.set('price_id', data.id);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "70d3a104-df74-4a3f-a20e-85d5fe36eaa4",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Idempotency-Key",
+										"value": "{{$randomInt}}-{{$timestamp}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "name",
-											"value": "Test Product",
+											"key": "currency",
+											"value": "usd",
 											"type": "text",
-											"uuid": "c813aff9-e9ff-4593-a820-80428b37b442"
+											"uuid": "85c38a5c-6b0c-45b0-aba5-96fe28170f88"
 										},
 										{
-											"key": "metadata[color]",
-											"value": "red",
+											"key": "unit_amount",
+											"value": "1000",
 											"type": "text",
-											"uuid": "a0107972-8db7-4bba-a0fc-bd386c6602e3"
+											"uuid": "aa2fc67c-63a9-4183-bb71-7d8f2ddd558d"
+										},
+										{
+											"key": "type",
+											"value": "one_time",
+											"type": "text",
+											"uuid": "5f3deb7c-b058-4f6c-a2c5-244912a34536"
+										},
+										{
+											"key": "product",
+											"value": "{{product_id}}",
+											"type": "text",
+											"uuid": "56d32781-751f-4c8a-9248-7def6e0d7157"
 										}
 									]
 								},
