@@ -668,7 +668,85 @@
 				},
 				{
 					"name": "Detach Payment Method",
-					"item": [],
+					"item": [
+						{
+							"name": "TC-PM-05 Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 400\", () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error type is invalid_request_error\", () => {\r",
+											"    pm.expect(response.error.type).to.eql(\"invalid_request_error\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message indicates customer not found\", () => {\r",
+											"    pm.expect(response.error.message.toLowerCase()).to.include(\"customer\");\r",
+											"    pm.expect(response.error.message.toLowerCase()).to.include(\"no such\");\r",
+											"});\r",
+											"pm.test(\"No payment_method object returned\", () => {\r",
+											"    pm.expect(response.object).to.not.eql(\"payment_method\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "b7c1146d-023c-438c-bdf2-7da14069ed52",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "customer",
+											"value": "{{customer_id}}+5",
+											"type": "text",
+											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/payment_methods/:PAYMENT_METHOD_ID/attach",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"payment_methods",
+										":PAYMENT_METHOD_ID",
+										"attach"
+									],
+									"variable": [
+										{
+											"id": "a1b3a015-f54c-4b24-8635-5a7b28818954",
+											"key": "PAYMENT_METHOD_ID",
+											"value": "{{payment_method_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
 					"id": "7db0849f-b3d8-4c68-964f-886fa0a13145"
 				}
 			],
