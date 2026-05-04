@@ -825,6 +825,48 @@
 						},
 						{
 							"name": "TC-PI-002",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d8a52582-48e0-4f3e-a9b6-2f045a34aa08",
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"    });\r",
+											"    pm.test(\"Response body contains id and object fields\", () => {\r",
+											"    pm.expect(response.id).to.match(/^pi_/);\r",
+											"    pm.expect(response.object).to.eql(\"payment_intent\");\r",
+											"    });\r",
+											"  pm.test(\"Amount is correct\", () => {\r",
+											"    const requestAmount = parseInt(pm.request.body.urlencoded.get(\"amount\"));\r",
+											"    pm.expect(response.amount).to.eql(requestAmount);\r",
+											"});\r",
+											"\r",
+											"    //test transacrions is succeeded \r",
+											"    pm.test(\"Payment method is attached correctly\", () => {\r",
+											"    const requestPM = pm.request.body.urlencoded.get(\"payment_method\");\r",
+											"    pm.expect(response.payment_method).to.eql(requestPM);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Payment status is valid\", () => {\r",
+											"    const validStatuses = [\r",
+											"        \"succeeded\",\r",
+											"        \"requires_action\",\r",
+											"        \"processing\",\r",
+											"        \"requires_payment_method\"\r",
+											"    ];\r",
+											"    pm.expect(validStatuses).to.include(response.status);\r",
+											"    console.log(response.status);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "0f7e2981-1acd-4c4e-8740-b5224d248bb2",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -854,16 +896,28 @@
 											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
 										},
 										{
-											"key": "customer",
-											"value": "cus_URH5IiEJozUYum",
+											"key": "payment_method",
+											"value": "pm_card_mastercard",
 											"type": "text",
 											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
 										},
 										{
 											"key": "description",
-											"value": "Test charge",
+											"value": "Test payment intent ",
 											"type": "text",
 											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
+										},
+										{
+											"key": "confirm",
+											"value": "true",
+											"type": "text",
+											"uuid": "c569745f-1fc2-4062-8997-8075a6101f99"
+										},
+										{
+											"key": "return_url",
+											"value": "https://example.com",
+											"type": "text",
+											"uuid": "a7455928-135e-4d84-979c-c877e10cf79f"
 										}
 									]
 								},
