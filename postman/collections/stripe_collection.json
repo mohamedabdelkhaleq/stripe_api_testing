@@ -2874,87 +2874,6 @@
 							"response": []
 						},
 						{
-							"name": "TC-PRC-004: Create Price with USD Currency",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "8138efcb-124e-4fe7-8313-696cc2302615",
-										"exec": [
-											"const data = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Status is 200 OK\", function() {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Price object has correct structure\", function() {\r",
-											"    pm.expect(data.id).to.match(/^price_/);\r",
-											"    pm.expect(data.object).to.eql('price');\r",
-											"    pm.expect(data.type).to.eql('one_time');\r",
-											"    pm.expect(data.currency).to.eql('usd');\r",
-											"    pm.expect(data.unit_amount).to.eql(1000);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Save price_id for later tests\", function() {\r",
-											"    pm.environment.set('price_id', data.id);\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "f6b6e5ad-de31-4345-a6f4-17245bb1fa74",
-										"exec": [
-											"const productId = pm.environment.get(\"product_id\");\r",
-											"if (!productId) {\r",
-											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"id": "876a153d-89a9-491f-967a-d21060b3cf18",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "currency",
-											"value": "usd",
-											"type": "text",
-											"uuid": "85c38a5c-6b0c-45b0-aba5-96fe28170f88"
-										},
-										{
-											"key": "unit_amount",
-											"value": "1000",
-											"type": "text",
-											"uuid": "aa2fc67c-63a9-4183-bb71-7d8f2ddd558d"
-										},
-										{
-											"key": "product",
-											"value": "{{product_id}}",
-											"type": "text",
-											"uuid": "56d32781-751f-4c8a-9248-7def6e0d7157"
-										}
-									]
-								},
-								"url": "{{base_url}}/v1/prices"
-							},
-							"response": []
-						},
-						{
 							"name": "TC-PRC-002: Create Monthly Recurring Price",
 							"event": [
 								{
@@ -2968,16 +2887,15 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Price object has correct structure\", function() {\r",
-											"    pm.expect(data.id).to.match(/^price_/);\r",
-											"    pm.expect(data.object).to.eql('price');\r",
-											"    pm.expect(data.type).to.eql('one_time');\r",
-											"    pm.expect(data.currency).to.eql('usd');\r",
+											"pm.test(\"Monthly recurring price is correct\", function() {\r",
+											"    pm.expect(data.type).to.eql('recurring');\r",
+											"    pm.expect(data.recurring.interval).to.eql('month');\r",
+											"    pm.expect(data.recurring.interval_count).to.eql(1);\r",
 											"    pm.expect(data.unit_amount).to.eql(1000);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Save price_id for later tests\", function() {\r",
-											"    pm.environment.set('price_id', data.id);\r",
+											"pm.test(\"Save price_id_monthly for later\", function() {\r",
+											"    pm.environment.set('price_id_monthly', data.id);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -3028,6 +2946,98 @@
 											"value": "{{product_id}}",
 											"type": "text",
 											"uuid": "56d32781-751f-4c8a-9248-7def6e0d7157"
+										},
+										{
+											"key": "recurring[interval]",
+											"value": "month",
+											"type": "text",
+											"uuid": "d72cb7c7-bf25-40cb-983a-9f67e05315f3"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/prices"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PRC-003: Create Yearly Recurring Price",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8138efcb-124e-4fe7-8313-696cc2302615",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Yearly recurring price is correct\", function() {\r",
+											"    pm.expect(data.type).to.eql('recurring');\r",
+											"    pm.expect(data.recurring.interval).to.eql('year');\r",
+											"    pm.expect(data.recurring.interval_count).to.eql(1);\r",
+											"    pm.expect(data.unit_amount).to.eql(1000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Save price_id_yearly for later\", function() {\r",
+											"    pm.environment.set('price_id_yearly', data.id);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f6b6e5ad-de31-4345-a6f4-17245bb1fa74",
+										"exec": [
+											"const productId = pm.environment.get(\"product_id\");\r",
+											"if (!productId) {\r",
+											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "8e2f2516-ba8b-4707-98f4-d151f8fc1ae8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currency",
+											"value": "usd",
+											"type": "text",
+											"uuid": "85c38a5c-6b0c-45b0-aba5-96fe28170f88"
+										},
+										{
+											"key": "unit_amount",
+											"value": "1000",
+											"type": "text",
+											"uuid": "aa2fc67c-63a9-4183-bb71-7d8f2ddd558d"
+										},
+										{
+											"key": "product",
+											"value": "{{product_id}}",
+											"type": "text",
+											"uuid": "56d32781-751f-4c8a-9248-7def6e0d7157"
+										},
+										{
+											"key": "recurring[interval]",
+											"value": "year",
+											"type": "text",
+											"uuid": "c8c0c30b-9866-4b12-ac3c-48b813c7b9c6"
 										}
 									]
 								},
