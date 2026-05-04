@@ -3361,11 +3361,7 @@
 									"script": {
 										"id": "2816ded6-3c53-417f-8617-c06466c9ea8d",
 										"exec": [
-											"// Pre-request Script for TC-PRC-008\r",
-											"const priceId = pm.environment.get(\"price_id\");\r",
-											"if (!priceId) {\r",
-											"    throw new Error(\"price_id is missing! Run TC-PRC-001 first.\");\r",
-											"}"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -3380,11 +3376,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": []
-								},
-								"url": "{{base_url}}/v1/prices/{{price_id}}"
+								"url": "{{base_url}}/v1/prices/invalidPrice"
 							},
 							"response": []
 						}
