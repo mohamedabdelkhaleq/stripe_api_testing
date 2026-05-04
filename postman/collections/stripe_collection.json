@@ -385,7 +385,12 @@
 			"name": "payment methods",
 			"item": [
 				{
-					"name": "TC-PM-06",
+					"name": "New Folder",
+					"item": [],
+					"id": "7b552dec-9cdd-40b6-947d-89a930eac6f5"
+				},
+				{
+					"name": "TC-PM-01",
 					"event": [
 						{
 							"listen": "test",
