@@ -1014,21 +1014,15 @@
 									"script": {
 										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
 										"exec": [
-											"const jsonData = pm.response.json();\r",
+											"const data = pm.response.json();\r",
 											"\r",
-											"// 1. Status Code Validation\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"// 2. Deleted is true\r",
-											"pm.test(\"Product is deleted\", function () {\r",
-											"    pm.expect(jsonData.deleted).to.be.true;\r",
-											"});\r",
-											"\r",
-											"// 3. ID matches deleted product\r",
-											"pm.test(\"Deleted product ID matches\", function () {\r",
-											"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"product_id\"));\r",
+											"pm.test(\"Customer is deleted\", function() {\r",
+											"    pm.expect(data.deleted).to.equal(true);\r",
+											"    pm.expect(data.id).to.match(/^cus_/);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -1041,11 +1035,13 @@
 									"script": {
 										"id": "6a696e77-5209-4bff-a581-519bda9e0540",
 										"exec": [
-											"const productId = pm.environment.get(\"product_id\");\r",
+											"const customerId = pm.environment.get(\"customer_id\");\r",
 											"\r",
-											"if (!productId) {\r",
-											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
 											"}\r",
+											"\r",
+											"\r",
 											""
 										],
 										"type": "text/javascript",
@@ -1061,7 +1057,69 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
-								"url": "{{base_url}}/v1/products/{{product_id}}"
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": "{{base_url}}/v1/customers/{{customer_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-CUS-017: Delete Already Deleted Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 404 Not Found\", function() {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error mentions customer not found\", function() {\r",
+											"    pm.expect(data.error.message).to.include('No such customer');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "6a696e77-5209-4bff-a581-519bda9e0540",
+										"exec": [
+											"const customerId = pm.environment.get(\"customer_id\");\r",
+											"\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
+											"}\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "99174350-e328-4d0c-8102-ef56b978c40e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": "{{base_url}}/v1/customers/{{customer_id}}"
 							},
 							"response": []
 						}
