@@ -2412,6 +2412,23 @@
 										"packages": {},
 										"requests": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d6946df7-45d3-4f28-93db-e4432a7b5547",
+										"exec": [
+											"const productId = pm.environment.get(\"product_id\");\r",
+											"\r",
+											"if (!productId) {\r",
+											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
 								}
 							],
 							"id": "4f0e34b2-00c9-4cf5-b38a-ace00fcdcc06",
