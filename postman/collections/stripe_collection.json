@@ -3031,7 +3031,7 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Failed charge has failure_code field populated with card_declined\", () => {\r",
-									"    const charges = response.payment_intent.failure_code;\r",
+									"    const charges = response.failure_code;\r",
 									"    pm.expect(charges).to.eql(\"card_declined\");\r",
 									"  \r",
 									"});\r",
@@ -3094,13 +3094,14 @@
 					"response": []
 				},
 				{
-					"name": "List charges",
+					"name": "TC-PI-003",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"id": "a320c530-892b-4dba-9e5f-541e520dc327",
 								"exec": [
+									"//List charges with customer_id ",
 									" const json = pm.response.json();",
 									" //status",
 									" pm.test(\"Status code is 200\", function () {",
@@ -3122,6 +3123,14 @@
 								"type": "text/javascript",
 								"packages": {},
 								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3e7946ce-ea19-4cf5-8fb3-6e87bf7834e9",
+								"exec": [],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5461,13 +5470,13 @@
 									"urlencoded": [
 										{
 											"key": "email",
-											"value": "ahmedmohamed@example.com",
+											"value": "{{$randomEmail}}",
 											"type": "text",
 											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
 										},
 										{
 											"key": "name",
-											"value": "ahmed mohamed",
+											"value": "{{$randomFullName}}",
 											"type": "text",
 											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
 										}
