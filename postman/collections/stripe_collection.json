@@ -1321,6 +1321,8 @@
 											"    const requestAmount = parseInt(pm.request.body.urlencoded.get(\"amount\"));",
 											"    pm.expect(response.amount).to.eql(requestAmount);",
 											"});",
+											"",
+											"",
 											""
 										],
 										"type": "text/javascript",
@@ -1331,8 +1333,13 @@
 								{
 									"listen": "prerequest",
 									"script": {
+										"id": "96238b94-5e01-4fc3-9c26-da6b2ecf1634",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
 										"packages": {},
-										"type": "text/javascript"
+										"requests": {}
 									}
 								}
 							],
