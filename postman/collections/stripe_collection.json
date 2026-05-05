@@ -1986,61 +1986,13 @@
 						},
 						{
 							"name": "TC-PI-005",
-							"id": "1e0d06d0-4091-49aa-a898-5fb38b017ce4",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "amount",
-											"value": "2000",
-											"type": "text",
-											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
-										},
-										{
-											"key": "currency",
-											"value": "usd",
-											"type": "text",
-											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
-										},
-										{
-											"key": "customer",
-											"value": "cus_URH5IiEJozUYum",
-											"type": "text",
-											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
-										},
-										{
-											"key": "description",
-											"value": "Test charge",
-											"type": "text",
-											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
-										}
-									]
-								},
-								"url": "{{base_url}}/v1/payment_intents"
-							},
-							"response": []
-						},
-						{
-							"name": "TC-PI-006",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"id": "85f2e0db-fa5c-4695-b6ab-a6566630ca53",
 										"exec": [
-											"//TC-PI-006 Create and Confirm payment intent with insufficient funds card\r",
+											"//TC-PI-005 Create and Confirm payment intent with insufficient funds card\r",
 											"const response = pm.response.json();\r",
 											"\r",
 											"pm.test(\"Status code is 402\", () => {\r",
@@ -2112,6 +2064,113 @@
 										{
 											"key": "payment_method",
 											"value": "pm_card_visa_chargeDeclinedInsufficientFunds",
+											"type": "text",
+											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
+										},
+										{
+											"key": "description",
+											"value": "Test Insufficient funds",
+											"type": "text",
+											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
+										},
+										{
+											"key": "confirm",
+											"value": "true",
+											"type": "text",
+											"uuid": "379cd311-00c8-458b-9d4c-b6b9fb52980c"
+										},
+										{
+											"key": "return_url",
+											"value": "https://example.com",
+											"type": "text",
+											"uuid": "6a206ece-8baa-4208-bc52-d66eb448fd78"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_intents"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-PI-006",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "85f2e0db-fa5c-4695-b6ab-a6566630ca53",
+										"exec": [
+											"//TC-PI-006 Create and Confirm payment intent with insufficient funds card\r",
+											"const response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 402\", () => {\r",
+											"    pm.response.to.have.status(402);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error code is card_declined\", () => {\r",
+											"    pm.expect(response.error.code).to.eql(\"card_declined\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error decline_code is insufficient_funds\", () => {\r",
+											"    pm.expect(response.error.decline_code).to.eql(\"insufficient_funds\");\r",
+											"   \r",
+											"    });\r",
+											"\r",
+											"\r",
+											"pm.test(\"Error message is correct\", () => {\r",
+											"    pm.expect(response.error.message).to.eql(\"Your card has insufficient funds.\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error contains a charge reference\", () => {\r",
+											"    pm.expect(response.error.charge).to.match(/^ch_/);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Payment intent status is failed\", () => {\r",
+											"    pm.expect(response.error.payment_intent.status).to.eql(\"requires_payment_method\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"amount_received is 0\", () => {\r",
+											"    pm.expect(response.error.payment_intent.amount_received).to.eql(0);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "cdcea757-ffb3-4a22-90d8-857dfba8b0d9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "amount",
+											"value": "2000",
+											"type": "text",
+											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
+										},
+										{
+											"key": "currency",
+											"value": "usd",
+											"type": "text",
+											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
+										},
+										{
+											"key": "payment_method",
+											"value": "pm_card_visa_chargeDeclined",
 											"type": "text",
 											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
 										},
