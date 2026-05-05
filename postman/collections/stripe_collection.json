@@ -2983,7 +2983,23 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/charges?customer={{customer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"charges"
+							],
+							"query": [
+								{
+									"key": "customer",
+									"value": "{{customer_id}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
