@@ -1124,6 +1124,7 @@
 										"id": "d8a52582-48e0-4f3e-a9b6-2f045a34aa08",
 										"exec": [
 											"const response = pm.response.json();",
+											"//TC-PI-002 CONNECT TO PAYMENT METHOD Confirm PI with success card status: succeeded",
 											"pm.test(\"Status code is 200\", () => {",
 											"    pm.response.to.have.status(200);",
 											"});",
@@ -1135,6 +1136,12 @@
 											"    const requestAmount = parseInt(pm.request.body.urlencoded.get(\"amount\"));",
 											"    pm.expect(response.amount).to.eql(requestAmount);",
 											"});",
+											"",
+											"pm.test(\"Transaction is successful\", () => {",
+											"    const amount = pm.request.body.urlencoded.get(\"amount\");",
+											"    pm.expect(response.amount_received).to.eql(Number(amount));",
+											"});",
+											"",
 											"",
 											"const validStatuses = [",
 											"    \"succeeded\",",
@@ -1150,9 +1157,9 @@
 											"pm.test(\"status: \" + response.status, () => {",
 											"    pm.expect(response.status).to.be.oneOf(validStatuses);",
 											"});",
-											"",
 											"pm.environment.set(\"payment_intent_id\", response.id);",
-											"pm.environment.set(\"charge_id\", response.latest_charge);"
+											"pm.environment.set(\"charge_id\", response.latest_charge);",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
