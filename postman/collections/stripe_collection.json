@@ -1021,17 +1021,19 @@
 									"script": {
 										"id": "e1c1ccea-b49b-4966-9a16-340c81215264",
 										"exec": [
-											"const response = pm.response.json();\r",
-											"pm.test(\"Status code is 200\", () => {\r",
-											"    pm.response.to.have.status(200);\r",
-											"    });\r",
-											"    pm.test(\"Response body contains id and object fields\", () => {\r",
-											"    pm.expect(response.id).to.match(/^pi_/);\r",
-											"    pm.expect(response.object).to.eql(\"payment_intent\");\r",
-											"    });\r",
-											"    pm.test(\"the right amount\",() =>{\r",
-											"      pm.expect(response.amount).to.eql(parseInt(pm.request.body.urlencoded.get(\"amount\")));\r",
-											"    })\r",
+											"const response = pm.response.json();",
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"    });",
+											"    pm.test(\"Response body contains id and object fields\", () => {",
+											"    pm.expect(response.id).to.match(/^pi_/);",
+											"    pm.expect(response.object).to.eql(\"payment_intent\");",
+											"    });",
+											"    pm.test(\"the right amount\",() =>{",
+											"      pm.expect(response.amount).to.eql(parseInt(pm.request.body.urlencoded.get(\"amount\")));",
+											"    })",
+											"    pm.environment.set(\"payment_intent_id\",response.id);",
+											"    pm.environment.set(\"charge_id\",response.latest_charge);",
 											""
 										],
 										"type": "text/javascript",
@@ -1044,13 +1046,7 @@
 									"script": {
 										"id": "608d572b-7c6c-4247-9517-dfb0c3e1471b",
 										"exec": [
-											"// Check that customer_id and payment_method_id exist first\r",
-											"const custId = pm.environment.get(\"customer_id\");\r",
-											"const pmId = pm.environment.get(\"payment_method_id\");\r",
-											"if (!custId || !pmId) {\r",
-											" throw new Error(\"Create Customer and Create PaymentMethod first!\");\r",
-											"}\r",
-											"pm.environment.set(\"timestamp\", new Date().toISOString());"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
