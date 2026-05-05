@@ -373,13 +373,44 @@
 					"item": [
 						{
 							"name": "TC-CUS-006: Retrieve Existing Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5c09eae7-1f08-44a5-a8ec-a7543ea4054f",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Retrieved customer matches expected ID\", function() {\r",
+											"    pm.expect(data.id).to.eql(pm.environment.get('customer_id'));\r",
+											"    pm.expect(data.object).to.eql('customer');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Customer has all required fields\", function() {\r",
+											"    pm.expect(data).to.have.property('id');\r",
+											"    pm.expect(data).to.have.property('object');\r",
+											"    pm.expect(data).to.have.property('created');\r",
+											"    pm.expect(data).to.have.property('livemode');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "db181691-f6bb-49f4-ae69-2d28dd2f127f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": "{{base_url}}/v1/customers/{{customer_id}}"
 							},
 							"response": []
 						}
@@ -3638,7 +3669,6 @@
 									"script": {
 										"id": "f34a30fe-a017-4a8a-bf23-15e007431718",
 										"exec": [
-											"// Pre-request Script for TC-PRC-008\r",
 											"const priceId = pm.environment.get(\"price_id\");\r",
 											"if (!priceId) {\r",
 											"    throw new Error(\"price_id is missing! Run TC-PRC-001 first.\");\r",
@@ -3715,7 +3745,6 @@
 									"script": {
 										"id": "f34a30fe-a017-4a8a-bf23-15e007431718",
 										"exec": [
-											"// Pre-request Script for TC-PRC-008\r",
 											"const priceId = pm.environment.get(\"price_id\");\r",
 											"if (!priceId) {\r",
 											"    throw new Error(\"price_id is missing! Run TC-PRC-001 first.\");\r",
