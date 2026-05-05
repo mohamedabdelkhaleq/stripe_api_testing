@@ -478,6 +478,54 @@
 								"url": "{{base_url}}/v1/customers/invalid_customer_id"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-CUS-008: Retrieve Customer with Empty ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5c09eae7-1f08-44a5-a8ec-a7543ea4054f",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 404 Not Found\", function() {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message mentions customer not found\", function() {\r",
+											"    pm.expect(data.error.message).to.include('No such customer');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "83ab759f-32a8-41d6-ba85-42c3b15571c0",
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "88198953-d177-4805-ada8-cf403df84fcc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/customers/invalid_customer_id"
+							},
+							"response": []
 						}
 					],
 					"id": "1aa40751-627c-4da2-b0bf-22c1cc6c95fc"
