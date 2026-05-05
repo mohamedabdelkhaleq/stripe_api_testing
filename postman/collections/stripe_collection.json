@@ -1839,6 +1839,20 @@
 											"",
 											"",
 											"",
+											"const validStatuses = [",
+											"    \"succeeded\",",
+											"    \"requires_action\",",
+											"    \"processing\",",
+											"    \"requires_payment_method\"",
+											"];",
+											"",
+											"pm.test(\"Payment status is valid\", () => {",
+											"    pm.expect(validStatuses).to.include(response.status);",
+											"});",
+											"",
+											"pm.test(\"status: \" + response.status, () => {",
+											"    pm.expect(response.status).to.be.oneOf(validStatuses);",
+											"});",
 											"",
 											"",
 											"//Environment Variable",
@@ -1852,6 +1866,14 @@
 										"type": "text/javascript",
 										"packages": {},
 										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "030aaba2-17b6-49e3-9e63-95d522d4a354",
+										"exec": [],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -1946,6 +1968,22 @@
 											"",
 											"pm.test(\"Amount is minimum 50 cents ($0.50)\", () => {",
 											"    pm.expect(response.amount).to.eql(50);",
+											"});",
+											"",
+											"",
+											"const validStatuses = [",
+											"    \"succeeded\",",
+											"    \"requires_action\",",
+											"    \"processing\",",
+											"    \"requires_payment_method\"",
+											"];",
+											"",
+											"pm.test(\"Payment status is valid\", () => {",
+											"    pm.expect(validStatuses).to.include(response.status);",
+											"});",
+											"",
+											"pm.test(\"status: \" + response.status, () => {",
+											"    pm.expect(response.status).to.be.oneOf(validStatuses);",
 											"});",
 											"",
 											"pm.test(\"Amount equals requested amount\", () => {",
@@ -2364,7 +2402,21 @@
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData.status).to.eql(\"requires_action\");",
 											"});",
-											""
+											"",
+											"const validStatuses = [",
+											"    \"succeeded\",",
+											"    \"requires_action\",",
+											"    \"processing\",",
+											"    \"requires_payment_method\"",
+											"];",
+											"",
+											"pm.test(\"Payment status is valid\", () => {",
+											"    pm.expect(validStatuses).to.include(response.status);",
+											"});",
+											"",
+											"pm.test(\"status: \" + response.status, () => {",
+											"    pm.expect(response.status).to.be.oneOf(validStatuses);",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -2374,9 +2426,13 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "c8201625-2d17-47dd-a42c-276153be1310",
-										"exec": [],
-										"type": "text/javascript"
+										"id": "367079b4-dab1-4054-83c9-2196f3986c4f",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -5562,29 +5618,23 @@
 										"exec": [
 											"const jsonData = pm.response.json();\r",
 											"\r",
-											"// 1. Status Code Validation\r",
 											"pm.test(\"Status is 200 OK\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"// 2. Data Format & ID Validation\r",
-											"pm.test(\"Customer has valid ID and type\", function () {\r",
-											"    pm.expect(jsonData.id).to.match(/^cus_/);\r",
-											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
+											"pm.test(\"Payment Method has valid ID and type\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^pm_/);\r",
+											"    pm.expect(jsonData.object).to.eql(\"payment_method\");\r",
+											"    pm.expect(jsonData.type).to.eql(\"card\");\r",
 											"});\r",
 											"\r",
-											"// 3. Data Integrity (Comparing Response to Request)\r",
-											"pm.test(\"Response name and email match the request\", function () {\r",
-											"    const sentName = pm.request.body.urlencoded.get(\"name\");\r",
-											"    const sentEmail = pm.request.body.urlencoded.get(\"email\");\r",
-											"\r",
-											"    pm.expect(jsonData.name).to.eql(sentName);\r",
-											"    pm.expect(jsonData.email).to.eql(sentEmail);\r",
+											"pm.test(\"Card details are correct\", function () {\r",
+											"    pm.expect(jsonData.card.last4).to.eql(\"4242\");\r",
+											"    pm.expect(jsonData.card.brand).to.eql(\"visa\");\r",
 											"});\r",
 											"\r",
-											"// 4. Save the ID for TC06, TC09, etc.\r",
 											"if (pm.response.code === 200 && jsonData.id) {\r",
-											"    pm.environment.set(\"e2e_customer_id\", jsonData.id);\r",
+											"    pm.environment.set(\"e2e_payment_method_id\", jsonData.id);\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -5597,7 +5647,10 @@
 									"script": {
 										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
 										"exec": [
-											""
+											"const customerId = pm.environment.get(\"e2e_customer_id\");\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"e2e_customer_id is missing! Run 03 - Create Customer first.\");\r",
+											"}"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -5629,9 +5682,27 @@
 										},
 										{
 											"key": "card[number]",
-											"value": "4242",
+											"value": "4242424242424242",
 											"type": "text",
 											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+										},
+										{
+											"key": "card[exp_month]",
+											"value": "12",
+											"type": "text",
+											"uuid": "a6148072-bc43-41ce-90ac-f3b778332287"
+										},
+										{
+											"key": "card[exp_year]",
+											"value": "2026",
+											"type": "text",
+											"uuid": "642b098b-0b7f-46fe-8681-4fcb55b577ee"
+										},
+										{
+											"key": "card[cvc]",
+											"value": "123",
+											"type": "text",
+											"uuid": "fad2004c-2f52-4b41-bf86-66260303e836"
 										}
 									]
 								},
