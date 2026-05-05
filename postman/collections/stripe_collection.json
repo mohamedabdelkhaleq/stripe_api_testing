@@ -1220,6 +1220,27 @@
 						},
 						{
 							"name": "TC-PI-003",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "67a4fe25-d26b-4427-9980-17afc7735855",
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.test(\"Payment Intent Created Successfully\", function () {\r",
+											"    pm.expect(response.id).to.not.be.null;\r",
+											"    pm.expect(response.object).to.equal(\"payment_intent\");\r",
+											"    pm.expect(response.amount).to.equal(20000);\r",
+											"    pm.expect(response.currency).to.equal(\"eur\");\r",
+											"});\r",
+											"pm.environment.set(\"payment_intent_id\", response.id);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "72925290-f29c-445a-a711-33c08a4a1cee",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -1238,25 +1259,19 @@
 									"urlencoded": [
 										{
 											"key": "amount",
-											"value": "2000",
+											"value": "20000",
 											"type": "text",
 											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
 										},
 										{
 											"key": "currency",
-											"value": "usd",
+											"value": "eur",
 											"type": "text",
 											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
 										},
 										{
-											"key": "customer",
-											"value": "",
-											"type": "text",
-											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
-										},
-										{
 											"key": "description",
-											"value": "Test charge",
+											"value": "Test payment intent ",
 											"type": "text",
 											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
 										}
@@ -1286,7 +1301,7 @@
 									"urlencoded": [
 										{
 											"key": "amount",
-											"value": "2000",
+											"value": "50",
 											"type": "text",
 											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
 										},
@@ -1295,18 +1310,6 @@
 											"value": "usd",
 											"type": "text",
 											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
-										},
-										{
-											"key": "customer",
-											"value": "cus_URH5IiEJozUYum",
-											"type": "text",
-											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
-										},
-										{
-											"key": "description",
-											"value": "Test charge",
-											"type": "text",
-											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
 										}
 									]
 								},
