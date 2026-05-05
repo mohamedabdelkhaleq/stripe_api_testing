@@ -2977,6 +2977,28 @@
 				},
 				{
 					"name": "List charges",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a320c530-892b-4dba-9e5f-541e520dc327",
+								"exec": [
+									"const json = pm.response.json();",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is a list object\", function () {  ",
+									"    pm.expect(json.object).to.eql(\"list\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "79561008-610e-43e1-af71-60c409d2bcbb",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
