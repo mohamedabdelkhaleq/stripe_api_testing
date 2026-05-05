@@ -1901,8 +1901,8 @@
 											"    const requestAmount = parseInt(pm.request.body.urlencoded.get(\"amount\"));",
 											"    pm.expect(response.amount).to.eql(requestAmount);",
 											"});",
-											"",
-											"",
+											"pm.environment.set(\"payment_intent_id\", response.id);",
+											"pm.environment.set(\"charge_id\", response.latest_charge);",
 											""
 										],
 										"type": "text/javascript",
@@ -1950,6 +1950,30 @@
 											"value": "usd",
 											"type": "text",
 											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
+										},
+										{
+											"key": "customer",
+											"value": "{{customer_id}}",
+											"type": "text",
+											"uuid": "009f76b9-a92f-4ddf-96a0-d9e1c24d4a38"
+										},
+										{
+											"key": "confirm",
+											"value": "true",
+											"type": "text",
+											"uuid": "76d2eb96-028e-4a85-86b0-045508d66eeb"
+										},
+										{
+											"key": "return_url",
+											"value": "https://example.com",
+											"type": "text",
+											"uuid": "dfb52944-dbb5-4ddd-a7fc-a975114330f5"
+										},
+										{
+											"key": "payment_method",
+											"value": "pm_card_unionpay",
+											"type": "text",
+											"uuid": "e2292fc7-3fb8-44a8-81f9-c2b10fd4763b"
 										}
 									]
 								},
@@ -2750,6 +2774,18 @@
 				{
 					"name": "New Request",
 					"id": "340f46fd-c4f2-4880-8fc2-855f66c61d82",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "f30aca5a-2b11-484c-bd7f-6270f51d58f6",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -4878,7 +4914,7 @@
 											"\r",
 											"// 4. Name validation\r",
 											"pm.test(\"Product name is correct\", function () {\r",
-											"    pm.expect(jsonData.name).to.eql(\"Test Product\");\r",
+											"    pm.expect(jsonData.name).to.eql(\"E2E Test Product\");\r",
 											"});\r",
 											"\r",
 											"// 5. Active Product validation\r",
@@ -4887,7 +4923,7 @@
 											"});\r",
 											"\r",
 											"// 6. Save product_id for next requests\r",
-											"pm.environment.set(\"product_id\", jsonData.id);"
+											"pm.environment.set(\"e2e_product_id\", jsonData.id);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -4897,8 +4933,13 @@
 								{
 									"listen": "prerequest",
 									"script": {
+										"id": "202bca4b-9997-46d8-85f3-7a2df596483c",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
 										"packages": {},
-										"type": "text/javascript"
+										"requests": {}
 									}
 								}
 							],
