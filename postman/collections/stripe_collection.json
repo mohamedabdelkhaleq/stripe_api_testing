@@ -70,13 +70,13 @@
 									"urlencoded": [
 										{
 											"key": "email",
-											"value": "ahmedmohamed@example.com",
+											"value": "{{$randomEmail}}",
 											"type": "text",
 											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
 										},
 										{
 											"key": "name",
-											"value": "ahmed mohamed",
+											"value": "{{$randomFullName}}",
 											"type": "text",
 											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
 										}
@@ -2305,8 +2305,12 @@
 									"listen": "prerequest",
 									"script": {
 										"id": "ada8ce2c-2f76-47aa-9567-803d03429c99",
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -2334,7 +2338,7 @@
 										},
 										{
 											"key": "currency",
-											"value": "aaa",
+											"value": "eur",
 											"type": "text",
 											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
 										}
@@ -5443,12 +5447,20 @@
 											"\r",
 											"// 4. Save the ID for TC06, TC09, etc.\r",
 											"if (pm.response.code === 200 && jsonData.id) {\r",
-											"    pm.environment.set(\"customer_id\", jsonData.id);\r",
+											"    pm.environment.set(\"e2e_customer_id\", jsonData.id);\r",
 											"}"
 										],
 										"type": "text/javascript",
 										"packages": {},
 										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
+										"exec": [],
+										"type": "text/javascript"
 									}
 								}
 							],
