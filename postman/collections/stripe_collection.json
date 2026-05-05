@@ -4846,8 +4846,88 @@
 			"id": "4bee5087-b2dd-4c29-acd0-09467eedb973"
 		},
 		{
-			"name": "New Folder",
-			"item": [],
+			"name": "E2E Flows",
+			"item": [
+				{
+					"name": "E2E-01 - Full Payment Lifecycle",
+					"item": [
+						{
+							"name": "Create Product - 01",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Product ID validation\r",
+											"pm.test(\"Response has valid product id\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^prod_/);\r",
+											"});\r",
+											"\r",
+											"// 3. Object type validation\r",
+											"pm.test(\"Object type is product\", function () {\r",
+											"    pm.expect(jsonData.object).to.eql(\"product\");\r",
+											"});\r",
+											"\r",
+											"// 4. Name validation\r",
+											"pm.test(\"Product name is correct\", function () {\r",
+											"    pm.expect(jsonData.name).to.eql(\"Test Product\");\r",
+											"});\r",
+											"\r",
+											"// 5. Active Product validation\r",
+											"pm.test(\"Product is active by default\", function () {\r",
+											"    pm.expect(jsonData.active).to.eql(true);\r",
+											"});\r",
+											"\r",
+											"// 6. Save product_id for next requests\r",
+											"pm.environment.set(\"product_id\", jsonData.id);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "54228f81-cffb-4d57-ace8-2ecd28487cb5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Test Product",
+											"type": "text",
+											"uuid": "c813aff9-e9ff-4593-a820-80428b37b442"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/products"
+							},
+							"response": []
+						}
+					],
+					"id": "42644aac-cb5f-4a4d-b905-4e76cd826e0c"
+				}
+			],
 			"id": "1a903abc-e868-43e9-94bd-b1eb933e6909"
 		}
 	],
