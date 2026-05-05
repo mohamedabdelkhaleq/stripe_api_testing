@@ -2350,6 +2350,36 @@
 						},
 						{
 							"name": "TC-PI-008",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "319e67ea-0702-4fbf-9a51-d4644ba5576d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Payment Intent status is requires_action\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.status).to.eql(\"requires_action\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c8201625-2d17-47dd-a42c-276153be1310",
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "250cf465-8713-48d7-9882-1057a81654b7",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -2374,15 +2404,39 @@
 										},
 										{
 											"key": "customer",
-											"value": "cus_URH5IiEJozUYum",
+											"value": "{{customer_id}}",
 											"type": "text",
 											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
 										},
 										{
 											"key": "description",
-											"value": "Test charge",
+											"value": "Test 3DS",
 											"type": "text",
 											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
+										},
+										{
+											"key": "payment_method",
+											"value": "pm_card_authenticationRequiredOnSetup",
+											"type": "text",
+											"uuid": "ddd54a88-d585-4373-a8e4-bf956bb963c5"
+										},
+										{
+											"key": "confirm",
+											"value": "true",
+											"type": "text",
+											"uuid": "2f3afd46-84c3-49d6-a643-aeb75060218e"
+										},
+										{
+											"key": "return_url",
+											"value": "https://example.com",
+											"type": "text",
+											"uuid": "356ae116-383b-4107-888a-b3ae22622113"
+										},
+										{
+											"key": "amount",
+											"value": "40000",
+											"type": "text",
+											"uuid": "886e9d4d-de06-452c-84f9-6b610d5c09c9"
 										}
 									]
 								},
@@ -5495,6 +5549,93 @@
 									]
 								},
 								"url": "{{base_url}}/v1/customers"
+							},
+							"response": []
+						},
+						{
+							"name": "04 - Create Payment Method",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Data Format & ID Validation\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^cus_/);\r",
+											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
+											"});\r",
+											"\r",
+											"// 3. Data Integrity (Comparing Response to Request)\r",
+											"pm.test(\"Response name and email match the request\", function () {\r",
+											"    const sentName = pm.request.body.urlencoded.get(\"name\");\r",
+											"    const sentEmail = pm.request.body.urlencoded.get(\"email\");\r",
+											"\r",
+											"    pm.expect(jsonData.name).to.eql(sentName);\r",
+											"    pm.expect(jsonData.email).to.eql(sentEmail);\r",
+											"});\r",
+											"\r",
+											"// 4. Save the ID for TC06, TC09, etc.\r",
+											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"    pm.environment.set(\"e2e_customer_id\", jsonData.id);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "70fde8b3-3790-4fb8-8fd6-68a56c1c3042",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "type",
+											"value": "card",
+											"type": "text",
+											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+										},
+										{
+											"key": "card[number]",
+											"value": "4242",
+											"type": "text",
+											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_methods"
 							},
 							"response": []
 						}
