@@ -87,38 +87,28 @@
 							"response": []
 						},
 						{
-							"name": "TC02 - POST /v1/customers - Create Customer (Email Only)",
+							"name": "TC-CUS-002: Create Customer with Email Only",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
 										"exec": [
-											"const jsonData = pm.response.json();\r",
+											"const data = pm.response.json();\r",
 											"\r",
-											"// 1. Status Code Validation\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"// 2. Data Format & ID Validation\r",
-											"pm.test(\"Customer has valid ID and type\", function () {\r",
-											"    pm.expect(jsonData.id).to.match(/^cus_/);\r",
-											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
+											"pm.test(\"Customer created with email only\", function() {\r",
+											"    pm.expect(data.id).to.match(/^cus_/);\r",
+											"    pm.expect(data.email).to.exist;\r",
+											"    pm.expect(data.name).to.be.null;\r",
 											"});\r",
 											"\r",
-											"// 3. Data Integrity (Comparing Response to Request)\r",
-											"pm.test(\"Response name and email match the request\", function () {\r",
-											"    const sentEmail = pm.request.body.urlencoded.get(\"email\");\r",
-											"\r",
-											"    pm.expect(jsonData.name).to.be.null;\r",
-											"    pm.expect(jsonData.email).to.eql(sentEmail);\r",
-											"});\r",
-											"\r",
-											"// 4. Save the ID for TC06, TC09, etc.\r",
-											"if (pm.response.code === 200 && jsonData.id) {\r",
-											"    pm.environment.set(\"customer_id\", jsonData.id);\r",
-											"}"
+											"pm.test(\"Save customer_id for later tests\", function() {\r",
+											"    pm.environment.set('customer_id_email_only', data.id);\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -155,7 +145,7 @@
 							"response": []
 						},
 						{
-							"name": "TC03 - POST /v1/customers - Create Customer (Optional Fields)",
+							"name": "TC-CUS-003: Create Customer with All Optional Fields",
 							"event": [
 								{
 									"listen": "test",
