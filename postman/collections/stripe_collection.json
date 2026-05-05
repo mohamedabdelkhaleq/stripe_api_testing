@@ -2411,11 +2411,11 @@
 											"];",
 											"",
 											"pm.test(\"Payment status is valid\", () => {",
-											"    pm.expect(validStatuses).to.include(response.status);",
+											"    pm.expect(validStatuses).to.include(pm.response.json().status);",
 											"});",
 											"",
-											"pm.test(\"status: \" + response.status, () => {",
-											"    pm.expect(response.status).to.be.oneOf(validStatuses);",
+											"pm.test(\"status: \" + pm.response.json().status, () => {",
+											"    pm.expect(pm.response.json().status).to.be.oneOf(validStatuses);",
 											"});"
 										],
 										"type": "text/javascript",
@@ -5681,28 +5681,10 @@
 											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
 										},
 										{
-											"key": "card[number]",
-											"value": "4242424242424242",
+											"key": "card[token]",
+											"value": "tok_visa",
 											"type": "text",
-											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
-										},
-										{
-											"key": "card[exp_month]",
-											"value": "12",
-											"type": "text",
-											"uuid": "a6148072-bc43-41ce-90ac-f3b778332287"
-										},
-										{
-											"key": "card[exp_year]",
-											"value": "2026",
-											"type": "text",
-											"uuid": "642b098b-0b7f-46fe-8681-4fcb55b577ee"
-										},
-										{
-											"key": "card[cvc]",
-											"value": "123",
-											"type": "text",
-											"uuid": "fad2004c-2f52-4b41-bf86-66260303e836"
+											"uuid": "cb3aab30-1ad0-4707-8e16-f4efd393d8d6"
 										}
 									]
 								},
