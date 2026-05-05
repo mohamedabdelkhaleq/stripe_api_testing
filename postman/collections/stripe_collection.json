@@ -401,6 +401,23 @@
 										"packages": {},
 										"requests": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "83ab759f-32a8-41d6-ba85-42c3b15571c0",
+										"exec": [
+											"const customerId = pm.environment.get(\"customer_id\");\r",
+											"\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
 								}
 							],
 							"id": "db181691-f6bb-49f4-ae69-2d28dd2f127f",
@@ -2172,6 +2189,23 @@
 										"packages": {},
 										"requests": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "66434b28-3dbd-4146-84df-9352cba45aab",
+										"exec": [
+											"const productId = pm.environment.get(\"product_id\");\r",
+											"\r",
+											"if (!productId) {\r",
+											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
 								}
 							],
 							"id": "954ea3c7-4b7b-4d62-a0d2-95106d6cd6f3",
@@ -2275,6 +2309,23 @@
 										"packages": {},
 										"requests": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "fab15dd2-32c5-46a7-9444-d90d308a65a7",
+										"exec": [
+											"const productId = pm.environment.get(\"product_id\");\r",
+											"\r",
+											"if (!productId) {\r",
+											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
 								}
 							],
 							"id": "a7b8ff11-4774-4943-8de5-c2a40cfde44a",
@@ -2341,6 +2392,22 @@
 											"\r",
 											"// 7. Save product_id for next requests\r",
 											"pm.environment.set(\"product_id\", jsonData.id);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "dbb66e6e-1ba5-4a19-bfbc-88038f02e96a",
+										"exec": [
+											"const productId = pm.environment.get(\"product_id\");\r",
+											"\r",
+											"if (!productId) {\r",
+											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
+											"}"
 										],
 										"type": "text/javascript",
 										"packages": {},
