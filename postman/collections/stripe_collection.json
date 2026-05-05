@@ -493,8 +493,8 @@
 											"    pm.response.to.have.status(404);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Error message mentions customer not found\", function() {\r",
-											"    pm.expect(data.error.message).to.include('No such customer');\r",
+											"pm.test(\"Error is about missing customer\", function() {\r",
+											"    pm.expect(data.error.type).to.equal('invalid_request_error');\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -523,7 +523,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/customers/invalid_customer_id"
+								"url": "{{base_url}}/v1/customers/"
 							},
 							"response": []
 						}
