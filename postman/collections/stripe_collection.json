@@ -297,7 +297,7 @@
 							"response": []
 						},
 						{
-							"name": "TC05 - POST /v1/customers - Create Customer (No Body)",
+							"name": "TC-CUS-005: Create Customer with Empty Body",
 							"event": [
 								{
 									"listen": "test",
