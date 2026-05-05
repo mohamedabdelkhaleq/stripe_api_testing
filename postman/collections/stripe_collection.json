@@ -632,9 +632,9 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Email is updated correctly\", function() {\r",
-											"    const newEmail = pm.request.body.urlencoded.get(\"email\");\r",
-											"    pm.expect(data.email).to.equal(newEmail);\r",
+											"pm.test(\"Name is updated correctly\", function() {\r",
+											"    const newName = pm.request.body.urlencoded.get(\"name\");\r",
+											"    pm.expect(data.name).to.equal(newName);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -654,10 +654,89 @@
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "email",
-											"value": "{{$randomEmail}}",
+											"key": "name",
+											"value": "{{$randomFullName}}",
 											"type": "text",
 											"uuid": "8d7a9a81-ffee-43e4-9680-b52327468099"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/customers/{{customer_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-CUS-011: Update Customer Metadata",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ce60a7b5-348d-4bd5-a7df-22d074883c3f",
+										"exec": [
+											"const customerId = pm.environment.get(\"customer_id\");\r",
+											"\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
+											"}\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "0d356990-4c7d-4208-a412-769cf6ed5fd5",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Metadata is updated correctly\", function() {\r",
+											"    pm.expect(data.metadata.order_id).to.equal('12345');\r",
+											"    pm.expect(data.metadata.tier).to.equal('premium');\r",
+											"    pm.expect(data.metadata.last_purchase).to.equal('2024-01-15');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "6e30042c-08ed-4b15-b4ed-efb8b40dadae",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "metadata[order_id]",
+											"value": "12345",
+											"type": "text",
+											"uuid": "8d7a9a81-ffee-43e4-9680-b52327468099"
+										},
+										{
+											"key": "metadata[tier]",
+											"value": "premium",
+											"type": "text",
+											"uuid": "74e3ac88-f9cd-42ac-b4fb-d3b8ac90af16"
+										},
+										{
+											"key": "metadata[last_purchase]",
+											"value": "2024-01-15",
+											"type": "text",
+											"uuid": "fcd1b1db-7339-4333-b9af-07c740649628"
 										}
 									]
 								},
