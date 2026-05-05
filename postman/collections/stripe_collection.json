@@ -1857,6 +1857,60 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "TC-PI-014 Copy",
+							"id": "d059728e-4e5f-4b04-859e-7d116cdc4e06",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "payment_method_options",
+											"value": "card",
+											"type": "text",
+											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
+										},
+										{
+											"key": "receipt_email",
+											"value": "hamde@gmail.com",
+											"type": "text",
+											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/payment_intents/:id/confirm",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"payment_intents",
+										":id",
+										"confirm"
+									],
+									"variable": [
+										{
+											"id": "726f9782-d396-45db-88d6-57c23dbb4530",
+											"key": "id",
+											"value": "pi_3TSPChAEI1vBJD0T1AP09bn2"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"id": "e25c57a3-fe4c-456e-803d-1ec4262d583b"
