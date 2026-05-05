@@ -1002,6 +1002,71 @@
 						}
 					],
 					"id": "59ffe98f-0a31-4c8e-af36-5b435caa67bd"
+				},
+				{
+					"name": "Delete a Customer",
+					"item": [
+						{
+							"name": "TC-CUS-016: Delete Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6581387b-99d0-4bfa-b840-e326a46b4914",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Deleted is true\r",
+											"pm.test(\"Product is deleted\", function () {\r",
+											"    pm.expect(jsonData.deleted).to.be.true;\r",
+											"});\r",
+											"\r",
+											"// 3. ID matches deleted product\r",
+											"pm.test(\"Deleted product ID matches\", function () {\r",
+											"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"product_id\"));\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "6a696e77-5209-4bff-a581-519bda9e0540",
+										"exec": [
+											"const productId = pm.environment.get(\"product_id\");\r",
+											"\r",
+											"if (!productId) {\r",
+											"    throw new Error(\"product_id is missing! Run TC-PR-001 first.\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "831ee0af-ae08-4900-9806-86b8c499c5e8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base_url}}/v1/products/{{product_id}}"
+							},
+							"response": []
+						}
+					],
+					"id": "657250f9-85f0-48ae-9c62-304970a831e2"
 				}
 			],
 			"id": "03cc6b74-92d6-4fea-bf47-41d7a11bc3c6"
