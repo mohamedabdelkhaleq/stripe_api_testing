@@ -2074,11 +2074,22 @@
 											"pm.test(\"amount_received is 0\", () => {\r",
 											"    pm.expect(response.error.payment_intent.amount_received).to.eql(0);\r",
 											"});\r",
-											""
+											"pm.environment.set(\"payment_intent_id\", response.id);\r",
+											"pm.environment.set(\"charge_id\", response.latest_charge);\r",
+											"pm.environment.set(\"amount\", response.amount);\r",
+											"pm.environment.set(\"currency\", response.currency);"
 										],
 										"type": "text/javascript",
 										"packages": {},
 										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "2522e2fb-7927-47f9-8a2e-7d42066d6f30",
+										"exec": [],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -2181,11 +2192,22 @@
 											"pm.test(\"amount_received is 0\", () => {\r",
 											"    pm.expect(response.error.payment_intent.amount_received).to.eql(0);\r",
 											"});\r",
-											""
+											"pm.environment.set(\"payment_intent_id\", response.id);\r",
+											"pm.environment.set(\"charge_id\", response.latest_charge);\r",
+											"pm.environment.set(\"amount\", response.amount);\r",
+											"pm.environment.set(\"currency\", response.currency);"
 										],
 										"type": "text/javascript",
 										"packages": {},
 										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "651a3dfa-c891-471a-9556-b33240a65ecc",
+										"exec": [],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -2892,9 +2914,7 @@
 								"exec": [
 									"const response = pm.response.json();\r",
 									"const paymentIntentAmount = pm.environment.get(\"amount\");\r",
-									"const paymentIntentCurrency = pm.environment.get(\"payment_intent_id\") ? pm.environment.get(\"amount\") : null;\r",
-									"\r",
-									"// ── Status & Response Time ──────────────────────────────────────────────────\r",
+									"//Status\r",
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
@@ -2905,14 +2925,14 @@
 									"    pm.expect(response.status).to.equal(\"succeeded\");\r",
 									"});\r",
 									"\r",
-									"// ── 2. charge.amount matches the PaymentIntent amount\r",
+									"//charge.amount matches the PaymentIntent amount\r",
 									"pm.test(\"charge.amount matches the PaymentIntent amount\", function () {\r",
 									"    const piAmount = parseInt(pm.environment.get(\"amount\"));\r",
 									"    pm.expect(response.amount).to.equal(piAmount);\r",
 									"  \r",
 									"});\r",
 									"\r",
-									"// ── 3. charge.currency matches the PaymentIntent currency ──────────────────\r",
+									"//charge.currency matches the PaymentIntent currency\r",
 									"pm.test(\"charge.currency matches the PaymentIntent currency\", function () {\r",
 									"    const piCurrency = pm.environment.get(\"currency\");\r",
 									"    pm.expect(response.currency).to.equal(piCurrency.toLowerCase());\r",
@@ -2941,6 +2961,14 @@
 								"type": "text/javascript",
 								"packages": {},
 								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4a10dfb0-9b8a-43f2-b132-bc80ea1a064a",
+								"exec": [],
+								"type": "text/javascript"
 							}
 						}
 					],
