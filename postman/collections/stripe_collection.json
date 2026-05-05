@@ -1290,6 +1290,52 @@
 						},
 						{
 							"name": "TC-PI-004",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "05868f7a-5618-4ebc-b4a0-7f17e653dc73",
+										"exec": [
+											"const response = pm.response.json();",
+											"",
+											"// TC-PI-004: Create payment intent with minimum amount ($0.50)",
+											"",
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response contains payment intent id\", () => {",
+											"    pm.expect(response.id).to.match(/^pi_/);",
+											"    pm.expect(response.id).to.not.be.empty;",
+											"});",
+											"",
+											"pm.test(\"Object type is payment_intent\", () => {",
+											"    pm.expect(response.object).to.eql(\"payment_intent\");",
+											"});",
+											"",
+											"pm.test(\"Amount is minimum 50 cents ($0.50)\", () => {",
+											"    pm.expect(response.amount).to.eql(50);",
+											"});",
+											"",
+											"pm.test(\"Amount equals requested amount\", () => {",
+											"    const requestAmount = parseInt(pm.request.body.urlencoded.get(\"amount\"));",
+											"    pm.expect(response.amount).to.eql(requestAmount);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "9b2d864f-eaa1-4e9d-af02-dbe1cf663b7e",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
