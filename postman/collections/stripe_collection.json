@@ -887,7 +887,7 @@
 											"});\r",
 											"\r",
 											"pm.test(\"Limit parameter works correctly\", function() {\r",
-											"    pm.expect(data.data.length).to.be.at.most(5);\r",
+											"    pm.expect(data.data.length).to.be.at.most(2);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -915,7 +915,88 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/customers"
+								"url": {
+									"raw": "{{base_url}}/v1/customers?limit=2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"customers"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-CUS-015: List Customers by Email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5c09eae7-1f08-44a5-a8ec-a7543ea4054f",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Email filter works correctly\", function() {\r",
+											"    const email = pm.request.url.query.get(\"email\");\r",
+											"    data.data.forEach(customer => {\r",
+											"        pm.expect(customer.email).to.equal(email);\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "83ab759f-32a8-41d6-ba85-42c3b15571c0",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "9cbfd788-b25c-4958-ab0e-76fe204137bd",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/customers?email={{customer_email}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"customers"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{customer_email}}"
+										}
+									]
+								}
 							},
 							"response": []
 						}
