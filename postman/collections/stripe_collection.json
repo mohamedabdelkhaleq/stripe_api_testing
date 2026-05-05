@@ -2976,8 +2976,8 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
-					"id": "f30aca5a-2b11-484c-bd7f-6270f51d58f6",
+					"name": "List charges",
+					"id": "79561008-610e-43e1-af71-60c409d2bcbb",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
