@@ -814,8 +814,112 @@
 					"id": "7a6d4c79-3fb0-4bea-9344-753a85aa4fcf"
 				},
 				{
-					"name": "New Folder",
-					"item": [],
+					"name": "List All Customers",
+					"item": [
+						{
+							"name": "TC-CUS-013: List All Customers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5c09eae7-1f08-44a5-a8ec-a7543ea4054f",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is a list of customers\", function() {\r",
+											"    pm.expect(data.object).to.equal('list');\r",
+											"    pm.expect(data.data).to.be.an('array');\r",
+											"    pm.expect(data.data.length).to.be.above(0);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Each customer has required fields\", function() {\r",
+											"    data.data.forEach(customer => {\r",
+											"        pm.expect(customer.id).to.match(/^cus_/);\r",
+											"        pm.expect(customer.object).to.equal('customer');\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "83ab759f-32a8-41d6-ba85-42c3b15571c0",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "8a17fbe0-34f7-46af-9ec7-eb0763142c5e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/customers"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-CUS-014: List Customers with Limit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5c09eae7-1f08-44a5-a8ec-a7543ea4054f",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Limit parameter works correctly\", function() {\r",
+											"    pm.expect(data.data.length).to.be.at.most(5);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "83ab759f-32a8-41d6-ba85-42c3b15571c0",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "51e81e44-f184-41f4-b7ed-ebe61346978b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/customers"
+							},
+							"response": []
+						}
+					],
 					"id": "59ffe98f-0a31-4c8e-af36-5b435caa67bd"
 				}
 			],
