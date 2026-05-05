@@ -3031,7 +3031,7 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Failed charge has failure_code field populated with card_declined\", () => {\r",
-									"    const charges = response.error.payment_intent.failure_code;\r",
+									"    const charges = response.payment_intent.failure_code;\r",
 									"    pm.expect(charges).to.eql(\"card_declined\");\r",
 									"  \r",
 									"});\r",
