@@ -2142,7 +2142,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{"
+											"value": "{{payment_intent_id}}"
 										}
 									]
 								}
