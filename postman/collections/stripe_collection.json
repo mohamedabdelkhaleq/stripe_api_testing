@@ -2110,14 +2110,14 @@
 											"    pm.expect(response.error.code).to.eql(\"card_declined\");\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Error decline_code is insufficient_funds\", () => {\r",
-											"    pm.expect(response.error.decline_code).to.eql(\"insufficient_funds\");\r",
+											"pm.test(\"Error decline_code is generic_decline\", () => {\r",
+											"    pm.expect(response.error.decline_code).to.eql(\"generic_decline\");\r",
 											"   \r",
 											"    });\r",
 											"\r",
 											"\r",
 											"pm.test(\"Error message is correct\", () => {\r",
-											"    pm.expect(response.error.message).to.eql(\"Your card has insufficient funds.\");\r",
+											"    pm.expect(response.error.message).to.eql(\"Your card was declined.\");\r",
 											"});\r",
 											"\r",
 											"pm.test(\"Error contains a charge reference\", () => {\r",
@@ -2158,7 +2158,7 @@
 									"urlencoded": [
 										{
 											"key": "amount",
-											"value": "2000",
+											"value": "40000",
 											"type": "text",
 											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
 										},
