@@ -2074,10 +2074,10 @@
 											"pm.test(\"amount_received is 0\", () => {\r",
 											"    pm.expect(response.error.payment_intent.amount_received).to.eql(0);\r",
 											"});\r",
-											"pm.environment.set(\"payment_intent_id\", response.id);\r",
-											"pm.environment.set(\"charge_id\", response.latest_charge);\r",
-											"pm.environment.set(\"amount\", response.amount);\r",
-											"pm.environment.set(\"currency\", response.currency);"
+											"pm.environment.set(\"payment_intent_id\", response.error.payment_intent.id);\r",
+											"pm.environment.set(\"charge_id\", response.error.payment_intent.latest_charge);\r",
+											"pm.environment.set(\"amount\", response.error.payment_intent.amount);\r",
+											"pm.environment.set(\"currency\", response.error.payment_intent.currency);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -2087,7 +2087,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "2522e2fb-7927-47f9-8a2e-7d42066d6f30",
+										"id": "8ea669ad-778d-4f03-9553-4fb86867ba58",
 										"exec": [],
 										"type": "text/javascript"
 									}
@@ -2192,10 +2192,10 @@
 											"pm.test(\"amount_received is 0\", () => {\r",
 											"    pm.expect(response.error.payment_intent.amount_received).to.eql(0);\r",
 											"});\r",
-											"pm.environment.set(\"payment_intent_id\", response.id);\r",
-											"pm.environment.set(\"charge_id\", response.latest_charge);\r",
-											"pm.environment.set(\"amount\", response.amount);\r",
-											"pm.environment.set(\"currency\", response.currency);"
+											"pm.environment.set(\"payment_intent_id\", response.error.payment_intent.id);\r",
+											"pm.environment.set(\"charge_id\", response.error.payment_intent.latest_charge);\r",
+											"pm.environment.set(\"amount\", response.error.payment_intent.amount);\r",
+											"pm.environment.set(\"currency\", response.error.payment_intent.currency);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -2205,7 +2205,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "a4e85409-bf24-42d5-b675-ea90810c5869",
+										"id": "6995b529-e67a-435d-906b-3cad330a5e2f",
 										"exec": [],
 										"type": "text/javascript"
 									}
@@ -2288,7 +2288,10 @@
 											"    pm.expect(response.error.code).to.eql(\"parameter_invalid_integer\");\r",
 											"});\r",
 											"\r",
-											"\r",
+											"pm.environment.set(\"payment_intent_id\", response.error.payment_intent.id);\r",
+											"pm.environment.set(\"charge_id\", response.error.payment_intent.latest_charge);\r",
+											"pm.environment.set(\"amount\", response.error.payment_intent.amount);\r",
+											"pm.environment.set(\"currency\", response.error.payment_intent.currency);\r",
 											"\r",
 											"\r",
 											""
@@ -2296,6 +2299,14 @@
 										"type": "text/javascript",
 										"packages": {},
 										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ada8ce2c-2f76-47aa-9567-803d03429c99",
+										"exec": [],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -2995,6 +3006,111 @@
 							],
 							"variable": [
 								{
+									"key": "id",
+									"value": "{{charge_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-PI-002",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "db29b888-f8cd-4c98-a44e-939d60a78197",
+								"exec": [
+									"//Create charge with declined card token\r",
+									"const response = pm.response.json();\r",
+									"const paymentIntentAmount = pm.environment.get(\"amount\");\r",
+									"//Status\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//charge.status = 'succeeded'\r",
+									"pm.test(\"charge.status is 'succeeded'\", function () {\r",
+									"    pm.expect(response.status).to.equal(\"succeeded\");\r",
+									"});\r",
+									"\r",
+									"//charge.amount matches the PaymentIntent amount\r",
+									"pm.test(\"charge.amount matches the PaymentIntent amount\", function () {\r",
+									"    const piAmount = parseInt(pm.environment.get(\"amount\"));\r",
+									"    pm.expect(response.amount).to.equal(piAmount);\r",
+									"  \r",
+									"});\r",
+									"\r",
+									"//charge.currency matches the PaymentIntent currency\r",
+									"pm.test(\"charge.currency matches the PaymentIntent currency\", function () {\r",
+									"    const piCurrency = pm.environment.get(\"currency\");\r",
+									"    pm.expect(response.currency).to.equal(piCurrency.toLowerCase());\r",
+									"});\r",
+									"\r",
+									"//charge.paid = true \r",
+									"pm.test(\"charge.paid is true\", function () {\r",
+									"    pm.expect(response.paid).to.be.true;\r",
+									"});\r",
+									"\r",
+									"//charge.receipt_url is present (non-empty string)\r",
+									"pm.test(\"charge.receipt_url is present and non-empty\", function () {\r",
+									"    pm.expect(response.receipt_url).to.be.a(\"string\").and.not.to.be.null;\r",
+									"    pm.expect(response.receipt_url).to.match(/^https:/);\r",
+									"});\r",
+									"\r",
+									"//charge.payment_method_details.card.brand is present\r",
+									"pm.test(\"charge.payment_method_details.card.brand is present\", function () {\r",
+									"    pm.expect(response.payment_method_details.card.brand).to.be.a(\"string\").and.not.to.be.null;\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"charge_id\", response.id);\r",
+									"console.log(\"Saved charge_id:\", response.id);\r",
+									"console.log(\"Card brand:\", response.payment_method_details?.card?.brand);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4a10dfb0-9b8a-43f2-b132-bc80ea1a064a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "239031bd-a320-4f91-9971-3d1484a567e9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/charges/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"charges",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "ff65e756-1e39-4baa-b18d-6c9eb0b926ab",
 									"key": "id",
 									"value": "{{charge_id}}"
 								}
