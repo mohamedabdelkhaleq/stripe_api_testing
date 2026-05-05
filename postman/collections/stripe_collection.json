@@ -1631,7 +1631,8 @@
 											"",
 											"pm.environment.set(\"payment_intent_id\", response.id);",
 											"pm.environment.set(\"charge_id\", response.latest_charge);",
-											"pm.environment.set(\"amount\", response.amount);"
+											"pm.environment.set(\"amount\", response.amount);",
+											"pm.environment.set(\"currency\", response.currency);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -1843,6 +1844,8 @@
 											"//Environment Variable",
 											"pm.environment.set(\"payment_intent_id\", response.id);",
 											"pm.environment.set(\"amount\", response.amount);",
+											"pm.environment.set(\"charge_id\", response.latest_charge);",
+											"pm.environment.set(\"currency\", response.currency);",
 											"console.log(\"Saved payment_intent_id:\", response.id);",
 											"console.log(\"Saved amount:\", response.amount);"
 										],
@@ -1885,6 +1888,24 @@
 											"value": "Test payment intent ",
 											"type": "text",
 											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
+										},
+										{
+											"key": "payment_method",
+											"value": "pm_card_visa",
+											"type": "text",
+											"uuid": "57ae4d91-3154-48f5-8555-2453021b2d93"
+										},
+										{
+											"key": "return_url",
+											"value": "https://example.com",
+											"type": "text",
+											"uuid": "a20ffe99-e18a-4888-b75f-b0845442ad0b"
+										},
+										{
+											"key": "customer",
+											"value": "{{customer_id}}",
+											"type": "text",
+											"uuid": "d0f50b3b-7800-4b90-91d8-8fc2bdf630b3"
 										}
 									]
 								},
@@ -2856,6 +2877,81 @@
 			"item": [
 				{
 					"name": "TC-PI-001",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "db29b888-f8cd-4c98-a44e-939d60a78197",
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const paymentIntentAmount = pm.environment.get(\"amount\");\r",
+									"const paymentIntentCurrency = pm.environment.get(\"payment_intent_id\") ? pm.environment.get(\"amount\") : null;\r",
+									"\r",
+									"// ── Status & Response Time ──────────────────────────────────────────────────\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//charge.status = 'succeeded'\r",
+									"pm.test(\"charge.status is 'succeeded'\", function () {\r",
+									"    pm.expect(response.status).to.equal(\"succeeded\");\r",
+									"});\r",
+									"\r",
+									"// ── 2. charge.amount matches the PaymentIntent amount\r",
+									"pm.test(\"charge.amount matches the PaymentIntent amount\", function () {\r",
+									"    const piAmount = parseInt(pm.environment.get(\"amount\"));\r",
+									"    pm.expect(response.amount).to.equal(piAmount);\r",
+									"  \r",
+									"});\r",
+									"\r",
+									"// ── 3. charge.currency matches the PaymentIntent currency ──────────────────\r",
+									"pm.test(\"charge.currency matches the PaymentIntent currency\", function () {\r",
+									"    const piCurrency = pm.environment.get(\"currency\");\r",
+									"    pm.expect(response.currency).to.equal(piCurrency.toLowerCase());\r",
+									"});\r",
+									"\r",
+									"// ── 4. charge.paid = true ───────────────────────────────────────────────────\r",
+									"pm.test(\"charge.paid is true\", function () {\r",
+									"    pm.expect(response.paid).to.be.true;\r",
+									"});\r",
+									"\r",
+									"// ── 5. charge.receipt_url is present (non-empty string) ────────────────────\r",
+									"pm.test(\"charge.receipt_url is present and non-empty\", function () {\r",
+									"    pm.expect(response.receipt_url).to.be.a(\"string\").and.to.have.length.above(0);\r",
+									"    pm.expect(response.receipt_url).to.match(/^https:\\/\\//);\r",
+									"});\r",
+									"\r",
+									"// ── 6. charge.payment_method_details.card.brand is present ─────────────────\r",
+									"pm.test(\"charge.payment_method_details.card.brand is present\", function () {\r",
+									"    pm.expect(response.payment_method_details).to.be.an(\"object\");\r",
+									"    pm.expect(response.payment_method_details.card).to.be.an(\"object\");\r",
+									"    pm.expect(response.payment_method_details.card.brand).to.be.a(\"string\").and.to.have.length.above(0);\r",
+									"});\r",
+									"\r",
+									"// ── Additional card detail assertions ──────────────────────────────────────\r",
+									"pm.test(\"charge.payment_method_details.card contains required fields\", function () {\r",
+									"    const card = response.payment_method_details.card;\r",
+									"    pm.expect(card).to.have.property(\"brand\");\r",
+									"    pm.expect(card).to.have.property(\"funding\");\r",
+									"    pm.expect(card).to.have.property(\"exp_month\");\r",
+									"    pm.expect(card).to.have.property(\"exp_year\");\r",
+									"    pm.expect(card).to.have.property(\"country\");\r",
+									"    pm.expect(card.exp_month).to.be.a(\"number\").and.to.be.within(1, 12);\r",
+									"    pm.expect(card.exp_year).to.be.a(\"number\").and.to.be.above(2024);\r",
+									"});\r",
+									"\r",
+									"// ── Save charge_id to environment ──────────────────────────────────────────\r",
+									"pm.environment.set(\"charge_id\", response.id);\r",
+									"console.log(\"Saved charge_id:\", response.id);\r",
+									"console.log(\"Card brand:\", response.payment_method_details?.card?.brand);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "340f46fd-c4f2-4880-8fc2-855f66c61d82",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
