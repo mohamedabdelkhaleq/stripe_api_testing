@@ -1011,7 +1011,7 @@
 			"name": "paymenintent",
 			"item": [
 				{
-					"name": "Create paymentintent",
+					"name": "Create  and Cofirm paymentintent",
 					"item": [
 						{
 							"name": "TC-PI-001",
@@ -2088,6 +2088,29 @@
 					"item": [
 						{
 							"name": "TC-PI-017",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "64c74c57-1613-42ff-b672-b7662e860a1d",
+										"exec": [
+											"//TC-PI-016 Cancel a PI before confirmation — status: canceled\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "2d95bf82-032a-4a88-af71-db349e506bee",
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "f9ea5a72-57a1-4cf1-aa22-ee1f99d835b5",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -2103,20 +2126,7 @@
 								"header": [],
 								"body": {
 									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "payment_method_options",
-											"value": "card",
-											"type": "text",
-											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
-										},
-										{
-											"key": "receipt_email",
-											"value": "hamde@gmail.com",
-											"type": "text",
-											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
-										}
-									]
+									"urlencoded": []
 								},
 								"url": {
 									"raw": "{{base_url}}/v1/payment_intents/:id/cancel",
@@ -2132,7 +2142,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "pi_3TSj5BAEI1vBJD0T1y7hZBaQ"
+											"value": "{{"
 										}
 									]
 								}
