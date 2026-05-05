@@ -5684,8 +5684,7 @@
 											"key": "card[token]",
 											"value": "tok_visa",
 											"type": "text",
-											"uuid": "cb3aab30-1ad0-4707-8e16-f4efd393d8d6",
-											"disabled": true
+											"uuid": "cb3aab30-1ad0-4707-8e16-f4efd393d8d6"
 										}
 									]
 								},
