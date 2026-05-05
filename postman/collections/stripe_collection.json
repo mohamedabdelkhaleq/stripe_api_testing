@@ -1534,6 +1534,34 @@
 						},
 						{
 							"name": "TC-PI-007",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ad8bad20-d11a-44e8-b847-fa1ca11e59cf",
+										"exec": [
+											"//TC-PI-007 Create PI with amount = 0 —returns 400\r",
+											"const response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"     pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error code is parameter_invalid_integer\", () => {\r",
+											"    pm.expect(response.error.code).to.eql(\"parameter_invalid_integer\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "a023e9f7-dcfd-4ff5-b656-291f01f399e7",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -1552,27 +1580,15 @@
 									"urlencoded": [
 										{
 											"key": "amount",
-											"value": "2000",
+											"value": "0",
 											"type": "text",
 											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
 										},
 										{
 											"key": "currency",
-											"value": "usd",
+											"value": "aaa",
 											"type": "text",
 											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
-										},
-										{
-											"key": "customer",
-											"value": "cus_URH5IiEJozUYum",
-											"type": "text",
-											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
-										},
-										{
-											"key": "description",
-											"value": "Test charge",
-											"type": "text",
-											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
 										}
 									]
 								},
