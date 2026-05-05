@@ -2206,7 +2206,7 @@
 											"});\r",
 											"\r",
 											"// 5. Active Product validation\r",
-											"pm.test(\"Product name is correct\", function () {\r",
+											"pm.test(\"Product is active by default\", function () {\r",
 											"    pm.expect(jsonData.active).to.eql(true);\r",
 											"});\r",
 											"\r",
@@ -2216,6 +2216,13 @@
 										"type": "text/javascript",
 										"packages": {},
 										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
 									}
 								}
 							],
