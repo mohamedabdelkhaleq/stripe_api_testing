@@ -529,6 +529,24 @@
 						}
 					],
 					"id": "1aa40751-627c-4da2-b0bf-22c1cc6c95fc"
+				},
+				{
+					"name": "Update a Customer",
+					"item": [
+						{
+							"name": "TC-CUS-009: Update Customer Email",
+							"id": "cb3fe3ec-1543-4faf-8222-d0900ef71c4a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
+					"id": "7a6d4c79-3fb0-4bea-9344-753a85aa4fcf"
 				}
 			],
 			"id": "03cc6b74-92d6-4fea-bf47-41d7a11bc3c6"
