@@ -1023,6 +1023,10 @@
 											"pm.test(\"Customer is deleted\", function() {\r",
 											"    pm.expect(data.deleted).to.equal(true);\r",
 											"    pm.expect(data.id).to.match(/^cus_/);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Save deleted_customer_id for later tests\", function() {\r",
+											"    pm.environment.set('deleted_customer_id', data.id);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -1093,10 +1097,10 @@
 									"script": {
 										"id": "6a696e77-5209-4bff-a581-519bda9e0540",
 										"exec": [
-											"const customerId = pm.environment.get(\"customer_id\");\r",
+											"const customerId = pm.environment.get(\"deleted_customer_id\");\r",
 											"\r",
 											"if (!customerId) {\r",
-											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
+											"    throw new Error(\"deleted_customer_id is missing! Run TC-CUS-001 and TC-CUS-16 first.\");\r",
 											"}\r",
 											"\r",
 											"\r",
@@ -1119,7 +1123,7 @@
 									"mode": "urlencoded",
 									"urlencoded": []
 								},
-								"url": "{{base_url}}/v1/customers/{{customer_id}}"
+								"url": "{{base_url}}/v1/customers/{{deleted_customer_id}}"
 							},
 							"response": []
 						}
