@@ -367,6 +367,24 @@
 						}
 					],
 					"id": "acc1f0f5-3ca4-44da-9d5b-aba0c19d6aff"
+				},
+				{
+					"name": "Retrieve a Customer",
+					"item": [
+						{
+							"name": "TC-CUS-006: Retrieve Existing Customer",
+							"id": "db181691-f6bb-49f4-ae69-2d28dd2f127f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
+					"id": "1aa40751-627c-4da2-b0bf-22c1cc6c95fc"
 				}
 			],
 			"id": "03cc6b74-92d6-4fea-bf47-41d7a11bc3c6"
