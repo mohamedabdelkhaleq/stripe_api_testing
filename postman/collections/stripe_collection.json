@@ -1942,6 +1942,32 @@
 										"id": "64c74c57-1613-42ff-b672-b7662e860a1d",
 										"exec": [
 											"//TC-PI-016 Cancel a PI before confirmation — status: canceled\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response body contains id and object fields\", () => {\r",
+											"    pm.expect(response.id).to.match(/^pi_/);\r",
+											"    pm.expect(response.object).to.eql(\"payment_intent\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"const validStatuses = [\r",
+											"    \"succeeded\",\r",
+											"    \"requires_action\",\r",
+											"    \"processing\",\r",
+											"    \"requires_payment_method\",\r",
+											"    \"canceled\"\r",
+											"];\r",
+											"\r",
+											"pm.test(\"Payment status is valid\", () => {\r",
+											"    pm.expect(validStatuses).to.include(response.status);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"status: \" + response.status, () => {\r",
+											"    pm.expect(response.status).to.be.oneOf(validStatuses);\r",
+											"});\r",
+											"\r",
 											""
 										],
 										"type": "text/javascript",
@@ -1953,8 +1979,12 @@
 									"listen": "prerequest",
 									"script": {
 										"id": "2d95bf82-032a-4a88-af71-db349e506bee",
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
