@@ -743,9 +743,80 @@
 								"url": "{{base_url}}/v1/customers/{{customer_id}}"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-CUS-012: Update Customer with Invalid Email",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ce60a7b5-348d-4bd5-a7df-22d074883c3f",
+										"exec": [
+											"const customerId = pm.environment.get(\"customer_id\");\r",
+											"\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
+											"}\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "0d356990-4c7d-4208-a412-769cf6ed5fd5",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Email is updated correctly\", function() {\r",
+											"    const newEmail = pm.request.body.urlencoded.get(\"email\");\r",
+											"    pm.expect(data.email).to.equal(newEmail);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "071e9a07-f137-4c97-a886-7ab84765d4e3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "{{$randomEmail}}",
+											"type": "text",
+											"uuid": "8d7a9a81-ffee-43e4-9680-b52327468099"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/customers/{{customer_id}}"
+							},
+							"response": []
 						}
 					],
 					"id": "7a6d4c79-3fb0-4bea-9344-753a85aa4fcf"
+				},
+				{
+					"name": "New Folder",
+					"item": [],
+					"id": "59ffe98f-0a31-4c8e-af36-5b435caa67bd"
 				}
 			],
 			"id": "03cc6b74-92d6-4fea-bf47-41d7a11bc3c6"
