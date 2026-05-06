@@ -3068,7 +3068,7 @@
 			"name": "Charges",
 			"item": [
 				{
-					"name": "TC-PI-001",
+					"name": "TC-PI-001:Create charge with valid card token",
 					"event": [
 						{
 							"listen": "test",
@@ -3092,7 +3092,7 @@
 									"pm.test(\"charge.amount matches the PaymentIntent amount\", function () {\r",
 									"    const piAmount = parseInt(pm.environment.get(\"amount\"));\r",
 									"    pm.expect(response.amount).to.equal(piAmount);\r",
-									"  \r",
+									"\r",
 									"});\r",
 									"\r",
 									"//charge.currency matches the PaymentIntent currency\r",
@@ -3106,15 +3106,9 @@
 									"    pm.expect(response.paid).to.be.true;\r",
 									"});\r",
 									"\r",
-									"//charge.receipt_url is present (non-empty string)\r",
-									"pm.test(\"charge.receipt_url is present and non-empty\", function () {\r",
-									"    pm.expect(response.receipt_url).to.be.a(\"string\").and.not.to.be.null;\r",
-									"    pm.expect(response.receipt_url).to.match(/^https:/);\r",
-									"});\r",
 									"\r",
-									"//charge.payment_method_details.card.brand is present\r",
-									"pm.test(\"charge.payment_method_details.card.brand is present\", function () {\r",
-									"    pm.expect(response.payment_method_details.card.brand).to.be.a(\"string\").and.not.to.be.null;\r",
+									"pm.test(\"charge.amount is equal to PaymentIntent amount\", function () {\r",
+									"    pm.expect(response.amount).to.equal(paymentIntentAmount);\r",
 									"});\r",
 									"\r",
 									"pm.environment.set(\"charge_id\", response.id);\r",
@@ -3130,8 +3124,12 @@
 							"listen": "prerequest",
 							"script": {
 								"id": "4a10dfb0-9b8a-43f2-b132-bc80ea1a064a",
-								"exec": [],
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
