@@ -3165,7 +3165,7 @@
 					"response": []
 				},
 				{
-					"name": "TC-PI-002",
+					"name": "TC-PI-002:Create charge with declined card token",
 					"event": [
 						{
 							"listen": "test",
@@ -6600,14 +6600,15 @@
 									"script": {
 										"id": "ae0f9e23-2822-45a5-9bed-043337a8d092",
 										"exec": [
-											"const refundResponse = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Status code is 200\", () => {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"pm.test(\"Metadata updated\", function () {\r",
-											"    pm.expect(refundResponse.metadata.order_id).to.eql(pm.request.body\r",
-											"    .urlencoded.metadata[0].order_id);\r",
+											"const refundResponse = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Metadata updated\", function () {",
+											"    const urlencodedParams = pm.request.body.urlencoded.toObject();",
+											"    const expectedOrderId = urlencodedParams[\"metadata[order_id]\"];",
+											"    pm.expect(refundResponse.metadata.order_id).to.eql(expectedOrderId);",
 											"});"
 										],
 										"type": "text/javascript",
