@@ -6432,7 +6432,11 @@
 											"pm.test(\"Subscription is canceled\", function() {\r",
 											"    pm.expect(data.status).to.equal('canceled');\r",
 											"    pm.expect(data.canceled_at).to.exist;\r",
-											"});"
+											"});\r",
+											"\r",
+											"pm.environment.set('canceled_subscription_id', data.id);\r",
+											"\r",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -6496,12 +6500,10 @@
 									"script": {
 										"id": "4b5ceff0-116a-4388-8e38-5716a2275b75",
 										"exec": [
-											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
-											"\r",
-											"if (!subscriptionId) {\r",
-											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
-											"}\r",
-											""
+											"const canceledSubId = pm.environment.get(\"canceled_subscription_id\");\r",
+											"if (!canceledSubId) {\r",
+											"    throw new Error(\"canceled_subscription_id is missing! Run TC-SUB-014 first.\");\r",
+											"}"
 										],
 										"type": "text/javascript",
 										"packages": {},
