@@ -5857,79 +5857,6 @@
 							"response": []
 						},
 						{
-							"name": "TC-SUB-007: Create Subscription with Non-Existent Customer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
-										"exec": [
-											"const data = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Status is 400 Bad Request\", function() {\r",
-											"    pm.response.to.have.status(400);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Error mentions missing customer\", function() {\r",
-											"    pm.expect(data.error.type).to.equal('invalid_request_error');\r",
-											"    pm.expect(data.error.message).to.include('customer');\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "fcc3de6f-3655-4bc6-bc4e-b8992c380750",
-										"exec": [
-											"const priceId = pm.environment.get(\"price_id_yearly\");\r",
-											"const paymentMethodId = pm.environment.get(\"payment_method_id\");\r",
-											"\r",
-											"if (!priceId) {\r",
-											"    throw new Error(\"price_id_yearly is missing! Run TC-PRC-003 first.\");\r",
-											"}\r",
-											"if (!paymentMethodId) {\r",
-											"    throw new Error(\"payment_method_id is missing! Run TC-PM-001 first.\");\r",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"id": "5c1a6887-e479-48db-9726-4c6dbece884e",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "items[0][price]",
-											"value": "{{price_id_monthly}}",
-											"type": "text",
-											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
-										},
-										{
-											"key": "default_payment_method",
-											"value": "{{payment_method_id}}",
-											"type": "text",
-											"uuid": "5b466fc7-d40f-4ee2-9ace-5f9cea28a21f"
-										}
-									]
-								},
-								"url": "{{base_url}}/v1/subscriptions"
-							},
-							"response": []
-						},
-						{
 							"name": "TC-SUB-006: Create Subscription without Price",
 							"event": [
 								{
@@ -6005,6 +5932,152 @@
 											"value": "invalidCustomer",
 											"type": "text",
 											"uuid": "8d7a356f-bd4a-42dd-ac63-442f9a7874ba"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/subscriptions"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-SUB-007: Create Subscription with Non-Existent Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 400 Bad Request\", function() {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error mentions missing customer\", function() {\r",
+											"    pm.expect(data.error.type).to.equal('invalid_request_error');\r",
+											"    pm.expect(data.error.message).to.include('customer');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "fcc3de6f-3655-4bc6-bc4e-b8992c380750",
+										"exec": [
+											"const priceId = pm.environment.get(\"price_id_yearly\");\r",
+											"const paymentMethodId = pm.environment.get(\"payment_method_id\");\r",
+											"\r",
+											"if (!priceId) {\r",
+											"    throw new Error(\"price_id_yearly is missing! Run TC-PRC-003 first.\");\r",
+											"}\r",
+											"if (!paymentMethodId) {\r",
+											"    throw new Error(\"payment_method_id is missing! Run TC-PM-001 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "5c1a6887-e479-48db-9726-4c6dbece884e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "items[0][price]",
+											"value": "{{price_id_monthly}}",
+											"type": "text",
+											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+										},
+										{
+											"key": "default_payment_method",
+											"value": "{{payment_method_id}}",
+											"type": "text",
+											"uuid": "5b466fc7-d40f-4ee2-9ace-5f9cea28a21f"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/subscriptions"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-SUB-008: Create Subscription with Non-Existent Price",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 400 Bad Request\", function() {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error mentions missing customer\", function() {\r",
+											"    pm.expect(data.error.type).to.equal('invalid_request_error');\r",
+											"    pm.expect(data.error.message).to.include('customer');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "fcc3de6f-3655-4bc6-bc4e-b8992c380750",
+										"exec": [
+											"const priceId = pm.environment.get(\"price_id_yearly\");\r",
+											"const paymentMethodId = pm.environment.get(\"payment_method_id\");\r",
+											"\r",
+											"if (!priceId) {\r",
+											"    throw new Error(\"price_id_yearly is missing! Run TC-PRC-003 first.\");\r",
+											"}\r",
+											"if (!paymentMethodId) {\r",
+											"    throw new Error(\"payment_method_id is missing! Run TC-PM-001 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "790bdc23-e690-464c-9be4-0eda5e0fd913",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "items[0][price]",
+											"value": "{{price_id_monthly}}",
+											"type": "text",
+											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+										},
+										{
+											"key": "default_payment_method",
+											"value": "{{payment_method_id}}",
+											"type": "text",
+											"uuid": "5b466fc7-d40f-4ee2-9ace-5f9cea28a21f"
 										}
 									]
 								},
@@ -6090,7 +6163,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-RF-001:Create full refund for charge Copy",
+							"name": "TC-RF-002:Create partial refund for charge",
 							"event": [
 								{
 									"listen": "test",
@@ -6150,7 +6223,92 @@
 										},
 										{
 											"key": "amount",
-											"value": "1000",
+											"value": "{{half of amount}}",
+											"type": "text",
+											"uuid": "4b216d39-d743-419a-8843-491f3576f04b"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/refunds?charge={{charge_id}}&amount=1000",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"refunds"
+									],
+									"query": [
+										{
+											"key": "charge",
+											"value": "{{charge_id}}"
+										},
+										{
+											"key": "amount",
+											"value": "1000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-RF-004:Create refund with mention the reason",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c1afb943-31b4-4697-b447-bd12bda25d2e",
+										"exec": [
+											"const refundResponse = pm.response.json();\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
+											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
+											"});\r",
+											"//check resson \r",
+											"pm.test(\"Refund amount is correct\", () => \r",
+											"pm.test(\"Refund status is succeeded\", () => {\r",
+											"    pm.expect(refundResponse.status).to.equal(\"succeeded\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "570be957-e7b8-4a96-8a62-24096b71c32b",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "3e4c3a4c-90a0-45c5-9e64-a25b9aef55dc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "charge",
+											"value": "{{charge_id}}",
+											"type": "text",
+											"uuid": "52478e1d-c587-4ff7-8210-dbf42f67fd12"
+										},
+										{
+											"key": "amount",
+											"value": "{{half of amount}}",
 											"type": "text",
 											"uuid": "4b216d39-d743-419a-8843-491f3576f04b"
 										}
