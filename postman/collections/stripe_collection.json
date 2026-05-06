@@ -5487,7 +5487,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-SUB-002: Create Subscription with One-Time Price",
+							"name": "TC-SUB-002: Create Subscription with Yearly Price",
 							"event": [
 								{
 									"listen": "test",
@@ -5527,14 +5527,14 @@
 										"id": "fcc3de6f-3655-4bc6-bc4e-b8992c380750",
 										"exec": [
 											"const customerId = pm.environment.get(\"customer_id\");\r",
-											"const priceId = pm.environment.get(\"price_id_monthly\");\r",
+											"const priceId = pm.environment.get(\"price_id_yearly\");\r",
 											"const paymentMethodId = pm.environment.get(\"payment_method_id\");\r",
 											"\r",
 											"if (!customerId) {\r",
 											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
 											"}\r",
 											"if (!priceId) {\r",
-											"    throw new Error(\"price_id_monthly is missing! Run TC-PRC-002 first.\");\r",
+											"    throw new Error(\"price_id_yearly is missing! Run TC-PRC-003 first.\");\r",
 											"}\r",
 											"if (!paymentMethodId) {\r",
 											"    throw new Error(\"payment_method_id is missing! Run TC-PM-001 first.\");\r",
@@ -5564,7 +5564,7 @@
 										},
 										{
 											"key": "items[0][price]",
-											"value": "{{price_id_monthly}}",
+											"value": "{{price_id_yearly}}",
 											"type": "text",
 											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
 										},
