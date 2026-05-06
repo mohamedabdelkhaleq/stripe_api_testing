@@ -2391,7 +2391,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PI-008",
+							"name": "TC-PI-008: POST",
 							"event": [
 								{
 									"listen": "test",
@@ -6253,7 +6253,7 @@
 										},
 										{
 											"key": "card[token]",
-											"value": "tok_visa",
+											"value": "tok_",
 											"type": "text",
 											"uuid": "cb3aab30-1ad0-4707-8e16-f4efd393d8d6"
 										}
