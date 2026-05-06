@@ -1703,7 +1703,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PI-002",
+							"name": "TC-PI-002 : Create and confirm paymentintent",
 							"event": [
 								{
 									"listen": "test",
@@ -6341,7 +6341,7 @@
 							"response": []
 						},
 						{
-							"name": "06 - Create Payment Intent Copy",
+							"name": "06 - Create Payment Intent",
 							"event": [
 								{
 									"listen": "test",
@@ -6362,7 +6362,7 @@
 											"    pm.expect(jsonData.status).to.be.oneOf([\"requires_confirmation\", \"requires_payment_method\"]);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Customer and Payment Method are linked\", function () {\r",
+											"pm.test(\"Customer and Payment Method are \", function () {\r",
 											"    pm.expect(jsonData.customer).to.eql(pm.environment.get(\"e2e_customer_id\"));\r",
 											"    pm.expect(jsonData.payment_method).to.eql(pm.environment.get(\"e2e_payment_method_id\"));\r",
 											"});\r",
