@@ -6355,7 +6355,7 @@
 							"response": []
 						},
 						{
-							"name": "06 - Create Payment Intent",
+							"name": "04 - Create Payment Intent",
 							"event": [
 								{
 									"listen": "test",
@@ -6476,6 +6476,113 @@
 									]
 								},
 								"url": "{{base_url}}/v1/payment_intents"
+							},
+							"response": []
+						},
+						{
+							"name": "05 - Confirm Payment Intent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Payment Intent created correctly\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^pi_/);\r",
+											"    pm.expect(jsonData.object).to.eql(\"payment_intent\");\r",
+											"    pm.expect(jsonData.amount).to.eql(1000);\r",
+											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
+											"    pm.expect(jsonData.status).to.be.oneOf([\"requires_confirmation\", \"requires_payment_method\"]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Customer and Payment Method are \", function () {\r",
+											"    pm.expect(jsonData.customer).to.eql(pm.environment.get(\"e2e_customer_id\"));\r",
+											"    pm.expect(jsonData.payment_method).to.eql(pm.environment.get(\"e2e_payment_method_id\"));\r",
+											"});\r",
+											"\r",
+											"\r",
+											"const validStatuses = [\r",
+											"    \"succeeded\",\r",
+											"    \"requires_action\",\r",
+											"    \"processing\",\r",
+											"    \"requires_payment_method\"\r",
+											"];\r",
+											"\r",
+											"pm.test(\"Payment status is valid\", () => {\r",
+											"    pm.expect(validStatuses).to.include(jsonData.status);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"status: \" + jsonData.status, () => {\r",
+											"    pm.expect(jsonData.status).to.be.oneOf(validStatuses);\r",
+											"});\r",
+											"\r",
+											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"    pm.environment.set(\"e2e_payment_intent_id\", jsonData.id);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
+										"exec": [
+											"const customerId = pm.environment.get(\"e2e_customer_id\");\r",
+											"const pmId = pm.environment.get(\"e2e_payment_method_id\");\r",
+											"\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"e2e_customer_id is missing! Run 03 first.\");\r",
+											"}\r",
+											"if (!pmId) {\r",
+											"    throw new Error(\"e2e_payment_method_id is missing! Run 04 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "db5be84d-69e1-422f-a192-fab4b34709cf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "payment_method",
+											"value": "{{e2e_payment_method_id}}",
+											"type": "text",
+											"uuid": "3472fdee-611c-4930-a354-219b0d363481"
+										},
+										{
+											"key": "return_url",
+											"value": "https://example.com",
+											"type": "text",
+											"uuid": "75b5b62e-3c17-4f79-8ea5-015c2bd7c6fa"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_intents/{{e2e_payment_intent_id}}/confirm"
 							},
 							"response": []
 						}
