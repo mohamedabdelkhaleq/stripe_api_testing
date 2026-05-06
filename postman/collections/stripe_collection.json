@@ -6713,7 +6713,7 @@
 											"});\r",
 											"\r",
 											"pm.test(\"array of refund is not empty\", function () {\r",
-											"  pm.expect(refundResponse.object).to.eql(\"list\");\r",
+											"  pm.expect(refundResponse.count).to.eql(parseInt(pm.request.url.query.get(\"limit\")));\r",
 											"});"
 										],
 										"type": "text/javascript",
