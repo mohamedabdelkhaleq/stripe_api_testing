@@ -6504,6 +6504,24 @@
 						}
 					],
 					"id": "33ad60e3-345f-4b24-940c-29fc34fe6273"
+				},
+				{
+					"name": "Retrieve Refunds",
+					"item": [
+						{
+							"name": "TC-RE-006",
+							"id": "bd8d4810-d474-499c-95bf-153b4ae2ea9b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
+					"id": "265dced3-8236-4f4d-98da-694939db596f"
 				}
 			],
 			"id": "cb095b04-ec36-41f7-8fc2-f9aea5f94a84"
