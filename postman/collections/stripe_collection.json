@@ -5938,22 +5938,19 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Payment Intent is succeeded\", function () {\r",
+											"pm.test(\"Charge is succeeded\", function () {\r",
 											"    pm.expect(jsonData.status).to.eql(\"succeeded\");\r",
+											"    pm.expect(jsonData.paid).to.be.true;\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Charge is created automatically\", function () {\r",
-											"    pm.expect(jsonData.latest_charge).to.not.be.null;\r",
-											"    pm.expect(jsonData.latest_charge).to.match(/^ch_/);\r",
+											"pm.test(\"Charge amount is correct\", function () {\r",
+											"    pm.expect(jsonData.amount).to.eql(1000);\r",
+											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Amount received is correct\", function () {\r",
-											"    pm.expect(jsonData.amount_received).to.eql(1000);\r",
-											"});\r",
-											"\r",
-											"if (pm.response.code === 200 && jsonData.latest_charge) {\r",
-											"    pm.environment.set(\"e2e_charge_id\", jsonData.latest_charge);\r",
-											"}"
+											"pm.test(\"Receipt URL exists\", function () {\r",
+											"    pm.expect(jsonData.receipt_url).to.not.be.null;\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -5989,23 +5986,6 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "payment_method",
-											"value": "{{e2e_payment_method_id}}",
-											"type": "text",
-											"uuid": "817316c4-90e8-4889-963e-d811498b400c"
-										},
-										{
-											"key": "return_url",
-											"value": "https://example.com",
-											"type": "text",
-											"uuid": "cc6e8c3e-80ba-49cb-a1c4-7329d448fbdd"
-										}
-									]
-								},
 								"url": "{{base_url}}/v1/charges/{{e2e_charge_id}}"
 							},
 							"response": []
