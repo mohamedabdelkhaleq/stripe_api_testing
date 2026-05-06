@@ -1162,7 +1162,7 @@
 					"name": "Create Payment Method",
 					"item": [
 						{
-							"name": "TC-PM-01",
+							"name": "TC-PM-001",
 							"event": [
 								{
 									"listen": "test",
@@ -1575,6 +1575,18 @@
 						}
 					],
 					"id": "2b4a082c-70dc-482f-a1cc-684bb1b19946"
+				},
+				{
+					"name": "New Request",
+					"id": "f5f0c078-8136-4d29-8dbf-4dd0adeb6876",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "e5269e50-6154-48f4-9a1b-60f63295b016"
@@ -6094,7 +6106,20 @@
 				},
 				{
 					"name": "E2E-03-Declined Card Flow",
-					"item": [],
+					"item": [
+						{
+							"name": "New Request",
+							"id": "ac7ad3c7-bd0f-4c6d-85b2-f2d17a413e99",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
 					"id": "b9cc7840-d0a0-447b-a73b-a13a715d1de1"
 				}
 			],
