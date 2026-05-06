@@ -6024,9 +6024,9 @@
 											"    pm.response.to.have.status(400);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Error mentions missing customer\", function() {\r",
+											"pm.test(\"Error mentions missing items\", function() {\r",
 											"    pm.expect(data.error.type).to.equal('invalid_request_error');\r",
-											"    pm.expect(data.error.message).to.include('customer');\r",
+											"    pm.expect(data.error.message).to.include('items');\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6039,15 +6039,12 @@
 									"script": {
 										"id": "fcc3de6f-3655-4bc6-bc4e-b8992c380750",
 										"exec": [
-											"const priceId = pm.environment.get(\"price_id_yearly\");\r",
-											"const paymentMethodId = pm.environment.get(\"payment_method_id\");\r",
+											"const customerId = pm.environment.get(\"customer_id\");\r",
 											"\r",
-											"if (!priceId) {\r",
-											"    throw new Error(\"price_id_yearly is missing! Run TC-PRC-003 first.\");\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
 											"}\r",
-											"if (!paymentMethodId) {\r",
-											"    throw new Error(\"payment_method_id is missing! Run TC-PM-001 first.\");\r",
-											"}"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -6066,16 +6063,10 @@
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "items[0][price]",
-											"value": "{{price_id_monthly}}",
+											"key": "customer",
+											"value": "{{customer_id}}",
 											"type": "text",
-											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
-										},
-										{
-											"key": "default_payment_method",
-											"value": "{{payment_method_id}}",
-											"type": "text",
-											"uuid": "5b466fc7-d40f-4ee2-9ace-5f9cea28a21f"
+											"uuid": "2e66cc16-927b-4da7-aaf9-6017ba4e790a"
 										}
 									]
 								},
