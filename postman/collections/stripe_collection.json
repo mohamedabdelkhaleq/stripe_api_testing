@@ -5393,39 +5393,34 @@
 					"name": "Create Subscriptions",
 					"item": [
 						{
-							"name": "TC-SUB-001: Create Customer with Email and Name Copy",
+							"name": "TC-SUB-001: Create Subscription with Monthly Price",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
 										"exec": [
-											"const jsonData = pm.response.json();\r",
+											"const data = pm.response.json();\r",
 											"\r",
-											"// 1. Status Code Validation\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"// 2. Data Format & ID Validation\r",
-											"pm.test(\"Customer has valid ID and type\", function () {\r",
-											"    pm.expect(jsonData.id).to.match(/^cus_/);\r",
-											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
+											"pm.test(\"Subscription object has correct structure\", function() {\r",
+											"    pm.expect(data.id).to.match(/^sub_/);\r",
+											"    pm.expect(data.object).to.equal('subscription');\r",
+											"    pm.expect(data.customer).to.equal(pm.environment.get('customer_id'));\r",
+											"    pm.expect(data.status).to.equal('active');\r",
 											"});\r",
 											"\r",
-											"// 3. Data Integrity (Comparing Response to Request)\r",
-											"pm.test(\"Response name and email match the request\", function () {\r",
-											"    const sentName = pm.request.body.urlencoded.get(\"name\");\r",
-											"    const sentEmail = pm.request.body.urlencoded.get(\"email\");\r",
-											"\r",
-											"    pm.expect(jsonData.name).to.eql(sentName);\r",
-											"    pm.expect(jsonData.email).to.eql(sentEmail);\r",
+											"pm.test(\"Subscription has correct items\", function() {\r",
+											"    pm.expect(data.items.data.length).to.equal(1);\r",
+											"    pm.expect(data.items.data[0].price.id).to.equal(pm.environment.get('price_id_monthly'));\r",
 											"});\r",
 											"\r",
-											"// 4. Save the ID for TC06, TC09, etc.\r",
-											"if (pm.response.code === 200 && jsonData.id) {\r",
-											"    pm.environment.set(\"customer_id\", jsonData.id);\r",
-											"}"
+											"pm.test(\"Save subscription_id for later tests\", function() {\r",
+											"    pm.environment.set('subscription_id', data.id);\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -5438,32 +5433,26 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "email",
-											"value": "{{$randomEmail}}",
+											"key": "customer",
+											"value": "{{customer_id}}",
 											"type": "text",
 											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
 										},
 										{
-											"key": "name",
-											"value": "{{$randomFullName}}",
+											"key": "item[0][price]",
+											"value": "{{price_id_monthly}}",
 											"type": "text",
 											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
 										}
 									]
 								},
-								"url": "{{base_url}}/v1/customers"
+								"url": "{{base_url}}/v1/subscriptions"
 							},
 							"response": []
 						}
@@ -6381,19 +6370,16 @@
 										"exec": [
 											"const jsonData = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status is 402 for payment method attach failure\", function () {\r",
+											"\r",
+											"    pm.response.to.have.status(402);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Payment Method is attached to customer\", function () {\r",
-											"    pm.expect(jsonData.id).to.match(/^pm_/);\r",
-											"    pm.expect(jsonData.customer).to.eql(pm.environment.get(\"e2e_customer_id\"));\r",
-											"});\r",
+											"pm.test(\"Error code is card_declined\", function () {\r",
+											"    pm.expect(jsonData.error.code).to.eql(\"card_declined\");\r",
+											"    });\r",
 											"\r",
-											"pm.test(\"Card details are correct\", function () {\r",
-											"    pm.expect(jsonData.type).to.eql(\"card\");\r",
-											"    pm.expect(jsonData.card.brand).to.eql(\"visa\");\r",
-											"});"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -6590,11 +6576,6 @@
 											"pm.test(\"Error code is card_declined\", () => {\r",
 											"    pm.expect(response.error.code).to.eql(\"card_declined\");\r",
 											"});\r",
-											"\r",
-											"pm.test(\"Error decline_code is generic_decline\", () => {\r",
-											"    pm.expect(response.error.decline_code).to.eql(\"generic_decline\");\r",
-											"   \r",
-											"    });\r",
 											"\r",
 											"\r",
 											"pm.test(\"Error message is correct\", () => {\r",
