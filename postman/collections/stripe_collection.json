@@ -6260,13 +6260,17 @@
 									"script": {
 										"id": "c1afb943-31b4-4697-b447-bd12bda25d2e",
 										"exec": [
+											"//Create refund with reason=duplicate\r",
 											"const refundResponse = pm.response.json();\r",
 											"pm.test(\"Customer has valid ID and type\", function () {\r",
 											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
 											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
 											"});\r",
-											"//check resson \r",
-											"pm.test(\"Refund amount is correct\", () => \r",
+											"//check reason of refund \r",
+											"pm.test(\"Refund reason is duplicate payment\", () => {\r",
+											"    pm.expect(refundResponse.reason).to.match(duplicate);\r",
+											"    });\r",
+											"\r",
 											"pm.test(\"Refund status is succeeded\", () => {\r",
 											"    pm.expect(refundResponse.status).to.equal(\"succeeded\");\r",
 											"});\r",
@@ -6311,6 +6315,12 @@
 											"value": "{{half of amount}}",
 											"type": "text",
 											"uuid": "4b216d39-d743-419a-8843-491f3576f04b"
+										},
+										{
+											"key": "reason",
+											"value": "duplicate",
+											"type": "text",
+											"uuid": "52573e6e-56bc-4993-9847-f51805ba46dc"
 										}
 									]
 								},
