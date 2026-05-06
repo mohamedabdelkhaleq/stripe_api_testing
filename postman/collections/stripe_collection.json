@@ -6595,7 +6595,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-RE-007:Retrieve refund with invalid ID Copy",
+							"name": "TC-RE-008:Update refund metadata",
 							"event": [
 								{
 									"listen": "test",
@@ -6604,11 +6604,11 @@
 										"exec": [
 											"const refundResponse = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status code is 404\", () => {\r",
-											"    pm.response.to.have.status(404);\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});\r",
-											"pm.test(\"error message is correct\", function () {\r",
-											"    pm.expect(refundResponse.error.message).to.have.include(\"No such refund\");\r",
+											"pm.test(\"Metadata updated\", function () {\r",
+											"    pm.expect(refundResponse.metadata.order_id).to.have.include(\"No such refund\");\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6634,9 +6634,20 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
-								"url": "{{base_url}}/v1/refunds/{{invalid_refund_id}}"
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "metadata[order_id]",
+											"value": "6735",
+											"type": "text",
+											"uuid": "658025a2-bbd7-44cf-94b1-6bf6395d30d0"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/refunds/{{refund_id}}"
 							},
 							"response": []
 						}
