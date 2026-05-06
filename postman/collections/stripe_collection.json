@@ -6253,7 +6253,7 @@
 										},
 										{
 											"key": "card[token]",
-											"value": "card_declined",
+											"value": "tok_visa_chargeDeclined",
 											"type": "text",
 											"uuid": "cb3aab30-1ad0-4707-8e16-f4efd393d8d6"
 										}
@@ -6331,7 +6331,7 @@
 									"urlencoded": [
 										{
 											"key": "customer",
-											"value": "{{e2e_customer_id}}",
+											"value": "{{",
 											"type": "text",
 											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
 										}
