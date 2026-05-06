@@ -8655,303 +8655,34 @@
 							"response": []
 						},
 						{
-							"name": "06 - Create Payment Intent",
+							"name": "06 - Create Subscription",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
 										"exec": [
-											"const jsonData = pm.response.json();\r",
+											"const data = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Payment Intent created correctly\", function () {\r",
-											"    pm.expect(jsonData.id).to.match(/^pi_/);\r",
-											"    pm.expect(jsonData.object).to.eql(\"payment_intent\");\r",
-											"    pm.expect(jsonData.amount).to.eql(1000);\r",
-											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
-											"    pm.expect(jsonData.status).to.be.oneOf([\"requires_confirmation\", \"requires_payment_method\"]);\r",
+											"pm.test(\"Subscription object has correct structure\", function() {\r",
+											"    pm.expect(data.id).to.match(/^sub_/);\r",
+											"    pm.expect(data.object).to.equal('subscription');\r",
+											"    pm.expect(data.customer).to.equal(pm.environment.get('customer_id'));\r",
+											"    pm.expect(data.status).to.equal('active');\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Customer and Payment Method are linked\", function () {\r",
-											"    pm.expect(jsonData.customer).to.eql(pm.environment.get(\"e2e_customer_id\"));\r",
-											"    pm.expect(jsonData.payment_method).to.eql(pm.environment.get(\"e2e_payment_method_id\"));\r",
+											"pm.test(\"Subscription has correct items\", function() {\r",
+											"    pm.expect(data.items.data.length).to.equal(1);\r",
+											"    pm.expect(data.items.data[0].price.id).to.equal(pm.environment.get('price_id_monthly'));\r",
 											"});\r",
 											"\r",
-											"if (pm.response.code === 200 && jsonData.id) {\r",
-											"    pm.environment.set(\"e2e_payment_intent_id\", jsonData.id);\r",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
-										"exec": [
-											"const customerId = pm.environment.get(\"e2e_customer_id\");\r",
-											"const pmId = pm.environment.get(\"e2e_payment_method_id\");\r",
-											"\r",
-											"if (!customerId) {\r",
-											"    throw new Error(\"e2e_customer_id is missing! Run 03 first.\");\r",
-											"}\r",
-											"if (!pmId) {\r",
-											"    throw new Error(\"e2e_payment_method_id is missing! Run 04 first.\");\r",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"id": "3f31fc45-84a7-4f92-aae3-6b441f8c9878",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "amount",
-											"value": "1000",
-											"type": "text",
-											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
-										},
-										{
-											"key": "currency",
-											"value": "usd",
-											"type": "text",
-											"uuid": "d1a505fb-8bdd-427c-8b50-5c18ba3dbd3f"
-										},
-										{
-											"key": "customer",
-											"value": "{{e2e_customer_id}}",
-											"type": "text",
-											"uuid": "ea4fafc9-bbbc-4047-ac95-ee034e01ba32"
-										},
-										{
-											"key": "payment_method",
-											"value": "{{e2e_payment_method_id}}",
-											"type": "text",
-											"uuid": "817316c4-90e8-4889-963e-d811498b400c"
-										},
-										{
-											"key": "payment_method_types[]",
-											"value": "card",
-											"type": "text",
-											"uuid": "23bb8dd0-a0b1-489a-8219-6b1e16a077d2"
-										}
-									]
-								},
-								"url": "{{base_url}}/v1/payment_intents"
-							},
-							"response": []
-						},
-						{
-							"name": "07 - Confirm Payment Intent",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
-										"exec": [
-											"const jsonData = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Payment Intent is succeeded\", function () {\r",
-											"    pm.expect(jsonData.status).to.eql(\"succeeded\");\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Charge is created automatically\", function () {\r",
-											"    pm.expect(jsonData.latest_charge).to.not.be.null;\r",
-											"    pm.expect(jsonData.latest_charge).to.match(/^ch_/);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Amount received is correct\", function () {\r",
-											"    pm.expect(jsonData.amount_received).to.eql(1000);\r",
-											"});\r",
-											"\r",
-											"if (pm.response.code === 200 && jsonData.latest_charge) {\r",
-											"    pm.environment.set(\"e2e_charge_id\", jsonData.latest_charge);\r",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
-										"exec": [
-											"const piId = pm.environment.get(\"e2e_payment_intent_id\");\r",
-											"if (!piId) {\r",
-											"    throw new Error(\"e2e_payment_intent_id is missing! Run 06 first.\");\r",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"id": "cc27cecc-524c-49d9-b2c6-abc67dff8142",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "payment_method",
-											"value": "{{e2e_payment_method_id}}",
-											"type": "text",
-											"uuid": "817316c4-90e8-4889-963e-d811498b400c"
-										},
-										{
-											"key": "return_url",
-											"value": "https://example.com",
-											"type": "text",
-											"uuid": "cc6e8c3e-80ba-49cb-a1c4-7329d448fbdd"
-										}
-									]
-								},
-								"url": "{{base_url}}/v1/payment_intents/{{e2e_payment_intent_id}}/confirm"
-							},
-							"response": []
-						},
-						{
-							"name": "09 - Create Refund",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
-										"exec": [
-											"const jsonData = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Refund is succeeded\", function () {\r",
-											"    pm.expect(jsonData.id).to.match(/^re_/);\r",
-											"    pm.expect(jsonData.status).to.eql(\"succeeded\");\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Refund amount matches charge\", function () {\r",
-											"    pm.expect(jsonData.amount).to.eql(1000);\r",
-											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
-											"});\r",
-											"\r",
-											"if (pm.response.code === 200 && jsonData.id) {\r",
-											"    pm.environment.set(\"e2e_refund_id\", jsonData.id);\r",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
-										"exec": [
-											"const chargeId = pm.environment.get(\"e2e_charge_id\");\r",
-											"if (!chargeId) {\r",
-											"    throw new Error(\"e2e_charge_id is missing! Run 08 first.\");\r",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"id": "745d3005-9f05-4791-9bc5-19588f0a5344",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "charge",
-											"value": "{{e2e_charge_id}}",
-											"type": "text",
-											"uuid": "cc6e8c3e-80ba-49cb-a1c4-7329d448fbdd"
-										}
-									]
-								},
-								"url": "{{base_url}}/v1/refunds"
-							},
-							"response": []
-						},
-						{
-							"name": "08 - Verify Charge",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
-										"exec": [
-											"const jsonData = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Charge is succeeded\", function () {\r",
-											"    pm.expect(jsonData.status).to.eql(\"succeeded\");\r",
-											"    pm.expect(jsonData.paid).to.be.true;\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Charge amount is correct\", function () {\r",
-											"    pm.expect(jsonData.amount).to.eql(1000);\r",
-											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Receipt URL exists\", function () {\r",
-											"    pm.expect(jsonData.receipt_url).to.not.be.null;\r",
+											"pm.test(\"Save subscription_id for later tests\", function() {\r",
+											"    pm.environment.set('subscription_id', data.id);\r",
+											"    pm.environment.set('subscription_item_id', data.items.data[0].id);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -8962,11 +8693,20 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
+										"id": "fcc3de6f-3655-4bc6-bc4e-b8992c380750",
 										"exec": [
-											"const chargeId = pm.environment.get(\"e2e_charge_id\");\r",
-											"if (!chargeId) {\r",
-											"    throw new Error(\"e2e_charge_id is missing! Run 07 first.\");\r",
+											"const customerId = pm.environment.get(\"customer_id\");\r",
+											"const priceId = pm.environment.get(\"price_id_monthly\");\r",
+											"const paymentMethodId = pm.environment.get(\"payment_method_id\");\r",
+											"\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
+											"}\r",
+											"if (!priceId) {\r",
+											"    throw new Error(\"price_id_monthly is missing! Run TC-PRC-002 first.\");\r",
+											"}\r",
+											"if (!paymentMethodId) {\r",
+											"    throw new Error(\"payment_method_id is missing! Run TC-PM-001 first.\");\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -8975,20 +8715,37 @@
 									}
 								}
 							],
-							"id": "38ff5f62-a791-4fa7-808f-f5aa4e04abf4",
+							"id": "6b4a5cb5-d251-4707-88cd-11e252057a95",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "GET",
+								"method": "POST",
 								"header": [],
-								"url": "{{base_url}}/v1/charges/{{e2e_charge_id}}"
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "customer",
+											"value": "{{customer_id}}",
+											"type": "text",
+											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+										},
+										{
+											"key": "items[0][price]",
+											"value": "{{price_id_monthly}}",
+											"type": "text",
+											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+										},
+										{
+											"key": "default_payment_method",
+											"value": "{{payment_method_id}}",
+											"type": "text",
+											"uuid": "5b466fc7-d40f-4ee2-9ace-5f9cea28a21f"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/subscriptions"
 							},
 							"response": []
 						}
