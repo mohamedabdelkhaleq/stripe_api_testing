@@ -2391,7 +2391,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PI-008: POST",
+							"name": "TC-PI-008: Create And Confirm Payment method with 3DS Card",
 							"event": [
 								{
 									"listen": "test",
