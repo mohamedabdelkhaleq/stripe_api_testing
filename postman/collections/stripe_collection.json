@@ -1712,7 +1712,7 @@
 										"exec": [
 											"const response = pm.response.json();",
 											"//TC-PI-002 CONNECT TO PAYMENT METHOD Confirm PI with success card status: succeeded",
-											"pm.test(\"Status",
+											"pm.test(\"Status code is 200\", () => {",
 											"    pm.response.to.have.status(200);",
 											"});",
 											"pm.test(\"Response body contains id and object fields\", () => {",
@@ -7977,13 +7977,13 @@
 										},
 										{
 											"key": "amount",
-											"value": "",
+											"value": "1000",
 											"type": "text",
 											"uuid": "4b216d39-d743-419a-8843-491f3576f04b"
 										}
 									]
 								},
-								"url": "/v1/refunds"
+								"url": "{{base_url}}/v1/refunds"
 							},
 							"response": []
 						}
