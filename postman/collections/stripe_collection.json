@@ -5831,6 +5831,109 @@
 								"url": "{{base_url}}/v1/payment_intents"
 							},
 							"response": []
+						},
+						{
+							"name": "07 - Confirm Payment Intent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Payment Intent created correctly\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^pi_/);\r",
+											"    pm.expect(jsonData.object).to.eql(\"payment_intent\");\r",
+											"    pm.expect(jsonData.amount).to.eql(1000);\r",
+											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
+											"    pm.expect(jsonData.status).to.eql(\"requires_confirmation\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Customer and Payment Method are linked\", function () {\r",
+											"    pm.expect(jsonData.customer).to.eql(pm.environment.get(\"e2e_customer_id\"));\r",
+											"    pm.expect(jsonData.payment_method).to.eql(pm.environment.get(\"e2e_payment_method_id\"));\r",
+											"});\r",
+											"\r",
+											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"    pm.environment.set(\"e2e_payment_intent_id\", jsonData.id);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
+										"exec": [
+											"const customerId = pm.environment.get(\"e2e_customer_id\");\r",
+											"const pmId = pm.environment.get(\"e2e_payment_method_id\");\r",
+											"\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"e2e_customer_id is missing! Run 03 first.\");\r",
+											"}\r",
+											"if (!pmId) {\r",
+											"    throw new Error(\"e2e_payment_method_id is missing! Run 04 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "5786ea40-67d5-4666-ab4a-9eeff758fd21",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "amount",
+											"value": "1000",
+											"type": "text",
+											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+										},
+										{
+											"key": "currency",
+											"value": "usd",
+											"type": "text",
+											"uuid": "d1a505fb-8bdd-427c-8b50-5c18ba3dbd3f"
+										},
+										{
+											"key": "customer",
+											"value": "{{e2e_customer_id}}",
+											"type": "text",
+											"uuid": "ea4fafc9-bbbc-4047-ac95-ee034e01ba32"
+										},
+										{
+											"key": "payment_method",
+											"value": "{{e2e_payment_method_id}}",
+											"type": "text",
+											"uuid": "817316c4-90e8-4889-963e-d811498b400c"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_intents"
+							},
+							"response": []
 						}
 					],
 					"id": "42644aac-cb5f-4a4d-b905-4e76cd826e0c"
