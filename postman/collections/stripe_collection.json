@@ -5913,20 +5913,6 @@
 											"uuid": "817316c4-90e8-4889-963e-d811498b400c"
 										},
 										{
-											"key": "automatic_payment_methods[enabled]",
-											"value": "true",
-											"type": "text",
-											"uuid": "d9eb046b-9ef7-4ba9-af08-b7b78abec57f",
-											"disabled": true
-										},
-										{
-											"key": "automatic_payment_methods[allow_redirects]",
-											"value": "never",
-											"type": "text",
-											"uuid": "5dcfe759-acbf-41ae-bf99-0e2ac54f51a2",
-											"disabled": true
-										},
-										{
 											"key": "return_url",
 											"value": "https://example.com",
 											"type": "text",
