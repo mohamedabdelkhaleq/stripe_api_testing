@@ -6582,7 +6582,7 @@
 									"script": {
 										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
 										"exec": [
-											"\r",
+											"const response = pm.response.json();\r",
 											"pm.test(\"Status code is 402\", () => {\r",
 											"    pm.response.to.have.status(402);\r",
 											"});\r",
