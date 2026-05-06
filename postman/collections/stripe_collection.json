@@ -6652,7 +6652,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-RE-007:Retrieve refund with invalid ID Copy",
+							"name": "TC-RE-008:List all refunds",
 							"event": [
 								{
 									"listen": "test",
@@ -6665,9 +6665,8 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"refun\", function () {\r",
-											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
-											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
+											"pm.test(\"array of refund is not empty\", function () {\r",
+											"  pm.expect(refundResponse.object).to.eql(\"list\");\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6696,6 +6695,68 @@
 								"method": "GET",
 								"header": [],
 								"url": "{{base_url}}/v1/refunds"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-RE-009:List refunds with limit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ae0f9e23-2822-45a5-9bed-043337a8d092",
+										"exec": [
+											"const refundResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"array of refund is not empty\", function () {\r",
+											"  pm.expect(refundResponse.object).to.eql(\"list\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "80d4a2f6-4cbf-4376-bde1-519944f0562d",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "e318e2db-ef60-4736-a83e-75567740343e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/refunds?limit=3",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"refunds"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3"
+										}
+									]
+								}
 							},
 							"response": []
 						}
