@@ -6521,6 +6521,56 @@
 								"url": "{{base_url}}/v1/subscriptions/{{canceled_subscription_id}}"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-SUB-016: Cancel Invalid Subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5d913a1a-d47c-4663-97e7-d7a9e61e7b3f",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 400 Bad Request\", function() {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error mentions subscription already canceled\", function() {\r",
+											"    pm.expect(data.error.message).to.include('already canceled');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4b5ceff0-116a-4388-8e38-5716a2275b75",
+										"exec": [
+											"const canceledSubId = pm.environment.get(\"canceled_subscription_id\");\r",
+											"if (!canceledSubId) {\r",
+											"    throw new Error(\"canceled_subscription_id is missing! Run TC-SUB-014 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "ad8269b5-3ad0-4959-b82b-bdb437d22e9c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base_url}}/v1/subscriptions/{{canceled_subscription_id}}"
+							},
+							"response": []
 						}
 					],
 					"id": "78f0c00d-538a-47b0-bfd0-175f2d833d5b",
