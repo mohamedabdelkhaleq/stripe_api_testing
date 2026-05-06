@@ -6268,7 +6268,7 @@
 											"});\r",
 											"//check reason of refund \r",
 											"pm.test(\"Refund reason is duplicate payment\", () => {\r",
-											"    pm.expect(refundResponse.reason).to.match(duplicate);\r",
+											"    pm.expect(refundResponse.reason).to.eql(\"duplicate\");\r",
 											"    });\r",
 											"\r",
 											"pm.test(\"Refund status is succeeded\", () => {\r",
@@ -6341,6 +6341,101 @@
 										{
 											"key": "amount",
 											"value": "1000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-RF-005:Create refund with amount greater than charge",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c1afb943-31b4-4697-b447-bd12bda25d2e",
+										"exec": [
+											"//Create refund with reason=duplicate\r",
+											"const refundResponse = pm.response.json();\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
+											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
+											"});\r",
+											"//check reason of refund \r",
+											"pm.test(\"Refund reason is duplicate payment\", () => {\r",
+											"    pm.expect(refundResponse.reason).to.eql(\"duplicate\");\r",
+											"    });\r",
+											"\r",
+											"pm.test(\"Refund status is succeeded\", () => {\r",
+											"    pm.expect(refundResponse.status).to.equal(\"succeeded\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "570be957-e7b8-4a96-8a62-24096b71c32b",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "30736e08-c2fd-47bc-a9bd-4fdb1ef37dac",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "charge",
+											"value": "{{charge_id}}",
+											"type": "text",
+											"uuid": "52478e1d-c587-4ff7-8210-dbf42f67fd12"
+										},
+										{
+											"key": "amount",
+											"value": "{{half of amount}}",
+											"type": "text",
+											"uuid": "4b216d39-d743-419a-8843-491f3576f04b"
+										},
+										{
+											"key": "reason",
+											"value": "duplicate",
+											"type": "text",
+											"uuid": "52573e6e-56bc-4993-9847-f51805ba46dc"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/refunds?charge={{charge_id}}&amount=",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"refunds"
+									],
+									"query": [
+										{
+											"key": "charge",
+											"value": "{{charge_id}}"
+										},
+										{
+											"key": "amount",
+											"value": ""
 										}
 									]
 								}
