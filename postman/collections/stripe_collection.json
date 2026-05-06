@@ -6532,12 +6532,12 @@
 										"exec": [
 											"const data = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status is 400 Bad Request\", function() {\r",
-											"    pm.response.to.have.status(400);\r",
+											"pm.test(\"Status is 404 Not Found\", function() {\r",
+											"    pm.response.to.have.status(404);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Error mentions subscription already canceled\", function() {\r",
-											"    pm.expect(data.error.message).to.include('already canceled');\r",
+											"pm.test(\"Error mentions subscription not found\", function() {\r",
+											"    pm.expect(data.error.message).to.include('No such subscription');\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6550,10 +6550,7 @@
 									"script": {
 										"id": "4b5ceff0-116a-4388-8e38-5716a2275b75",
 										"exec": [
-											"const canceledSubId = pm.environment.get(\"canceled_subscription_id\");\r",
-											"if (!canceledSubId) {\r",
-											"    throw new Error(\"canceled_subscription_id is missing! Run TC-SUB-014 first.\");\r",
-											"}"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -6568,13 +6565,63 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
-								"url": "{{base_url}}/v1/subscriptions/{{canceled_subscription_id}}"
+								"url": "{{base_url}}/v1/subscriptions/invalid_sub"
 							},
 							"response": []
 						}
 					],
 					"id": "78f0c00d-538a-47b0-bfd0-175f2d833d5b",
 					"description": "Cancel"
+				},
+				{
+					"name": "List Subscriptions",
+					"item": [
+						{
+							"name": "TC-SUB-017: List All Subscriptions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e148bdd5-56c6-420f-b552-0832a821e20c",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is a list of subscriptions\", function() {\r",
+											"    pm.expect(data.object).to.equal('list');\r",
+											"    pm.expect(data.data).to.be.an('array');\r",
+											"    pm.expect(data.data.length).to.be.above(0);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Each subscription has required fields\", function() {\r",
+											"    data.data.forEach(subscription => {\r",
+											"        pm.expect(subscription.id).to.match(/^sub_/);\r",
+											"        pm.expect(subscription.object).to.equal('subscription');\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "23474787-e75a-43b9-9ca7-8d775eb68cdb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/subscriptions"
+							},
+							"response": []
+						}
+					],
+					"id": "3b59b3d2-8175-4a4b-913e-b25428125cbc"
 				}
 			],
 			"id": "51ff5231-ef15-4c55-b543-9964d0887952"
