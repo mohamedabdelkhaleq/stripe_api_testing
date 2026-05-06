@@ -1712,7 +1712,7 @@
 										"exec": [
 											"const response = pm.response.json();",
 											"//TC-PI-002 CONNECT TO PAYMENT METHOD Confirm PI with success card status: succeeded",
-											"pm.test(\"Status code is 200\"",
+											"pm.test(\"Status ",
 											"    pm.response.to.have.status(200);",
 											"});",
 											"pm.test(\"Response body contains id and object fields\", () => {",
@@ -1756,7 +1756,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "cf38b56c-b2e0-4237-aa50-a1e28f621a23",
+										"id": "15cf5537-bfa0-42dc-a9cc-cedf0d1cb127",
 										"exec": [],
 										"type": "text/javascript"
 									}
@@ -5973,72 +5973,6 @@
 							"response": []
 						},
 						{
-							"name": "08 - Verify Charge",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
-										"exec": [
-											"const jsonData = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Charge is succeeded\", function () {\r",
-											"    pm.expect(jsonData.status).to.eql(\"succeeded\");\r",
-											"    pm.expect(jsonData.paid).to.be.true;\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Charge amount is correct\", function () {\r",
-											"    pm.expect(jsonData.amount).to.eql(1000);\r",
-											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Receipt URL exists\", function () {\r",
-											"    pm.expect(jsonData.receipt_url).to.not.be.null;\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
-										"exec": [
-											"const chargeId = pm.environment.get(\"e2e_charge_id\");\r",
-											"if (!chargeId) {\r",
-											"    throw new Error(\"e2e_charge_id is missing! Run 07 first.\");\r",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"id": "1fe36d8b-1add-4d92-adc8-838cc156460e",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "GET",
-								"header": [],
-								"url": "{{base_url}}/v1/charges/{{e2e_charge_id}}"
-							},
-							"response": []
-						},
-						{
 							"name": "09 - Create Refund",
 							"event": [
 								{
@@ -6112,6 +6046,72 @@
 									]
 								},
 								"url": "{{base_url}}/v1/refunds"
+							},
+							"response": []
+						},
+						{
+							"name": "08 - Verify Charge",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Charge is succeeded\", function () {\r",
+											"    pm.expect(jsonData.status).to.eql(\"succeeded\");\r",
+											"    pm.expect(jsonData.paid).to.be.true;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Charge amount is correct\", function () {\r",
+											"    pm.expect(jsonData.amount).to.eql(1000);\r",
+											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Receipt URL exists\", function () {\r",
+											"    pm.expect(jsonData.receipt_url).to.not.be.null;\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
+										"exec": [
+											"const chargeId = pm.environment.get(\"e2e_charge_id\");\r",
+											"if (!chargeId) {\r",
+											"    throw new Error(\"e2e_charge_id is missing! Run 07 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "1fe36d8b-1add-4d92-adc8-838cc156460e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/charges/{{e2e_charge_id}}"
 							},
 							"response": []
 						}
@@ -6390,11 +6390,11 @@
 											"];\r",
 											"\r",
 											"pm.test(\"Payment status is valid\", () => {\r",
-											"    pm.expect(validStatuses).to.include(response.status);\r",
+											"    pm.expect(validStatuses).to.include(jsonData.status);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"status: \" + response.status, () => {\r",
-											"    pm.expect(response.status).to.be.oneOf(validStatuses);\r",
+											"pm.test(\"status: \" + jsonData.status, () => {\r",
+											"    pm.expect(jsonData.status).to.be.oneOf(validStatuses);\r",
 											"});\r",
 											"\r",
 											"if (pm.response.code === 200 && jsonData.id) {\r",
