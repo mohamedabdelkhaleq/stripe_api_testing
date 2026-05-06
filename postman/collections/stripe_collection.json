@@ -5849,7 +5849,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-SUB-005: Create Subscription without Customer Copy",
+							"name": "TC-SUB-006: Create Subscription without Price",
 							"event": [
 								{
 									"listen": "test",
@@ -5952,11 +5952,11 @@
 										"id": "c1afb943-31b4-4697-b447-bd12bda25d2e",
 										"exec": [
 											"const refundResponse = pm.response.json();\r",
-											"//Refund object\r",
-											"pm.test(\"Refund ID and objectl\", () => {\r",
-											"    pm.expect(refundResponse.id).to.match(\"/^re_/\");\r",
-											"    pm.expect(refundResponse.object).to.equal(\"refund\");\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
+											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
 											"});\r",
+											"\r",
 											"pm.test(\"Refund amount is correct\", () => {\r",
 											"    pm.expect(refundResponse.amount).to.equal(1000);\r",
 											"});\r",
@@ -5987,6 +5987,77 @@
 								}
 							],
 							"id": "8cfb3ccf-2d02-4463-b020-279770fb326d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "charge",
+											"value": "{{charge_id}}",
+											"type": "text",
+											"uuid": "52478e1d-c587-4ff7-8210-dbf42f67fd12"
+										},
+										{
+											"key": "amount",
+											"value": "1000",
+											"type": "text",
+											"uuid": "4b216d39-d743-419a-8843-491f3576f04b"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/refunds"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-RF-001:Create full refund for charge Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c1afb943-31b4-4697-b447-bd12bda25d2e",
+										"exec": [
+											"const refundResponse = pm.response.json();\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
+											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Refund amount is correct\", () => {\r",
+											"    pm.expect(refundResponse.amount).to.equal(1000);\r",
+											"});\r",
+											"pm.test(\"Refund currency is correct\", () => {\r",
+											"    pm.expect(refundResponse.currency).to.equal(\"usd\");\r",
+											"});\r",
+											"pm.test(\"Refund status is succeeded\", () => {\r",
+											"    pm.expect(refundResponse.status).to.equal(\"succeeded\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "570be957-e7b8-4a96-8a62-24096b71c32b",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "334670a5-3bc8-4a9d-853c-97cc43552181",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
