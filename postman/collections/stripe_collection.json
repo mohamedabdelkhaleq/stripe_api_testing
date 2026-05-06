@@ -5404,7 +5404,7 @@
 									"urlencoded": [
 										{
 											"key": "name",
-											"value": "Test Product",
+											"value": "E2E Test Product",
 											"type": "text",
 											"uuid": "c813aff9-e9ff-4593-a820-80428b37b442"
 										}
@@ -6004,21 +6004,18 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Payment Intent is succeeded\", function () {\r",
+											"pm.test(\"Refund is succeeded\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^re_/);\r",
 											"    pm.expect(jsonData.status).to.eql(\"succeeded\");\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Charge is created automatically\", function () {\r",
-											"    pm.expect(jsonData.latest_charge).to.not.be.null;\r",
-											"    pm.expect(jsonData.latest_charge).to.match(/^ch_/);\r",
+											"pm.test(\"Refund amount matches charge\", function () {\r",
+											"    pm.expect(jsonData.amount).to.eql(1000);\r",
+											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Amount received is correct\", function () {\r",
-											"    pm.expect(jsonData.amount_received).to.eql(1000);\r",
-											"});\r",
-											"\r",
-											"if (pm.response.code === 200 && jsonData.latest_charge) {\r",
-											"    pm.environment.set(\"e2e_charge_id\", jsonData.latest_charge);\r",
+											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"    pm.environment.set(\"e2e_refund_id\", jsonData.id);\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -6031,9 +6028,9 @@
 									"script": {
 										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
 										"exec": [
-											"const piId = pm.environment.get(\"e2e_payment_intent_id\");\r",
-											"if (!piId) {\r",
-											"    throw new Error(\"e2e_payment_intent_id is missing! Run 06 first.\");\r",
+											"const chargeId = pm.environment.get(\"e2e_charge_id\");\r",
+											"if (!chargeId) {\r",
+											"    throw new Error(\"e2e_charge_id is missing! Run 08 first.\");\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -6060,7 +6057,7 @@
 									"urlencoded": [
 										{
 											"key": "charge",
-											"value": "https://example.com",
+											"value": "{{e2e_charge_id}}",
 											"type": "text",
 											"uuid": "cc6e8c3e-80ba-49cb-a1c4-7329d448fbdd"
 										}
