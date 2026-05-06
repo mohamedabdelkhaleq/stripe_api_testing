@@ -6331,7 +6331,7 @@
 									"urlencoded": [
 										{
 											"key": "customer",
-											"value": "{{",
+											"value": "{{customer_id}}",
 											"type": "text",
 											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
 										}
