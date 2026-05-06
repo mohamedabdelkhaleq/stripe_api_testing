@@ -3234,7 +3234,7 @@
 					"response": []
 				},
 				{
-					"name": "TC-PI-003",
+					"name": "TC-PI-003:x: List all charges for spacific customer",
 					"event": [
 						{
 							"listen": "test",
@@ -3269,8 +3269,12 @@
 							"listen": "prerequest",
 							"script": {
 								"id": "3e7946ce-ea19-4cf5-8fb3-6e87bf7834e9",
-								"exec": [],
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -7950,14 +7954,32 @@
 					"name": "Create refund",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "TC-RF-001:Create full refund for charge",
 							"id": "8cfb3ccf-2d02-4463-b020-279770fb326d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
 								"method": "POST",
-								"header": []
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "charge",
+											"value": "{{charge_id}}",
+											"type": "text",
+											"uuid": "52478e1d-c587-4ff7-8210-dbf42f67fd12"
+										},
+										{
+											"key": "amount",
+											"value": "",
+											"type": "text",
+											"uuid": "4b216d39-d743-419a-8843-491f3576f04b"
+										}
+									]
+								},
+								"url": "/v1/refunds"
 							},
 							"response": []
 						}
