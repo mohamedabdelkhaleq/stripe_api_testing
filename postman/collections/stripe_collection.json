@@ -5763,14 +5763,14 @@
 									"script": {
 										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
 										"exec": [
-											"const pmId = pm.environment.get(\"e2e_payment_method_id\");\r",
 											"const customerId = pm.environment.get(\"e2e_customer_id\");\r",
+											"const pmId = pm.environment.get(\"e2e_payment_method_id\");\r",
 											"\r",
-											"if (!pmId) {\r",
-											"    throw new Error(\"e2e_payment_method_id is missing! Run 04 first.\");\r",
-											"}\r",
 											"if (!customerId) {\r",
 											"    throw new Error(\"e2e_customer_id is missing! Run 03 first.\");\r",
+											"}\r",
+											"if (!pmId) {\r",
+											"    throw new Error(\"e2e_payment_method_id is missing! Run 04 first.\");\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -5796,14 +5796,32 @@
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
+											"key": "amount",
+											"value": "1000",
+											"type": "text",
+											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+										},
+										{
+											"key": "currency ",
+											"value": "usd",
+											"type": "text",
+											"uuid": "d1a505fb-8bdd-427c-8b50-5c18ba3dbd3f"
+										},
+										{
 											"key": "customer",
 											"value": "{{e2e_customer_id}}",
 											"type": "text",
-											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+											"uuid": "ea4fafc9-bbbc-4047-ac95-ee034e01ba32"
+										},
+										{
+											"key": "payment_method",
+											"value": "{{e2e_payment_method_id}}",
+											"type": "text",
+											"uuid": "817316c4-90e8-4889-963e-d811498b400c"
 										}
 									]
 								},
-								"url": "{{base_url}}/v1/payment_methods/{{e2e_payment_method_id}}/attach"
+								"url": "{{base_url}}/v1/payment_intents"
 							},
 							"response": []
 						}
