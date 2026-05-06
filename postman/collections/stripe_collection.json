@@ -5718,20 +5718,14 @@
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "type",
-											"value": "card",
+											"key": "customer",
+											"value": "{{e2e_customer_id}}",
 											"type": "text",
 											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
-										},
-										{
-											"key": "card[token]",
-											"value": "tok_visa",
-											"type": "text",
-											"uuid": "cb3aab30-1ad0-4707-8e16-f4efd393d8d6"
 										}
 									]
 								},
-								"url": "{{base_url}}/v1/payment_methods"
+								"url": "{{base_url}}/v1/payment_methods/{{e2e_payment_method_id}}/attach"
 							},
 							"response": []
 						}
