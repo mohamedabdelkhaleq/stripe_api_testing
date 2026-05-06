@@ -6619,6 +6619,76 @@
 								"url": "{{base_url}}/v1/subscriptions"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-SUB-018: List Subscriptions for Specific Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e148bdd5-56c6-420f-b552-0832a821e20c",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"All subscriptions belong to specified customer\", function() {\r",
+											"    const customerId = pm.environment.get('customer_id');\r",
+											"    data.data.forEach(subscription => {\r",
+											"        pm.expect(subscription.customer).to.equal(customerId);\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "a8cd6345-34c9-48f0-97f1-df406314f325",
+										"exec": [
+											"const customerId = pm.environment.get(\"customer_id\");\r",
+											"\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "17a60397-5ec0-4988-b4d6-fda91714f1c5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/subscriptions?customer={{customer_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"subscriptions"
+									],
+									"query": [
+										{
+											"key": "customer",
+											"value": "{{customer_id}}"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"id": "3b59b3d2-8175-4a4b-913e-b25428125cbc"
