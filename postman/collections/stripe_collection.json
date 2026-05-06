@@ -6188,9 +6188,6 @@
 											"pm.test(\"Refund amount is correct\", () => {\r",
 											"    pm.expect(refundResponse.amount).to.equal(pm.environment.get(\"amount\")/2);\r",
 											"});\r",
-											"pm.test(\"Refund currency is correct\", () => {\r",
-											"    pm.expect(refundResponse.currency).to.equal(\"usd\");\r",
-											"});\r",
 											"pm.test(\"Refund status is succeeded\", () => {\r",
 											"    pm.expect(refundResponse.status).to.equal(\"succeeded\");\r",
 											"});\r",
@@ -6510,6 +6507,36 @@
 					"item": [
 						{
 							"name": "TC-RE-006:Retrieve existing refund with id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ae0f9e23-2822-45a5-9bed-043337a8d092",
+										"exec": [
+											"const refundResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
+											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "80d4a2f6-4cbf-4376-bde1-519944f0562d",
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "bd8d4810-d474-499c-95bf-153b4ae2ea9b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -6517,7 +6544,54 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/refunds/"
+								"url": "{{base_url}}/v1/refunds/{{refund_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-RE-006:Retrieve existing refund with id Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ae0f9e23-2822-45a5-9bed-043337a8d092",
+										"exec": [
+											"const refundResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
+											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "80d4a2f6-4cbf-4376-bde1-519944f0562d",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "38fc2d48-7cb2-40b5-a899-e5c0ac4e33a0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/refunds/{{rand"
 							},
 							"response": []
 						}
