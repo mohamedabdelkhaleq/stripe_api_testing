@@ -57,12 +57,6 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -121,12 +115,6 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -181,12 +169,6 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -267,12 +249,6 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -334,12 +310,6 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -5569,8 +5539,12 @@
 									"listen": "prerequest",
 									"script": {
 										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -5579,12 +5553,6 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -5663,12 +5631,6 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
