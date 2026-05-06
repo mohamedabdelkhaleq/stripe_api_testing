@@ -7512,7 +7512,7 @@
 											"//check payment_intent.payment_failed event fired",
 											"pm.test(\"payment_intent.payment_failed event fired\",  ()=> {",
 											"",
-											"    pm.expect(response.data.type).to.eql(\"payment_intent.payment_faile\");",
+											"    pm.expect(response.type).to.eql(\"payment_intent.payment_faile\");",
 											" ",
 											"});"
 										],
