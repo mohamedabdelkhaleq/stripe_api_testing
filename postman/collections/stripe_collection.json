@@ -6108,14 +6108,63 @@
 					"name": "E2E-03-Declined Card Flow",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "Create Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dbfcc5d6-bbb6-4341-bc5d-427615418576",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^cus_/);\r",
+											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
+											"});\r",
+											"\r",
+											"// 3. Data Integrity (Comparing Response to Request)\r",
+											"pm.test(\"Response name and email match the request\", function () {\r",
+											"    const sentName = pm.request.body.urlencoded.get(\"name\");\r",
+											"    const sentEmail = pm.request.body.urlencoded.get(\"email\");\r",
+											"\r",
+											"    pm.expect(jsonData.name).to.eql(sentName);\r",
+											"    pm.expect(jsonData.email).to.eql(sentEmail);\r",
+											"});\r",
+											"\r",
+											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"    pm.environment.set(\"customer_id\", jsonData.id);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "1f1de2f2-48c0-4f4a-94bb-06e0341a5757",
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "ac7ad3c7-bd0f-4c6d-85b2-f2d17a413e99",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								}
 							},
 							"response": []
 						}
