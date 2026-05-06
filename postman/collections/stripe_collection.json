@@ -6549,7 +6549,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-RE-006:Retrieve existing refund with id Copy",
+							"name": "TC-RE-007:Retrieve refund with invalid ID",
 							"event": [
 								{
 									"listen": "test",
@@ -6558,12 +6558,11 @@
 										"exec": [
 											"const refundResponse = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status code is 200\", () => {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status code is 404\", () => {\r",
+											"    pm.response.to.have.status(404);\r",
 											"});\r",
-											"pm.test(\"Customer has valid ID and type\", function () {\r",
-											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
-											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
+											"pm.test(\"error message is correct\", function () {\r",
+											"    pm.expect(refundResponse.error.message).to.have.include(\"No such refund\");\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6591,7 +6590,53 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/refunds/{{rand"
+								"url": "{{base_url}}/v1/refunds/{{invalid_refund_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-RE-007:Retrieve refund with invalid ID Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ae0f9e23-2822-45a5-9bed-043337a8d092",
+										"exec": [
+											"const refundResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 404\", () => {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"pm.test(\"error message is correct\", function () {\r",
+											"    pm.expect(refundResponse.error.message).to.have.include(\"No such refund\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "80d4a2f6-4cbf-4376-bde1-519944f0562d",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "68966183-46e5-4eca-8ceb-0b19a35aee59",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/refunds/{{invalid_refund_id}}"
 							},
 							"response": []
 						}
