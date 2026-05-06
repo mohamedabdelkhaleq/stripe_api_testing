@@ -5958,7 +5958,7 @@
 											"});\r",
 											"\r",
 											"pm.test(\"Refund amount is correct\", () => {\r",
-											"    pm.expect(refundResponse.amount).to.equal(1000);\r",
+											"    pm.expect(refundResponse.amount).to.equal(pm.environment.get(\"amount\"));\r",
 											"});\r",
 											"pm.test(\"Refund currency is correct\", () => {\r",
 											"    pm.expect(refundResponse.currency).to.equal(\"usd\");\r",
@@ -6001,12 +6001,6 @@
 											"value": "{{charge_id}}",
 											"type": "text",
 											"uuid": "52478e1d-c587-4ff7-8210-dbf42f67fd12"
-										},
-										{
-											"key": "amount",
-											"value": "1000",
-											"type": "text",
-											"uuid": "4b216d39-d743-419a-8843-491f3576f04b"
 										}
 									]
 								},
@@ -6081,7 +6075,23 @@
 										}
 									]
 								},
-								"url": "{{base_url}}/v1/refunds"
+								"url": {
+									"raw": "{{base_url}}/v1/refunds?charge",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"refunds"
+									],
+									"query": [
+										{
+											"key": "charge",
+											"value": null,
+											"type": "text"
+										}
+									]
+								}
 							},
 							"response": []
 						}
