@@ -6313,7 +6313,7 @@
 							"response": []
 						},
 						{
-							"name": "01 - Create Product",
+							"name": "02 - Create Product",
 							"event": [
 								{
 									"listen": "test",
@@ -6391,7 +6391,7 @@
 							"response": []
 						},
 						{
-							"name": "02 - Create Price",
+							"name": "03 - Create Price",
 							"event": [
 								{
 									"listen": "test",
@@ -7492,6 +7492,65 @@
 										}
 									]
 								}
+							},
+							"response": []
+						},
+						{
+							"name": "07 -GET Events",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "db29b888-f8cd-4c98-a44e-939d60a78197",
+										"exec": [
+											"const response = pm.response.json();\r",
+											"//Status\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"//check payment_intent.payment_failed event fired\r",
+											"pm.test(\"payment_intent.payment_failed event fired\",  ()=> {\r",
+											"    pm.expect(response.data).to.have.property('object', 'event');\r",
+											"    pm.expect(response.data.data.object).to.have.property('type', 'payment_intent.payment_failed');\r",
+											"    pm.expect(response.data.data.object).to.have.property('data');\r",
+											"    pm.expect(response.data.data.object.data.object).to.have.property('payment_intent');\r",
+											"    pm.expect(response.data.data.object.data.object.payment_intent).to.have.property('id', pm.environment.get('payment_intent_id'));\r",
+											"\r",
+											"}\r",
+											"     \r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4a10dfb0-9b8a-43f2-b132-bc80ea1a064a",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "5dedd62b-ffca-4c91-adb5-0cc383f86def",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": "{{base_url}}/v1/events"
 							},
 							"response": []
 						}
