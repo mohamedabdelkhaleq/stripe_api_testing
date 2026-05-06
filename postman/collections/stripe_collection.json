@@ -5718,7 +5718,7 @@
 										},
 										{
 											"key": "name",
-											"value": "{{$randomFullName}}",
+											"value": "{{$",
 											"type": "text",
 											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
 										}
@@ -6226,6 +6226,93 @@
 					"name": "E2E-02 - Full Subscriptions Lifecycle",
 					"item": [
 						{
+							"name": "01 - Create Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Data Format & ID Validation\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^cus_/);\r",
+											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
+											"});\r",
+											"\r",
+											"// 3. Data Integrity (Comparing Response to Request)\r",
+											"pm.test(\"Response name and email match the request\", function () {\r",
+											"    const sentName = pm.request.body.urlencoded.get(\"name\");\r",
+											"    const sentEmail = pm.request.body.urlencoded.get(\"email\");\r",
+											"\r",
+											"    pm.expect(jsonData.name).to.eql(sentName);\r",
+											"    pm.expect(jsonData.email).to.eql(sentEmail);\r",
+											"});\r",
+											"\r",
+											"// 4. Save the ID for TC06, TC09, etc.\r",
+											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"    pm.environment.set(\"e2e_customer_id\", jsonData.id);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "0fa27cac-5124-4a27-b63f-8a1734179e52",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "{{$randomEmail}}",
+											"type": "text",
+											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+										},
+										{
+											"key": "name",
+											"value": "{{$randomFullName}}",
+											"type": "text",
+											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/customers"
+							},
+							"response": []
+						},
+						{
 							"name": "01 - Create Product",
 							"event": [
 								{
@@ -6381,93 +6468,6 @@
 									]
 								},
 								"url": "{{base_url}}/v1/prices"
-							},
-							"response": []
-						},
-						{
-							"name": "03 - Create Customer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
-										"exec": [
-											"const jsonData = pm.response.json();\r",
-											"\r",
-											"// 1. Status Code Validation\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"// 2. Data Format & ID Validation\r",
-											"pm.test(\"Customer has valid ID and type\", function () {\r",
-											"    pm.expect(jsonData.id).to.match(/^cus_/);\r",
-											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
-											"});\r",
-											"\r",
-											"// 3. Data Integrity (Comparing Response to Request)\r",
-											"pm.test(\"Response name and email match the request\", function () {\r",
-											"    const sentName = pm.request.body.urlencoded.get(\"name\");\r",
-											"    const sentEmail = pm.request.body.urlencoded.get(\"email\");\r",
-											"\r",
-											"    pm.expect(jsonData.name).to.eql(sentName);\r",
-											"    pm.expect(jsonData.email).to.eql(sentEmail);\r",
-											"});\r",
-											"\r",
-											"// 4. Save the ID for TC06, TC09, etc.\r",
-											"if (pm.response.code === 200 && jsonData.id) {\r",
-											"    pm.environment.set(\"e2e_customer_id\", jsonData.id);\r",
-											"}"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"id": "0fa27cac-5124-4a27-b63f-8a1734179e52",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{api_key}}"
-									}
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "email",
-											"value": "{{$randomEmail}}",
-											"type": "text",
-											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
-										},
-										{
-											"key": "name",
-											"value": "{{$randomFullName}}",
-											"type": "text",
-											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
-										}
-									]
-								},
-								"url": "{{base_url}}/v1/customers"
 							},
 							"response": []
 						},
@@ -7434,18 +7434,17 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
+											"//check  charge.status  \r",
+											" pm.test(\"Charge status is failed\", function () {\r",
+											"    const charges = response.status;\r",
+											"    pm.expect(charges).to.eql(\"failed\");\r",
+											"    });\r",
 											"pm.test(\"Failed charge has failure_code field populated with card_declined\", () => {\r",
 											"    const charges = response.failure_code;\r",
 											"    pm.expect(charges).to.eql(\"card_declined\");\r",
 											"  \r",
 											"});\r",
-											"\r",
-											"\r",
-											"\r",
-											"\r",
-											"pm.environment.set(\"charge_id\", response.id);\r",
-											"console.log(\"Saved charge_id:\", response.id);\r",
-											"console.log(\"Card brand:\", response.payment_method_details?.card?.brand);"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -7488,9 +7487,8 @@
 									],
 									"variable": [
 										{
-											"id": "ff65e756-1e39-4baa-b18d-6c9eb0b926ab",
 											"key": "id",
-											"value": "{{charge_id}}"
+											"value": "{{e2e_charge_id}}"
 										}
 									]
 								}
