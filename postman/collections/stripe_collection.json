@@ -2090,7 +2090,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PI-005",
+							"name": "TC-PI-005 : TC-PI-006 : Create and Confirm payment intent with insufficient funds card",
 							"event": [
 								{
 									"listen": "test",
@@ -2144,8 +2144,12 @@
 									"listen": "prerequest",
 									"script": {
 										"id": "8ea669ad-778d-4f03-9553-4fb86867ba58",
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -2208,7 +2212,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PI-006",
+							"name": "TC-PI-006 : Create and Confirm payment intent with decline card",
 							"event": [
 								{
 									"listen": "test",
@@ -2262,8 +2266,12 @@
 									"listen": "prerequest",
 									"script": {
 										"id": "6995b529-e67a-435d-906b-3cad330a5e2f",
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -2303,7 +2311,7 @@
 										},
 										{
 											"key": "description",
-											"value": "Test Insufficient funds",
+											"value": "Test decline card",
 											"type": "text",
 											"uuid": "61f91695-7594-4666-8488-b01a25db1e1f"
 										},
@@ -5379,6 +5387,93 @@
 			"id": "4bee5087-b2dd-4c29-acd0-09467eedb973"
 		},
 		{
+			"name": "Subscriptions",
+			"item": [
+				{
+					"name": "Create Subscriptions",
+					"item": [
+						{
+							"name": "TC-SUB-001: Create Customer with Email and Name Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"// 1. Status Code Validation\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// 2. Data Format & ID Validation\r",
+											"pm.test(\"Customer has valid ID and type\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^cus_/);\r",
+											"    pm.expect(jsonData.object).to.eql(\"customer\");\r",
+											"});\r",
+											"\r",
+											"// 3. Data Integrity (Comparing Response to Request)\r",
+											"pm.test(\"Response name and email match the request\", function () {\r",
+											"    const sentName = pm.request.body.urlencoded.get(\"name\");\r",
+											"    const sentEmail = pm.request.body.urlencoded.get(\"email\");\r",
+											"\r",
+											"    pm.expect(jsonData.name).to.eql(sentName);\r",
+											"    pm.expect(jsonData.email).to.eql(sentEmail);\r",
+											"});\r",
+											"\r",
+											"// 4. Save the ID for TC06, TC09, etc.\r",
+											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"    pm.environment.set(\"customer_id\", jsonData.id);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "140d1057-4e4c-4963-aa82-28fcecde2127",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "{{$randomEmail}}",
+											"type": "text",
+											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+										},
+										{
+											"key": "name",
+											"value": "{{$randomFullName}}",
+											"type": "text",
+											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/customers"
+							},
+							"response": []
+						}
+					],
+					"id": "2e7ce4cb-e415-4ea0-8163-53bdf075a310"
+				}
+			],
+			"id": "51ff5231-ef15-4c55-b543-9964d0887952"
+		},
+		{
 			"name": "E2E Flows",
 			"item": [
 				{
@@ -6487,44 +6582,30 @@
 									"script": {
 										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
 										"exec": [
-											"const jsonData = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status code is 402\", () => {\r",
+											"    pm.response.to.have.status(402);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Payment Intent created correctly\", function () {\r",
-											"    pm.expect(jsonData.id).to.match(/^pi_/);\r",
-											"    pm.expect(jsonData.object).to.eql(\"payment_intent\");\r",
-											"    pm.expect(jsonData.amount).to.eql(1000);\r",
-											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
-											"    pm.expect(jsonData.status).to.be.oneOf([\"requires_confirmation\", \"requires_payment_method\"]);\r",
+											"pm.test(\"Error code is card_declined\", () => {\r",
+											"    pm.expect(response.error.code).to.eql(\"card_declined\");\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Customer and Payment Method are \", function () {\r",
-											"    pm.expect(jsonData.customer).to.eql(pm.environment.get(\"e2e_customer_id\"));\r",
-											"    pm.expect(jsonData.payment_method).to.eql(pm.environment.get(\"e2e_payment_method_id\"));\r",
+											"pm.test(\"Error decline_code is generic_decline\", () => {\r",
+											"    pm.expect(response.error.decline_code).to.eql(\"generic_decline\");\r",
+											"   \r",
+											"    });\r",
+											"\r",
+											"\r",
+											"pm.test(\"Error message is correct\", () => {\r",
+											"    pm.expect(response.error.message).to.eql(\"Your card was declined.\");\r",
 											"});\r",
 											"\r",
 											"\r",
-											"const validStatuses = [\r",
-											"    \"succeeded\",\r",
-											"    \"requires_action\",\r",
-											"    \"processing\",\r",
-											"    \"requires_payment_method\"\r",
-											"];\r",
-											"\r",
-											"pm.test(\"Payment status is valid\", () => {\r",
-											"    pm.expect(validStatuses).to.include(jsonData.status);\r",
+											"pm.test(\"Payment intent status is failed\", () => {\r",
+											"    pm.expect(response.error.payment_intent.status).to.eql(\"requires_payment_method\");\r",
 											"});\r",
-											"\r",
-											"pm.test(\"status: \" + jsonData.status, () => {\r",
-											"    pm.expect(jsonData.status).to.be.oneOf(validStatuses);\r",
-											"});\r",
-											"\r",
-											"if (pm.response.code === 200 && jsonData.id) {\r",
-											"    pm.environment.set(\"e2e_payment_intent_id\", jsonData.id);\r",
-											"}"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -6553,6 +6634,99 @@
 								}
 							],
 							"id": "db5be84d-69e1-422f-a192-fab4b34709cf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "payment_method",
+											"value": "{{e2e_payment_method_id}}",
+											"type": "text",
+											"uuid": "3472fdee-611c-4930-a354-219b0d363481"
+										},
+										{
+											"key": "return_url",
+											"value": "https://example.com",
+											"type": "text",
+											"uuid": "75b5b62e-3c17-4f79-8ea5-015c2bd7c6fa"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_intents/{{e2e_payment_intent_id}}/confirm"
+							},
+							"response": []
+						},
+						{
+							"name": "05 - Confirm Payment Intent Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 402\", () => {\r",
+											"    pm.response.to.have.status(402);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error code is card_declined\", () => {\r",
+											"    pm.expect(response.error.code).to.eql(\"card_declined\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error decline_code is generic_decline\", () => {\r",
+											"    pm.expect(response.error.decline_code).to.eql(\"generic_decline\");\r",
+											"   \r",
+											"    });\r",
+											"\r",
+											"\r",
+											"pm.test(\"Error message is correct\", () => {\r",
+											"    pm.expect(response.error.message).to.eql(\"Your card was declined.\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Payment intent status is failed\", () => {\r",
+											"    pm.expect(response.error.payment_intent.status).to.eql(\"requires_payment_method\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
+										"exec": [
+											"const customerId = pm.environment.get(\"e2e_customer_id\");\r",
+											"const pmId = pm.environment.get(\"e2e_payment_method_id\");\r",
+											"\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"e2e_customer_id is missing! Run 03 first.\");\r",
+											"}\r",
+											"if (!pmId) {\r",
+											"    throw new Error(\"e2e_payment_method_id is missing! Run 04 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "3911f651-11a5-4141-b50c-20f3838dfd22",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
