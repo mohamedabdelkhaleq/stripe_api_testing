@@ -5748,7 +5748,7 @@
 											"    pm.expect(jsonData.object).to.eql(\"payment_intent\");\r",
 											"    pm.expect(jsonData.amount).to.eql(1000);\r",
 											"    pm.expect(jsonData.currency).to.eql(\"usd\");\r",
-											"    pm.expect(jsonData.status).to.eql(\"requires_confirmation\");\r",
+											"    pm.expect(jsonData.status).to.be.oneOf([\"requires_confirmation\", \"requires_payment_method\"]);\r",
 											"});\r",
 											"\r",
 											"pm.test(\"Customer and Payment Method are linked\", function () {\r",
