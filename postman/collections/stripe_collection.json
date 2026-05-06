@@ -6359,9 +6359,9 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Subscription metadata is updated\", function() {\r",
-											"    pm.expect(data.metadata.order_id).to.equal('12345');\r",
-											"    pm.expect(data.metadata.tier).to.equal('premium');\r",
+											"pm.test(\"Subscription marked for cancellation at period end\", function() {\r",
+											"    pm.expect(data.cancel_at_period_end).to.equal(true);\r",
+											"    pm.expect(data.status).to.equal('active');\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6405,22 +6405,10 @@
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "metadata[order_id]",
-											"value": "12345",
+											"key": "cancel_at_period_end",
+											"value": "true",
 											"type": "text",
 											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
-										},
-										{
-											"key": "metadata[tier]",
-											"value": "premium",
-											"type": "text",
-											"uuid": "2e919db2-c8ec-42eb-b314-17f16192c8ec"
-										},
-										{
-											"key": "metadata[renewal_date]",
-											"value": "2024-03-15",
-											"type": "text",
-											"uuid": "92408e12-795c-455b-9238-dbbcc8c6e06e"
 										}
 									]
 								},
@@ -6430,6 +6418,25 @@
 						}
 					],
 					"id": "c6af3085-f7e4-4ad4-9fbd-9b475ac76deb"
+				},
+				{
+					"name": "Cancel a Subscription",
+					"item": [
+						{
+							"name": "TC-SUB-014: Cancel Subscription Immediately",
+							"id": "00403c4e-3b9c-4fca-8252-19c7f6029fb5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						}
+					],
+					"id": "78f0c00d-538a-47b0-bfd0-175f2d833d5b",
+					"description": "Cancel"
 				}
 			],
 			"id": "51ff5231-ef15-4c55-b543-9964d0887952"
