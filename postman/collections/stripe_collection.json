@@ -6106,6 +6106,11 @@
 										"id": "c1afb943-31b4-4697-b447-bd12bda25d2e",
 										"exec": [
 											"const refundResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
 											"pm.test(\"Customer has valid ID and type\", function () {\r",
 											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
 											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
@@ -6171,6 +6176,10 @@
 										"id": "c1afb943-31b4-4697-b447-bd12bda25d2e",
 										"exec": [
 											"const refundResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
 											"pm.test(\"Customer has valid ID and type\", function () {\r",
 											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
 											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
@@ -6262,6 +6271,9 @@
 										"exec": [
 											"//Create refund with reason=duplicate\r",
 											"const refundResponse = pm.response.json();\r",
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
 											"pm.test(\"Customer has valid ID and type\", function () {\r",
 											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
 											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
@@ -6357,6 +6369,12 @@
 										"exec": [
 											"//Create refund with reason=duplicate\r",
 											"const refundResponse = pm.response.json();\r",
+											"\r",
+											"  pm.test(\"Status code is 400\", () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
 											"pm.test(\"Customer has valid ID and type\", function () {\r",
 											"    pm.expect(refundResponse.id).to.match(/^re_/);\r",
 											"    pm.expect(refundResponse.object).to.eql(\"refund\");\r",
@@ -6420,7 +6438,7 @@
 									]
 								},
 								"url": {
-									"raw": "{{base_url}}/v1/refunds?charge={{charge_id}}&amount=",
+									"raw": "{{base_url}}/v1/refunds?charge={{charge_id}}&amount=3000",
 									"host": [
 										"{{base_url}}"
 									],
@@ -6435,7 +6453,7 @@
 										},
 										{
 											"key": "amount",
-											"value": ""
+											"value": "3000"
 										}
 									]
 								}
