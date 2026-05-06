@@ -1703,7 +1703,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-PI-002 : Create and confirm paymentintent",
+							"name": "TC-PI-002 : Create and confirm valid paymentintent",
 							"event": [
 								{
 									"listen": "test",
@@ -1712,7 +1712,7 @@
 										"exec": [
 											"const response = pm.response.json();",
 											"//TC-PI-002 CONNECT TO PAYMENT METHOD Confirm PI with success card status: succeeded",
-											"pm.test(\"Status code is 200\", () => {",
+											"pm.test(\"Status code is 200\"",
 											"    pm.response.to.have.status(200);",
 											"});",
 											"pm.test(\"Response body contains id and object fields\", () => {",
@@ -1751,6 +1751,14 @@
 										"type": "text/javascript",
 										"packages": {},
 										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "cf38b56c-b2e0-4237-aa50-a1e28f621a23",
+										"exec": [],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -1805,6 +1813,12 @@
 											"value": "https://example.com",
 											"type": "text",
 											"uuid": "a7455928-135e-4d84-979c-c877e10cf79f"
+										},
+										{
+											"key": "customer",
+											"value": "{{customer_id}}",
+											"type": "text",
+											"uuid": "a926b14c-9879-49ec-8c10-388e857af6ca"
 										}
 									]
 								},
@@ -6365,6 +6379,22 @@
 											"pm.test(\"Customer and Payment Method are \", function () {\r",
 											"    pm.expect(jsonData.customer).to.eql(pm.environment.get(\"e2e_customer_id\"));\r",
 											"    pm.expect(jsonData.payment_method).to.eql(pm.environment.get(\"e2e_payment_method_id\"));\r",
+											"});\r",
+											"\r",
+											"\r",
+											"const validStatuses = [\r",
+											"    \"succeeded\",\r",
+											"    \"requires_action\",\r",
+											"    \"processing\",\r",
+											"    \"requires_payment_method\"\r",
+											"];\r",
+											"\r",
+											"pm.test(\"Payment status is valid\", () => {\r",
+											"    pm.expect(validStatuses).to.include(response.status);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"status: \" + response.status, () => {\r",
+											"    pm.expect(response.status).to.be.oneOf(validStatuses);\r",
 											"});\r",
 											"\r",
 											"if (pm.response.code === 200 && jsonData.id) {\r",
