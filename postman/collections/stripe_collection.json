@@ -1169,22 +1169,38 @@
 									"script": {
 										"id": "0198a7ba-517c-4efe-b1ed-73784c953200",
 										"exec": [
-											"const response = pm.response.json();\r",
-											"pm.test(\"Status code is 200\", () => {\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
-											"    });\r",
-											"    pm.test(\"Response body contains payment_method_id\", () => {\r",
-											"    pm.expect(response.id).to.match(/^pm_/);\r",
-											"    pm.expect(response.object).to.eql(\"payment_method\");\r",
-											"    });\r",
-											"    pm.environment.set(\"payment_method_type\",response.type);\r",
-											"if (pm.response.code === 200 && response.id) {\r",
-											"    pm.environment.set(\"payment_method_id\", response.id);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Payment Method has valid ID and type\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^pm_/);\r",
+											"    pm.expect(jsonData.object).to.eql(\"payment_method\");\r",
+											"    pm.expect(jsonData.type).to.eql(\"card\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Card details are correct\", function () {\r",
+											"    pm.expect(jsonData.card.last4).to.eql(\"4242\");\r",
+											"    pm.expect(jsonData.card.brand).to.eql(\"visa\");\r",
+											"});\r",
+											"\r",
+											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"    pm.environment.set(\"payment_method_id\", jsonData.id);\r",
 											"}"
 										],
 										"type": "text/javascript",
 										"packages": {},
 										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "439e7807-ae82-408a-a022-8c8a8fcc895b",
+										"exec": [],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -1206,9 +1222,15 @@
 									"urlencoded": [
 										{
 											"key": "type",
-											"value": "amazon_pay",
+											"value": "card",
 											"type": "text",
 											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
+										},
+										{
+											"key": "card[token]",
+											"value": "tok_mastercard",
+											"type": "text",
+											"uuid": "f38dc912-cd17-498e-8d5a-1b68998953eb"
 										}
 									]
 								},
@@ -6069,6 +6091,11 @@
 						}
 					],
 					"id": "42644aac-cb5f-4a4d-b905-4e76cd826e0c"
+				},
+				{
+					"name": "E2E-03-Declined Card Flow",
+					"item": [],
+					"id": "b9cc7840-d0a0-447b-a73b-a13a715d1de1"
 				}
 			],
 			"id": "1a903abc-e868-43e9-94bd-b1eb933e6909"
