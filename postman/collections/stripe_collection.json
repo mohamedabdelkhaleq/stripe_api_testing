@@ -6432,7 +6432,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-RF-005:Create refund with amount greater than charge Copy",
+							"name": "TC-RF-006:Refund already fully refunded charge",
 							"event": [
 								{
 									"listen": "test",
@@ -6447,8 +6447,7 @@
 											"});",
 											"",
 											"pm.test(\"Error message is correct\", () => {",
-											"    pm.expect(refundResponse.error.message).to.be.a(\"string\");",
-											"    pm.expect(refundResponse.error.message).to.include(\"greater than\");",
+											"    pm.expect(refundResponse.error.code).to.eql(\"charge_already_refunded\");",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6487,7 +6486,7 @@
 										},
 										{
 											"key": "amount",
-											"value": "3000",
+											"value": "2000",
 											"type": "text",
 											"uuid": "4b216d39-d743-419a-8843-491f3576f04b"
 										},
