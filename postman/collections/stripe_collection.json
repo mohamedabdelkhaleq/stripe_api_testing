@@ -6367,16 +6367,17 @@
 									"script": {
 										"id": "c1afb943-31b4-4697-b447-bd12bda25d2e",
 										"exec": [
-											"//Create refund with reason=duplicate\r",
-											"const refundResponse = pm.response.json();\r",
-											"\r",
-											"  pm.test(\"Status code is 400\", () => {\r",
-											"    pm.response.to.have.status(400);\r",
-											"});\r",
-											"pm.test(\"Error message is correct\", () => {\r",
-											"    pm.expect(refundResponse.error.message).to.eql(\"Refund amount \"+pm.request is greater than the charge amount ($15.00).\");\r",
-											"    });\r",
-											"    "
+											"//Create refund with amount greater than charge",
+											"const refundResponse = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 400\", () => {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Error message is correct\", () => {",
+											"    pm.expect(refundResponse.error.message).to.be.a(\"string\");",
+											"    pm.expect(refundResponse.error.message).to.include(\"greater than\");",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -6426,26 +6427,7 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{base_url}}/v1/refunds?charge={{charge_id}}&amount=3000",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"v1",
-										"refunds"
-									],
-									"query": [
-										{
-											"key": "charge",
-											"value": "{{charge_id}}"
-										},
-										{
-											"key": "amount",
-											"value": "3000"
-										}
-									]
-								}
+								"url": "{{base_url}}/v1/refunds"
 							},
 							"response": []
 						}
