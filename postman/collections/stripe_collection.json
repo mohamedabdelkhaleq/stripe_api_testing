@@ -6082,6 +6082,45 @@
 					"item": [
 						{
 							"name": "TC-SUB-009: Retrieve Existing Subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c9173d2-3a67-4555-a40f-4612d5b3402c",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Retrieved subscription matches expected ID\", function() {\r",
+											"    pm.expect(data.id).to.equal(pm.environment.get('subscription_id'));\r",
+											"    pm.expect(data.object).to.equal('subscription');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f40d9218-47fb-4771-8f4c-ef4d100ec2e0",
+										"exec": [
+											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
+											"\r",
+											"if (!subscriptionId) {\r",
+											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "e3f35bb8-be74-4fcb-92f0-7d6f6d56426b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -6089,41 +6128,76 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "customer",
-											"value": "{{customer_id}}",
-											"type": "text",
-											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
-										},
-										{
-											"key": "items[0][price]",
-											"value": "{{price_id_monthly}}",
-											"type": "text",
-											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
-										},
-										{
-											"key": "default_payment_method",
-											"value": "{{payment_method_id}}",
-											"type": "text",
-											"uuid": "5b466fc7-d40f-4ee2-9ace-5f9cea28a21f"
-										},
-										{
-											"key": "trial_end",
-											"value": "1800000000",
-											"type": "text",
-											"uuid": "a6891a48-7256-4fbf-9028-30067ea8cd38"
-										}
-									]
+								"url": "{{base_url}}/v1/subscriptions/{{subscription_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-SUB-009: Retrieve Existing Subscription Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c9173d2-3a67-4555-a40f-4612d5b3402c",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Retrieved subscription matches expected ID\", function() {\r",
+											"    pm.expect(data.id).to.equal(pm.environment.get('subscription_id'));\r",
+											"    pm.expect(data.object).to.equal('subscription');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
 								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f40d9218-47fb-4771-8f4c-ef4d100ec2e0",
+										"exec": [
+											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
+											"\r",
+											"if (!subscriptionId) {\r",
+											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "86d4213d-9478-407d-a67e-409910d5a400",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
 								"url": "{{base_url}}/v1/subscriptions/{{subscription_id}}"
 							},
 							"response": []
 						}
 					],
 					"id": "f2ec2416-18fb-47d6-8d8d-37e0257a71a7"
+				},
+				{
+					"name": "New Request",
+					"id": "e86532da-cc80-4a04-8b08-eb22661ee082",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "51ff5231-ef15-4c55-b543-9964d0887952"
