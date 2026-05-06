@@ -5500,20 +5500,14 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Subscription object has correct structure\", function() {\r",
+											"pm.test(\"Subscription is trialing\", function() {\r",
 											"    pm.expect(data.id).to.match(/^sub_/);\r",
-											"    pm.expect(data.object).to.equal('subscription');\r",
-											"    pm.expect(data.customer).to.equal(pm.environment.get('customer_id'));\r",
-											"    pm.expect(data.status).to.equal('active');\r",
+											"    pm.expect(data.status).to.equal('trialing');\r",
+											"    pm.expect(data.trial_end).to.equal(1800000000);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Subscription has correct items\", function() {\r",
-											"    pm.expect(data.items.data.length).to.equal(1);\r",
-											"    pm.expect(data.items.data[0].price.id).to.equal(pm.environment.get('price_id_monthly'));\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Save subscription_id for later tests\", function() {\r",
-											"    pm.environment.set('subscription_id', data.id);\r",
+											"pm.test(\"Save subscription_id_trial for later\", function() {\r",
+											"    pm.environment.set('subscription_id_trial', data.id);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -5573,6 +5567,12 @@
 											"value": "{{payment_method_id}}",
 											"type": "text",
 											"uuid": "5b466fc7-d40f-4ee2-9ace-5f9cea28a21f"
+										},
+										{
+											"key": "trial_end",
+											"value": "1800000000",
+											"type": "text",
+											"uuid": "a6891a48-7256-4fbf-9028-30067ea8cd38"
 										}
 									]
 								},
