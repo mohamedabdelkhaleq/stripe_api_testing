@@ -1685,8 +1685,8 @@
 											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
 										},
 										{
-											"key": "",
-											"value": "",
+											"key": "payment_method",
+											"value": "{{payment_method_id}}",
 											"type": "text",
 											"uuid": "ee49f512-858c-4ac0-9b2b-a7a708f4dbaf"
 										},
@@ -1712,7 +1712,7 @@
 										"exec": [
 											"const response = pm.response.json();",
 											"//TC-PI-002 CONNECT TO PAYMENT METHOD Confirm PI with success card status: succeeded",
-											"pm.test(\"Status ",
+											"pm.test(\"Status",
 											"    pm.response.to.have.status(200);",
 											"});",
 											"pm.test(\"Response body contains id and object fields\", () => {",
@@ -1757,8 +1757,12 @@
 									"listen": "prerequest",
 									"script": {
 										"id": "15cf5537-bfa0-42dc-a9cc-cedf0d1cb127",
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -3234,7 +3238,7 @@
 					"response": []
 				},
 				{
-					"name": "TC-PI-003:x: List all charges for spacific customer",
+					"name": "TC-PI-003: List all charges for spacific customer",
 					"event": [
 						{
 							"listen": "test",
