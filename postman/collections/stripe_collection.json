@@ -6375,18 +6375,11 @@
 										"id": "fcc3de6f-3655-4bc6-bc4e-b8992c380750",
 										"exec": [
 											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
-											"const subscriptionItemId = pm.environment.get(\"subscription_item_id\");\r",
-											"const priceIdYearly = pm.environment.get(\"price_id_yearly\");\r",
 											"\r",
 											"if (!subscriptionId) {\r",
 											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
 											"}\r",
-											"if (!subscriptionItemId) {\r",
-											"    throw new Error(\"subscription_item_id is missing! Run TC-SUB-001 first.\");\r",
-											"}\r",
-											"if (!priceIdYearly) {\r",
-											"    throw new Error(\"price_id_yearly is missing! Run TC-PRC-003 first.\");\r",
-											"}"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -6424,13 +6417,106 @@
 					"item": [
 						{
 							"name": "TC-SUB-014: Cancel Subscription Immediately",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5d913a1a-d47c-4663-97e7-d7a9e61e7b3f",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Subscription is canceled\", function() {\r",
+											"    pm.expect(data.status).to.equal('canceled');\r",
+											"    pm.expect(data.canceled_at).to.exist;\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4b5ceff0-116a-4388-8e38-5716a2275b75",
+										"exec": [
+											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
+											"\r",
+											"if (!subscriptionId) {\r",
+											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "00403c4e-3b9c-4fca-8252-19c7f6029fb5",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
 								"method": "DELETE",
-								"header": []
+								"header": [],
+								"url": "{{base_url}}/v1/subscriptions/{{subscription_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-SUB-015: Cancel Already Canceled Subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5d913a1a-d47c-4663-97e7-d7a9e61e7b3f",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 400 Bad Request\", function() {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error mentions subscription already canceled\", function() {\r",
+											"    pm.expect(data.error.message).to.include('already canceled');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4b5ceff0-116a-4388-8e38-5716a2275b75",
+										"exec": [
+											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
+											"\r",
+											"if (!subscriptionId) {\r",
+											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "e54b68a0-e33d-42d3-80d3-1f5533b1a133",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base_url}}/v1/subscriptions/{{canceled_subscription_id}}"
 							},
 							"response": []
 						}
