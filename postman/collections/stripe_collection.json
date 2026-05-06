@@ -6608,7 +6608,8 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"pm.test(\"Metadata updated\", function () {\r",
-											"    pm.expect(refundResponse.metadata.order_id).to.have.include(\"No such refund\");\r",
+											"    pm.expect(refundResponse.metadata.order_id).to.eql(pm.request.body\r",
+											"    .urlencoded.metadata[0].order_id);\r",
 											"});"
 										],
 										"type": "text/javascript",
