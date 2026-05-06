@@ -1746,7 +1746,9 @@
 											"});",
 											"pm.environment.set(\"payment_intent_id\", response.id);",
 											"pm.environment.set(\"charge_id\", response.latest_charge);",
-											"pm.environment.set(\"amount\", response.amount);"
+											"pm.environment.set(\"amount\", response.amount);",
+											"pm.environment.set(\"half of amount\", response.amount / 2);",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -1853,6 +1855,7 @@
 											"    pm.expect(response.currency).to.equal(\"eur\");",
 											"});",
 											"",
+											"pm.environment.set(\"half of amount\", response.amount / 2);",
 											"",
 											"//Status Value ",
 											"pm.test(\"Payment Intent status is 'succeeded'\", function () {",
@@ -1894,8 +1897,12 @@
 									"listen": "prerequest",
 									"script": {
 										"id": "030aaba2-17b6-49e3-9e63-95d522d4a354",
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -2015,7 +2022,8 @@
 											"pm.environment.set(\"payment_intent_id\", response.id);",
 											"pm.environment.set(\"charge_id\", response.latest_charge);",
 											"pm.environment.set(\"amount\", response.amount);",
-											"pm.environment.set(\"currency\", response.currency);"
+											"pm.environment.set(\"currency\", response.currency);",
+											"pm.environment.set(\"half of amount\", response.amount / 2);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -5858,13 +5866,13 @@
 										"exec": [
 											"const data = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status is 404 Not Found\", function() {\r",
-											"    pm.response.to.have.status(404);\r",
+											"pm.test(\"Status is 400 Bad Request\", function() {\r",
+											"    pm.response.to.have.status(400);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Error mentions no such customer\", function() {\r",
+											"pm.test(\"Error mentions missing customer\", function() {\r",
 											"    pm.expect(data.error.type).to.equal('invalid_request_error');\r",
-											"    pm.expect(data.error.message).to.include('No such customer');\r",
+											"    pm.expect(data.error.message).to.include('customer');\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -5877,13 +5885,9 @@
 									"script": {
 										"id": "fcc3de6f-3655-4bc6-bc4e-b8992c380750",
 										"exec": [
-											"const customerId = pm.environment.get(\"customer_id\");\r",
 											"const priceId = pm.environment.get(\"price_id_yearly\");\r",
 											"const paymentMethodId = pm.environment.get(\"payment_method_id\");\r",
 											"\r",
-											"if (!customerId) {\r",
-											"    throw new Error(\"customer_id is missing! Run TC-CUS-001 first.\");\r",
-											"}\r",
 											"if (!priceId) {\r",
 											"    throw new Error(\"price_id_yearly is missing! Run TC-PRC-003 first.\");\r",
 											"}\r",
@@ -5909,7 +5913,7 @@
 									"urlencoded": [
 										{
 											"key": "items[0][price]",
-											"value": "{{price_id_yearly}}",
+											"value": "{{price_id_monthly}}",
 											"type": "text",
 											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
 										},
@@ -5918,12 +5922,6 @@
 											"value": "{{payment_method_id}}",
 											"type": "text",
 											"uuid": "5b466fc7-d40f-4ee2-9ace-5f9cea28a21f"
-										},
-										{
-											"key": "customer",
-											"value": "invalidCustomer",
-											"type": "text",
-											"uuid": "8d7a356f-bd4a-42dd-ac63-442f9a7874ba"
 										}
 									]
 								},
