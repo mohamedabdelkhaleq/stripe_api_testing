@@ -5434,6 +5434,7 @@
 											"\r",
 											"pm.test(\"Save subscription_id for later tests\", function() {\r",
 											"    pm.environment.set('subscription_id', data.id);\r",
+											"    pm.environment.set('subscription_item_id', data.items.data[0].id);\r",
 											"});"
 										],
 										"type": "text/javascript",
