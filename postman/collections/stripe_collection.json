@@ -6136,9 +6136,9 @@
 											"    pm.expect(response.email).to.eql(sentEmail);\r",
 											"});\r",
 											"\r",
-											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"if (pm.response.code === 200 && response.id) {\r",
 											"//Save customer_id at folder level\r",
-											"pm.variables.set(\"customer_id\", response.id);\r",
+											"pm.environment.set(\"e2e_customer_id\", response.id);\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -6149,7 +6149,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "204ed803-be62-49df-96a2-3b0a8910725f",
+										"id": "3e00cf60-7795-4c76-a4f4-c2ccca9cc637",
 										"exec": [],
 										"type": "text/javascript"
 									}
@@ -6208,7 +6208,7 @@
 											"});\r",
 											"\r",
 											"if (pm.response.code === 200 && response.id) {\r",
-											"    pm.variables.set(\"payment_method_id\", response.id);\r",
+											"    pm.variables.set(\"e2e_payment_method_id\", response.id);\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -6264,7 +6264,7 @@
 							"response": []
 						},
 						{
-							"name": "05 - Attach Payment Method Copy",
+							"name": "03 - Attach Payment Method",
 							"event": [
 								{
 									"listen": "test",
@@ -6331,7 +6331,7 @@
 									"urlencoded": [
 										{
 											"key": "customer",
-											"value": "{{customer_id}}",
+											"value": "{{e2e_customer_id}}",
 											"type": "text",
 											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
 										}
