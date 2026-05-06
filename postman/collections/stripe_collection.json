@@ -6125,7 +6125,7 @@
 											"pm.test(\"Refund status is succeeded\", () => {\r",
 											"    pm.expect(refundResponse.status).to.equal(\"succeeded\");\r",
 											"});\r",
-											""
+											"pm.environment.set(\"refund_id\", refundResponse.id);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -6194,7 +6194,7 @@
 											"pm.test(\"Refund status is succeeded\", () => {\r",
 											"    pm.expect(refundResponse.status).to.equal(\"succeeded\");\r",
 											"});\r",
-											""
+											"pm.environment.set(\"refund_id\", refundResponse.id);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -6286,7 +6286,7 @@
 											"pm.test(\"Refund status is succeeded\", () => {\r",
 											"    pm.expect(refundResponse.status).to.equal(\"succeeded\");\r",
 											"});\r",
-											""
+											"pm.environment.set(\"refund_id\", refundResponse.id);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -6509,14 +6509,15 @@
 					"name": "Retrieve Refunds",
 					"item": [
 						{
-							"name": "TC-RE-006",
+							"name": "TC-RE-006:Retrieve existing refund with id",
 							"id": "bd8d4810-d474-499c-95bf-153b4ae2ea9b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": "{{base_url}}/v1/refunds/"
 							},
 							"response": []
 						}
