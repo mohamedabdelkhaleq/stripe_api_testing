@@ -5908,7 +5908,7 @@
 										}
 									]
 								},
-								"url": "{{base_url}}/v1/payment_intents/{{e2e_payment_method_id}}/confirm"
+								"url": "{{base_url}}/v1/payment_intents/{{e2e_payment_intent_id}}/confirm"
 							},
 							"response": []
 						}
