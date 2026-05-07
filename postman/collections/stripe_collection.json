@@ -9901,13 +9901,94 @@
 					"item": [
 						{
 							"name": "01 - Create Payment Intent and Confirm",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e141ca5c-c2ee-4441-b980-08b7417cbea4",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"const expectedStatus = pm.iterationData.get(\"expected_status\");\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Payment status matches expected\", function () {\r",
+											"    pm.expect(jsonData.status).to.eql(expectedStatus);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Amount matches CSV data\", function () {\r",
+											"    pm.expect(jsonData.amount).to.eql(parseInt(pm.iterationData.get(\"amount\")));\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "e8aa63ab-c802-4937-97f9-f01d5e8d6885",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
-								"method": "GET",
-								"header": []
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "amount",
+											"value": "{{amount}}",
+											"type": "text",
+											"uuid": "2338fce6-9558-4274-8be2-5bdfc9433b31"
+										},
+										{
+											"key": "currency",
+											"value": "{{currency}}",
+											"type": "text",
+											"uuid": "e9204bb6-331b-4765-9a87-44f9ed881314"
+										},
+										{
+											"key": "payment_method_types[]",
+											"value": "card",
+											"type": "text",
+											"uuid": "c263c1e4-af8b-4f16-800a-77a574bf18e0"
+										},
+										{
+											"key": "confirm",
+											"value": "true",
+											"type": "text",
+											"uuid": "379cd311-00c8-458b-9d4c-b6b9fb52980c"
+										},
+										{
+											"key": "return_url",
+											"value": "https://example.com",
+											"type": "text",
+											"uuid": "6a206ece-8baa-4208-bc52-d66eb448fd78"
+										},
+										{
+											"key": "payment_method_data[type]",
+											"value": "card",
+											"type": "text",
+											"uuid": "694ee685-9dde-4d04-a0d3-a64725130287"
+										},
+										{
+											"key": "payment_method_data[card][token]",
+											"value": "{{card_token}}",
+											"type": "text",
+											"uuid": "8ec856f1-68ce-4562-b85d-e7d8216a5a9d"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_intents"
 							},
 							"response": []
 						}
