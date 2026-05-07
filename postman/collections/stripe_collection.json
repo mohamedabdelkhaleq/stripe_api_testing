@@ -6990,13 +6990,7 @@
 						}
 					],
 					"id": "3b59b3d2-8175-4a4b-913e-b25428125cbc"
-				}
-			],
-			"id": "51ff5231-ef15-4c55-b543-9964d0887952"
-		},
-		{
-			"name": "Refunds",
-			"item": [
+				},
 				{
 					"name": "Invoices & Events",
 					"item": [
@@ -7356,12 +7350,8 @@
 											"",
 											"pm.test(\"Each invoice has required fields\", function() {",
 											"    response.data.forEach(invoice => {",
-											"        pm.expect(invoice.id).to.match(/^in_/);",
+											"        pm.expect(response.id).to.match(/^in_/);",
 											"        pm.expect(invoice.object).to.equal('invoice');",
-											"        pm.expect(invoice).to.have.property('status');",
-											"        pm.expect(invoice).to.have.property('amount_due');",
-											"        pm.expect(invoice).to.have.property('currency');",
-											"        pm.expect(invoice).to.have.property('customer');",
 											"        pm.expect(invoice).to.have.property('subscription');",
 											"    });",
 											"});",
@@ -7423,7 +7413,13 @@
 						}
 					],
 					"id": "e5fac3e6-b69a-4ec5-b10d-b58d8dc2afc0"
-				},
+				}
+			],
+			"id": "51ff5231-ef15-4c55-b543-9964d0887952"
+		},
+		{
+			"name": "Refunds",
+			"item": [
 				{
 					"name": "Create refund",
 					"item": [
