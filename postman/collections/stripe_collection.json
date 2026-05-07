@@ -9982,7 +9982,7 @@
 										},
 										{
 											"key": "payment_method_data[card][token]",
-											"value": "{{card_token}}",
+											"value": "tok_insufficient_funds",
 											"type": "text",
 											"uuid": "8ec856f1-68ce-4562-b85d-e7d8216a5a9d"
 										}
