@@ -7350,7 +7350,7 @@
 											"",
 											"pm.test(\"Each invoice has required fields\", function() {",
 											"    response.data.forEach(invoice => {",
-											"        pm.expect(response.id).to.match(/^in_/);",
+											"        pm.expect(invoice.id).to.match(/^in_/);",
 											"        pm.expect(invoice.object).to.equal('invoice');",
 											"        pm.expect(invoice).to.have.property('subscription');",
 											"    });",
