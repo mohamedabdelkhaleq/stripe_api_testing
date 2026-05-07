@@ -7502,6 +7502,24 @@
 						}
 					],
 					"id": "265dced3-8236-4f4d-98da-694939db596f"
+				},
+				{
+					"name": "Invoices & Events",
+					"item": [
+						{
+							"name": "TC-IE-001",
+							"id": "997ae78c-0689-471b-918e-5322a3059527",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
+					"id": "e5fac3e6-b69a-4ec5-b10d-b58d8dc2afc0"
 				}
 			],
 			"id": "cb095b04-ec36-41f7-8fc2-f9aea5f94a84"
