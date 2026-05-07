@@ -8431,7 +8431,7 @@
 											"pm.test(\"Price object has correct structure\", function() {\r",
 											"    pm.expect(data.id).to.match(/^price_/);\r",
 											"    pm.expect(data.object).to.eql('price');\r",
-											"    pm.expect(data.type).to.eql('one_time');\r",
+											"    pm.expect(data.type).to.eql('recurring');\r",
 											"    pm.expect(data.currency).to.eql('usd');\r",
 											"    pm.expect(data.unit_amount).to.eql(1000);\r",
 											"});\r",
@@ -8488,6 +8488,12 @@
 											"value": "{{e2e_product_id}}",
 											"type": "text",
 											"uuid": "56d32781-751f-4c8a-9248-7def6e0d7157"
+										},
+										{
+											"key": "recurring[interval]",
+											"value": "month",
+											"type": "text",
+											"uuid": "3572315d-9176-4161-8833-d548e114c8df"
 										}
 									]
 								},
