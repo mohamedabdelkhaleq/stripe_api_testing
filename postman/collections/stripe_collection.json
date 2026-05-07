@@ -7866,7 +7866,7 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "{{base_url}}/v1/invoices?status=paid",
+									"raw": "{{base_url}}/v1/invoices?status=open",
 									"host": [
 										"{{base_url}}"
 									],
@@ -7877,7 +7877,7 @@
 									"query": [
 										{
 											"key": "status",
-											"value": "paid"
+											"value": "open"
 										}
 									]
 								}
