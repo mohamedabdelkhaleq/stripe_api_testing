@@ -1289,7 +1289,7 @@
 										},
 										{
 											"key": "card[token]",
-											"value": "tok_radarBlock",
+											"value": "tok_threeDSecure2Required",
 											"type": "text",
 											"uuid": "153affde-ad08-4fc5-a310-1c1c60ddd562"
 										}
