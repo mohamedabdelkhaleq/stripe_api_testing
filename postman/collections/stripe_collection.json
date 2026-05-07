@@ -9779,7 +9779,7 @@
 											"});\r",
 											"\r",
 											"pm.test(\"Error mentions invalid API key\", function () {\r",
-											"    pm.expect(jsonData.error.message).to.include(\"No such API key\");\r",
+											"    pm.expect(jsonData.error.message).to.include(\"Invalid API Key provided\");\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -9801,7 +9801,52 @@
 								},
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/account"
+								"url": "{{base_url}}/v1/account"
+							},
+							"response": []
+						},
+						{
+							"name": "03 - Publishable Key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3b12e994-fc4c-43ef-b204-d8d16afad46e",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 401 Unauthorized\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error type is invalid_request_error\", function () {\r",
+											"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error mentions invalid API key\", function () {\r",
+											"    pm.expect(jsonData.error.message).to.include(\"Invalid API Key provided\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "d0601c50-5846-4411-b628-685fcee62211",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "sk_test_wrongkey"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/v1/account"
 							},
 							"response": []
 						}
