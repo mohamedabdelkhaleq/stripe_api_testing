@@ -7019,7 +7019,7 @@
 											"});\r",
 											"\r",
 											"\r",
-											"pm.test(\"Each subscription has required fields\", function() {\r",
+											"pm.test(\"Each invice has required fields\", function() {\r",
 											"    response.data.forEach(invoice => {\r",
 											"        pm.expect(invoice.id).to.match(/^in_/);\r",
 											"        pm.expect(invoice.object).to.equal('invoice');\r",
@@ -7037,8 +7037,12 @@
 									"listen": "prerequest",
 									"script": {
 										"id": "f98f5176-4a1a-47de-9c41-b50f52ef9328",
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -7080,7 +7084,7 @@
 											"\r",
 											"\r",
 											"\r",
-											"pm.test(\"Each subscription has required fields\", function() {\r",
+											"pm.test(\"Each invoice has required fields\", function() {\r",
 											"    response.data.forEach(invoice => {\r",
 											"        pm.expect(invoice.id).to.match(/^in_/);\r",
 											"        pm.expect(invoice.object).to.equal('invoice');\r",
@@ -7097,8 +7101,12 @@
 									"listen": "prerequest",
 									"script": {
 										"id": "d70f4828-5f9b-47fb-a197-7417cebfe9fc",
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -7165,8 +7173,10 @@
 											"\r",
 											"\r",
 											"//only paid status\r",
-											"pm.test(\"All invoices have status open\", function() {\r",
-											"pm.expec    \r",
+											"pm.test(\"All invoices have status paid\", ()=> {\r",
+											"    pm.expect(response.data.every(invoice => invoice.status === \"paid\")).to.be.true;\r",
+											"    });\r",
+											"    \r",
 											"\r",
 											"\r",
 											"\r",
@@ -7196,6 +7206,102 @@
 								}
 							],
 							"id": "d1453f8a-8028-4633-86dd-b8c2188e15d1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/invoices?status=paid",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"invoices"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "paid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-IE-003:Only paid invoices returned Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "eeb4c086-1e23-48e9-a3f1-cf718322c364",
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 200\",  ()=> {\r",
+											"    pm.response.to.have.status(200);    \r",
+											"    });\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is a list of invoices\", ()=> {\r",
+											"    pm.expect(response.object).to.equal('list');\r",
+											"    pm.expect(response.data).to.be.an('array');\r",
+											"    pm.expect(response.data.length).to.be.above(0);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each invoice has required fields\", function() {\r",
+											"    response.data.forEach(invoice => {\r",
+											"        pm.expect(invoice.id).to.match(/^in_/);\r",
+											"        pm.expect(invoice.object).to.equal('invoice');\r",
+											"    });\r",
+											"    });\r",
+											"\r",
+											"\r",
+											"\r",
+											"//check only  open status\r",
+											"pm.test(\"All invoices have status open\", ()=> {\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d70f4828-5f9b-47fb-a197-7417cebfe9fc",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "ab9763c9-24b4-49ab-9989-9213d8fdbe54",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
