@@ -8914,6 +8914,63 @@
 								"url": "{{base_url}}/v1/subscriptions/{{e2e_subscription_id}}"
 							},
 							"response": []
+						},
+						{
+							"name": "08 - Cancel Subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5d913a1a-d47c-4663-97e7-d7a9e61e7b3f",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Subscription is canceled\", function() {\r",
+											"    pm.expect(data.status).to.equal('canceled');\r",
+											"    pm.expect(data.canceled_at).to.exist;\r",
+											"});\r",
+											"\r",
+											"pm.environment.set('canceled_subscription_id', data.id);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4b5ceff0-116a-4388-8e38-5716a2275b75",
+										"exec": [
+											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
+											"\r",
+											"if (!subscriptionId) {\r",
+											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "6fcfb70c-4a5c-420d-bdb9-dcbe3276824c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base_url}}/v1/subscriptions/{{subscription_id}}"
+							},
+							"response": []
 						}
 					],
 					"id": "4385fb53-5812-4bd5-99dd-c73869c9f2f5"
