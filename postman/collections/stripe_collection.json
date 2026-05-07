@@ -9898,7 +9898,20 @@
 				},
 				{
 					"name": "E2E-05 - Data Driven Payments",
-					"item": [],
+					"item": [
+						{
+							"name": "01 - Create Payment Intent and Confirm",
+							"id": "e8aa63ab-c802-4937-97f9-f01d5e8d6885",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
 					"id": "5853dbc5-73cc-45f3-97f7-473711bb3127"
 				}
 			],
