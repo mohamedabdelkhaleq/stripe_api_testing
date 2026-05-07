@@ -7688,8 +7688,8 @@
 											"\r",
 											"pm.test(\"Each subscription has required fields\", function() {\r",
 											"    response.data.forEach(invoice => {\r",
-											"        pm.expect(subscription.id).to.match(/^in_/);\r",
-											"        pm.expect(subscription.object).to.equal('invoice');\r",
+											"        pm.expect(invoice.id).to.match(/^in_/);\r",
+											"        pm.expect(invoice.object).to.equal('invoice');\r",
 											"    });\r",
 											"    });\r",
 											"\r",
@@ -7703,7 +7703,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "4e8dd9b4-84c7-4377-8aa9-3ea6c7774b3e",
+										"id": "f98f5176-4a1a-47de-9c41-b50f52ef9328",
 										"exec": [],
 										"type": "text/javascript"
 									}
@@ -7748,10 +7748,12 @@
 											"\r",
 											"\r",
 											"pm.test(\"Each subscription has required fields\", function() {\r",
-											"    data.data.forEach(subscription => {\r",
-											"        pm.expect(subscription.id).to.match(/^sub_/);\r",
-											"        pm.expect(subscription.object).to.equal('subscription');\r",
-											"    });"
+											"    response.data.forEach(invoice => {\r",
+											"        pm.expect(invoice.id).to.match(/^in_/);\r",
+											"        pm.expect(invoice.object).to.equal('invoice');\r",
+											"    });\r",
+											"    });\r",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -7761,7 +7763,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "4e23a40e-6b2d-48eb-897c-7d019c56e0f3",
+										"id": "d70f4828-5f9b-47fb-a197-7417cebfe9fc",
 										"exec": [],
 										"type": "text/javascript"
 									}
@@ -7791,6 +7793,85 @@
 										{
 											"key": "customer",
 											"value": "{{customer_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-IE-003:List paid invoices only",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "eeb4c086-1e23-48e9-a3f1-cf718322c364",
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 200\",  ()=> {\r",
+											"    pm.response.to.have.status(200);    \r",
+											"    });\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is a list of invoices\", ()=> {\r",
+											"    pm.expect(response.object).to.equal('list');\r",
+											"    pm.expect(response.data).to.be.an('array');\r",
+											"    pm.expect(response.data.length).to.be.above(0);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each subscription has required fields\", function() {\r",
+											"    response.data.forEach(invoice => {\r",
+											"        pm.expect(invoice.id).to.match(/^in_/);\r",
+											"        pm.expect(invoice.object).to.equal('invoice');\r",
+											"    });\r",
+											"    });\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d70f4828-5f9b-47fb-a197-7417cebfe9fc",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "d1453f8a-8028-4633-86dd-b8c2188e15d1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/invoices?status=paid",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"invoices"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "paid"
 										}
 									]
 								}
