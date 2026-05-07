@@ -7476,11 +7476,7 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": []
-								},
-								"url": "{{base_url}}/v1/invoices/{={{subscription_id}}"
+								"url": "{{base_url}}/v1/invoices/{{open_invoice_id}}/void"
 							},
 							"response": []
 						}
