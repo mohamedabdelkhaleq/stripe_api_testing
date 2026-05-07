@@ -8833,7 +8833,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-SUB-011: Update Subscription to New Price Copy",
+							"name": "08 - Update Subscription",
 							"event": [
 								{
 									"listen": "test",
@@ -8904,7 +8904,27 @@
 										}
 									]
 								},
-								"url": "{{base_url}}/v1/subscriptions/{{subscription_id}}"
+								"url": {
+									"raw": "{{base_url}}/v1/subscriptions/{{e2e_subscription_id))?items[0][id]=&items[0][price]={{price_id_yearly}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"subscriptions",
+										"{{e2e_subscription_id))"
+									],
+									"query": [
+										{
+											"key": "items[0][id]",
+											"value": ""
+										},
+										{
+											"key": "items[0][price]",
+											"value": "{{price_id_yearly}}"
+										}
+									]
+								}
 							},
 							"response": []
 						}
