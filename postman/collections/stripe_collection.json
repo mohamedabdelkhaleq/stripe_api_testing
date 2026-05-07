@@ -7680,7 +7680,7 @@
 					"name": "Retrieve Events",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "TC-EVT-001",
 							"event": [
 								{
 									"listen": "test",
@@ -7698,13 +7698,15 @@
 											"});\r",
 											"\r",
 											"\r",
+											"\r",
+											"\r",
+											"\r",
 											"pm.test(\"Each invice has required fields\", function() {\r",
 											"    response.data.forEach(invoice => {\r",
-											"        pm.expect(invoice.id).to.match(/^in_/);\r",
-											"        pm.expect(invoice.object).to.equal('invoice');\r",
+											"        pm.expect(invoice.id).to.match(/^evt_/);\r",
+											"        pm.expect(invoice.object).to.equal('event');\r",
 											"    });\r",
-											"    });\r",
-											"\r",
+											"});\r",
 											""
 										],
 										"type": "text/javascript",
@@ -7715,7 +7717,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "de28afc1-a93a-4404-9540-78003868f28a",
+										"id": "c5e6c5cd-a275-4d20-b1cf-eb77db95d285",
 										"exec": [],
 										"type": "text/javascript"
 									}
@@ -7728,7 +7730,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/events "
+								"url": "{{base_url}}/v1/events"
 							},
 							"response": []
 						}
@@ -7750,9 +7752,7 @@
 									"pm.test(\"Response is a list of invoices\", ()=> {\r",
 									"    pm.expect(response.object).to.equal('list');\r",
 									"    pm.expect(response.data).to.be.an('array');\r",
-									"    pm.expect(response.data.length).to.be.above(0);\r",
-									"});\r",
-									"\r",
+									"    pm.expect(response.data.length).to.be.above(0)\r",
 									"\r",
 									"pm.test(\"Each invice has required fields\", function() {\r",
 									"    response.data.forEach(invoice => {\r",
