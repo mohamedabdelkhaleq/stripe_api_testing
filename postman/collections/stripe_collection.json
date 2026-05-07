@@ -8840,14 +8840,19 @@
 									"script": {
 										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
 										"exec": [
-											"const data = pm.response.json();\r",
+											"const jsonData = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status is 200 OK\", function() {\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Subscription price is updated\", function() {\r",
-											"    pm.expect(data.items.data[0].price.id).to.equal(pm.environment.get('price_id_yearly'));\r",
+											"pm.test(\"Subscription price is updated\", function () {\r",
+											"    pm.expect(jsonData.status).to.eql(\"active\");\r",
+											"    pm.expect(jsonData.items.data[0].price.id).to.eql(pm.environment.get(\"price_id_yearly\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Subscription ID is correct\", function () {\r",
+											"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"e2e_subscription_id\"));\r",
 											"});"
 										],
 										"type": "text/javascript",
