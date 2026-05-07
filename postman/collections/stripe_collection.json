@@ -7674,7 +7674,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/invoices/{{customer_id}}"
+								"url": "{{base_url}}/v1/invoices"
 							},
 							"response": []
 						}
