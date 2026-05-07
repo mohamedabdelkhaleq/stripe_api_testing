@@ -8860,18 +8860,14 @@
 									"script": {
 										"id": "fcc3de6f-3655-4bc6-bc4e-b8992c380750",
 										"exec": [
-											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
-											"const subscriptionItemId = pm.environment.get(\"subscription_item_id\");\r",
-											"const priceIdYearly = pm.environment.get(\"price_id_yearly\");\r",
+											"const subId = pm.environment.get(\"e2e_subscription_id\");\r",
+											"const subItemId = pm.environment.get(\"e2e_subscription_item_id\");\r",
 											"\r",
-											"if (!subscriptionId) {\r",
-											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
+											"if (!subId) {\r",
+											"    throw new Error(\"e2e_subscription_id is missing! Run 06 first.\");\r",
 											"}\r",
-											"if (!subscriptionItemId) {\r",
-											"    throw new Error(\"subscription_item_id is missing! Run TC-SUB-001 first.\");\r",
-											"}\r",
-											"if (!priceIdYearly) {\r",
-											"    throw new Error(\"price_id_yearly is missing! Run TC-PRC-003 first.\");\r",
+											"if (!subItemId) {\r",
+											"    throw new Error(\"e2e_subscription_item_id is missing! Run 06 first.\");\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -8898,33 +8894,13 @@
 										},
 										{
 											"key": "items[0][id]",
-											"value": "{{subscription_item_id}}",
+											"value": "{{e2e_subscription_item_id}}",
 											"type": "text",
 											"uuid": "2e919db2-c8ec-42eb-b314-17f16192c8ec"
 										}
 									]
 								},
-								"url": {
-									"raw": "{{base_url}}/v1/subscriptions/{{e2e_subscription_id))?items[0][id]=&items[0][price]={{price_id_yearly}}",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"v1",
-										"subscriptions",
-										"{{e2e_subscription_id))"
-									],
-									"query": [
-										{
-											"key": "items[0][id]",
-											"value": ""
-										},
-										{
-											"key": "items[0][price]",
-											"value": "{{price_id_yearly}}"
-										}
-									]
-								}
+								"url": "{{base_url}}/v1/subscriptions/{{e2e_subscription_id))"
 							},
 							"response": []
 						}
