@@ -8973,22 +8973,26 @@
 							"response": []
 						},
 						{
-							"name": "TC-SUB-009: Retrieve Existing Subscription Copy",
+							"name": "09 - Verify Canceled Subscription",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"id": "9c9173d2-3a67-4555-a40f-4612d5b3402c",
 										"exec": [
-											"const data = pm.response.json();\r",
+											"const jsonData = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status is 200 OK\", function() {\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Retrieved subscription matches expected ID\", function() {\r",
-											"    pm.expect(data.id).to.equal(pm.environment.get('subscription_id'));\r",
-											"    pm.expect(data.object).to.equal('subscription');\r",
+											"pm.test(\"Subscription is canceled\", function () {\r",
+											"    pm.expect(jsonData.status).to.eql(\"canceled\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"canceled_at timestamp is populated\", function () {\r",
+											"    pm.expect(jsonData.canceled_at).to.not.be.null;\r",
+											"    pm.expect(jsonData.canceled_at).to.be.a('number');\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -9001,10 +9005,10 @@
 									"script": {
 										"id": "f40d9218-47fb-4771-8f4c-ef4d100ec2e0",
 										"exec": [
-											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
+											"const subId = pm.environment.get(\"e2e_subscription_id\");\r",
 											"\r",
-											"if (!subscriptionId) {\r",
-											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
+											"if (!subId) {\r",
+											"    throw new Error(\"e2e_subscription_id is missing! Run 08 first.\");\r",
 											"}"
 										],
 										"type": "text/javascript",
@@ -9020,7 +9024,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/subscriptions/{{subscription_id}}"
+								"url": "{{base_url}}/v1/subscriptions/{{e2e_subscription_id}}"
 							},
 							"response": []
 						}
