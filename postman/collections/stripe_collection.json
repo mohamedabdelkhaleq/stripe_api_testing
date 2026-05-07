@@ -8744,7 +8744,7 @@
 							"response": []
 						},
 						{
-							"name": "07 - GET Invoice",
+							"name": "07 - Get Invoice",
 							"event": [
 								{
 									"listen": "test",
