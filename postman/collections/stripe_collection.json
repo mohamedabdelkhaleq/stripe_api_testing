@@ -9756,7 +9756,7 @@
 								},
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/account"
+								"url": "{{base_url}}/v1/account"
 							},
 							"response": []
 						},
@@ -9780,6 +9780,13 @@
 											"\r",
 											"pm.test(\"Error mentions invalid API key\", function () {\r",
 											"    pm.expect(jsonData.error.message).to.include(\"Invalid API Key provided\");\r",
+											"});\r",
+											"\r",
+											"// من Step 05\r",
+											"pm.test(\"Error response has correct structure\", function () {\r",
+											"    pm.expect(jsonData).to.have.property('error');\r",
+											"    pm.expect(jsonData.error).to.have.property('type');\r",
+											"    pm.expect(jsonData.error).to.have.property('message');\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -9876,42 +9883,6 @@
 								}
 							],
 							"id": "a53252d6-4661-4f89-b375-64071a5f3ca6",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": "{{base_url}}/v1/account"
-							},
-							"response": []
-						},
-						{
-							"name": "04 - Restore Valid Key Copy",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "3b12e994-fc4c-43ef-b204-d8d16afad46e",
-										"exec": [
-											"const jsonData = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Status is 200 OK\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Valid key returns account object\", function () {\r",
-											"    pm.expect(jsonData.id).to.match(/^acct_/);\r",
-											"    pm.expect(jsonData.object).to.eql(\"account\");\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"id": "d00da177-f963-4d11-bacf-73e9cad8310b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
