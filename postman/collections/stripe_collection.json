@@ -8911,7 +8911,7 @@
 										}
 									]
 								},
-								"url": "{{base_url}}/v1/subscriptions/{{e2e_subscription_id))"
+								"url": "{{base_url}}/v1/subscriptions/{{e2e_subscription_id}}"
 							},
 							"response": []
 						}
