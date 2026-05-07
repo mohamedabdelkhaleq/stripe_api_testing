@@ -9724,13 +9724,84 @@
 					"item": [
 						{
 							"name": "01 - No Authentication Header",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3b12e994-fc4c-43ef-b204-d8d16afad46e",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 401 Unauthorized\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error type is correct\", function () {\r",
+											"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"id": "4914198a-5d95-43ff-9e19-229f3b862d01",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "noauth"
+								},
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": "{{base_url}}/account"
+							},
+							"response": []
+						},
+						{
+							"name": "02 - Wrong API Key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3b12e994-fc4c-43ef-b204-d8d16afad46e",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 401 Unauthorized\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error type is invalid_request_error\", function () {\r",
+											"    pm.expect(jsonData.error.type).to.eql(\"invalid_request_error\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error mentions invalid API key\", function () {\r",
+											"    pm.expect(jsonData.error.message).to.include(\"No such API key\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "7b9d105f-e2f3-495f-93a7-f245267cfea1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": {
+										"username": "sk_test_wrongkey"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/account"
 							},
 							"response": []
 						}
