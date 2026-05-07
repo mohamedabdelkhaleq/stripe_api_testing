@@ -8681,8 +8681,8 @@
 											"\r",
 											"\r",
 											"pm.test(\"Save subscription_id for later tests\", function() {\r",
-											"    pm.environment.set('e2e_subscription_id', data.id);\r",
-											"    pm.environment.set('e2e_subscription_item_id', data.items.data[0].id);\r",
+											"    pm.environment.set('e2e_subscription_id', jsonData.id);\r",
+											"    pm.environment.set('e2e_subscription_item_id', jsonData.items.data[0].id);\r",
 											"});"
 										],
 										"type": "text/javascript",
