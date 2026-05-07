@@ -9718,6 +9718,24 @@
 						}
 					],
 					"id": "b9cc7840-d0a0-447b-a73b-a13a715d1de1"
+				},
+				{
+					"name": "E2E-04 - Authentication Boundary Flow",
+					"item": [
+						{
+							"name": "01 - No Authentication Header",
+							"id": "4914198a-5d95-43ff-9e19-229f3b862d01",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
+					"id": "b3d55325-1fa9-43fb-b958-50a43d9190d1"
 				}
 			],
 			"id": "1a903abc-e868-43e9-94bd-b1eb933e6909"
