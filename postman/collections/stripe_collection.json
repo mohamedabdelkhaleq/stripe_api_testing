@@ -7674,7 +7674,27 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{base_url}}/v1/invoices"
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/invoices/create_preview?={{customer_id}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"invoices",
+										"create_preview"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "{{customer_id}"
+										}
+									]
+								}
 							},
 							"response": []
 						}
