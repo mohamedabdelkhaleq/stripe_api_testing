@@ -7265,6 +7265,11 @@
 											"pm.test(\"All invoices have status open\", ()=> {\r",
 											"    pm.expect(response.data.every(invoice => invoice.status === \"open\")).to.be.true;\r",
 											"    });\r",
+											"\r",
+											"pm.environment.set(\"open_invoice_id\", response.data[0].id);\r",
+											"\r",
+											"\r",
+											"\r",
 											"    \r",
 											"\r",
 											"\r",
@@ -7408,6 +7413,74 @@
 										}
 									]
 								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-IE-006:Void an open invoice",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "eeb4c086-1e23-48e9-a3f1-cf718322c364",
+										"exec": [
+											"const response = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is a list of invoices\", () => {",
+											"    pm.expect(response.object).to.equal('list');",
+											"    pm.expect(response.data).to.be.an('array');",
+											"    pm.expect(response.data.length).to.be.above(0);",
+											"});",
+											"",
+											"pm.test(\"Each invoice has required fields\", function() {",
+											"    response.data.forEach(invoice => {",
+											"        pm.expect(invoice.id).to.match(/^in_/);",
+											"        pm.expect(invoice.object).to.equal('invoice');",
+											"        pm.expect(invoice).to.have.property('parent');",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Only invoices for that subscription are returned\", () => {",
+											"    const subscriptionId = pm.environment.get(\"subscription_id\");",
+											"    response.data.forEach(invoice => {",
+											"        pm.expect(invoice.parent.subscription_details.subscription).to.equal(subscriptionId);",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d70f4828-5f9b-47fb-a197-7417cebfe9fc",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "f7474f2b-ff81-497e-9f44-40c70b66558f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": "{{base_url}}/v1/invoices/{={{subscription_id}}"
 							},
 							"response": []
 						}
