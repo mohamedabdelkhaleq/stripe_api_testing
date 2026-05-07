@@ -7236,7 +7236,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-IE-003:Only paid invoices returned Copy",
+							"name": "TC-IE-003:Only paid invoices returned",
 							"event": [
 								{
 									"listen": "test",
@@ -7268,11 +7268,10 @@
 											"\r",
 											"\r",
 											"//check only  open status\r",
-											"pm.test(\" invoices have status open\", ()=> {\r",
+											"pm.test(\"All invoices have status open\", ()=> {\r",
+											"    pm.expect(response.data.every(invoice => invoice.status === \"open\")).to.be.true;\r",
+											"    });\r",
 											"    \r",
-											"\r",
-											"    \r",
-											"\r",
 											"\r",
 											"\r",
 											"\r",
@@ -7306,6 +7305,105 @@
 								}
 							],
 							"id": "ab9763c9-24b4-49ab-9989-9213d8fdbe54",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/invoices?status=open",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"invoices"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "open"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TC-IE-003:Only paid invoices returned Copy 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "eeb4c086-1e23-48e9-a3f1-cf718322c364",
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.test(\"Status code is 200\",  ()=> {\r",
+											"    pm.response.to.have.status(200);    \r",
+											"    });\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is a list of invoices\", ()=> {\r",
+											"    pm.expect(response.object).to.equal('list');\r",
+											"    pm.expect(response.data).to.be.an('array');\r",
+											"    pm.expect(response.data.length).to.be.above(0);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each invoice has required fields\", function() {\r",
+											"    response.data.forEach(invoice => {\r",
+											"        pm.expect(invoice.id).to.match(/^in_/);\r",
+											"        pm.expect(invoice.object).to.equal('invoice');\r",
+											"    });\r",
+											"    });\r",
+											"\r",
+											"\r",
+											"\r",
+											"//check only  open status\r",
+											"pm.test(\"All invoices have status paid\", ()=> {\r",
+											"    pm.expect(response.data.every(invoice => invoice.status === \"open\")).to.be.true;\r",
+											"    });\r",
+											"    \r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d70f4828-5f9b-47fb-a197-7417cebfe9fc",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "3c9cd6ff-97d1-474d-8cb8-447d6cc60c52",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
