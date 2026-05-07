@@ -1283,9 +1283,15 @@
 									"urlencoded": [
 										{
 											"key": "type",
-											"value": "alipay",
+											"value": "card",
 											"type": "text",
 											"uuid": "69e3edfa-02c5-4308-9fb6-e0a9e44591e9"
+										},
+										{
+											"key": "card[token]",
+											"value": "tok_radarBlock",
+											"type": "text",
+											"uuid": "153affde-ad08-4fc5-a310-1c1c60ddd562"
 										}
 									]
 								},
