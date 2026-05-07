@@ -8831,6 +8831,82 @@
 								"url": "{{base_url}}/v1/subscriptions"
 							},
 							"response": []
+						},
+						{
+							"name": "TC-SUB-011: Update Subscription to New Price Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Subscription price is updated\", function() {\r",
+											"    pm.expect(data.items.data[0].price.id).to.equal(pm.environment.get('price_id_yearly'));\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "fcc3de6f-3655-4bc6-bc4e-b8992c380750",
+										"exec": [
+											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
+											"const subscriptionItemId = pm.environment.get(\"subscription_item_id\");\r",
+											"const priceIdYearly = pm.environment.get(\"price_id_yearly\");\r",
+											"\r",
+											"if (!subscriptionId) {\r",
+											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
+											"}\r",
+											"if (!subscriptionItemId) {\r",
+											"    throw new Error(\"subscription_item_id is missing! Run TC-SUB-001 first.\");\r",
+											"}\r",
+											"if (!priceIdYearly) {\r",
+											"    throw new Error(\"price_id_yearly is missing! Run TC-PRC-003 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "acb14a61-ea1d-436d-991d-e7d9712d6aa6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "items[0][price]",
+											"value": "{{price_id_yearly}}",
+											"type": "text",
+											"uuid": "1c6b7d94-f5ed-4f41-8e03-428d196c12d6"
+										},
+										{
+											"key": "items[0][id]",
+											"value": "{{subscription_item_id}}",
+											"type": "text",
+											"uuid": "2e919db2-c8ec-42eb-b314-17f16192c8ec"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/subscriptions/{{subscription_id}}"
+							},
+							"response": []
 						}
 					],
 					"id": "4385fb53-5812-4bd5-99dd-c73869c9f2f5"
