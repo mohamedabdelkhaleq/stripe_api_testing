@@ -1292,6 +1292,165 @@
 								"url": "{{base_url}}/v1/payment_methods"
 							},
 							"response": []
+						},
+						{
+							"name": "- Create Payment Method",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Payment Method has valid ID and type\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^pm_/);\r",
+											"    pm.expect(jsonData.object).to.eql(\"payment_method\");\r",
+											"    pm.expect(jsonData.type).to.eql(\"card\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Card details are correct\", function () {\r",
+											"    pm.expect(jsonData.card.last4).to.eql(\"4242\");\r",
+											"    pm.expect(jsonData.card.brand).to.eql(\"visa\");\r",
+											"});S\r",
+											"\r",
+											"if (pm.response.code === 200 && jsonData.id) {\r",
+											"    pm.environment.set(\"payment_method_id\", jsonData.id);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "41798f20-4311-43bd-a7dc-23ffd940441f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "type",
+											"value": "card",
+											"type": "text",
+											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+										},
+										{
+											"key": "card[token]",
+											"value": "tok_visa",
+											"type": "text",
+											"uuid": "cb3aab30-1ad0-4707-8e16-f4efd393d8d6"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_methods"
+							},
+							"response": []
+						},
+						{
+							"name": "05 - Attach Payment Method Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "95ec3a3c-ea06-4fe2-9784-6b3bce54bb27",
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Payment Method is attached to customer\", function () {\r",
+											"    pm.expect(jsonData.id).to.match(/^pm_/);\r",
+											"    pm.expect(jsonData.customer).to.eql(pm.environment.get(\"customer_id\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Card details are correct\", function () {\r",
+											"    pm.expect(jsonData.type).to.eql(\"card\");\r",
+											"    pm.expect(jsonData.card.brand).to.eql(\"visa\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "225148d9-6f60-4c60-8160-50160b4d1d8e",
+										"exec": [
+											"const pmId = pm.environment.get(\"e2e_payment_method_id\");\r",
+											"const customerId = pm.environment.get(\"e2e_customer_id\");\r",
+											"\r",
+											"if (!pmId) {\r",
+											"    throw new Error(\"e2e_payment_method_id is missing! Run 04 first.\");\r",
+											"}\r",
+											"if (!customerId) {\r",
+											"    throw new Error(\"e2e_customer_id is missing! Run 03 first.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "1c8603e8-d5db-473c-a4ed-4a9fe04091e6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "customer",
+											"value": "{{customer_id}}",
+											"type": "text",
+											"uuid": "a5be4bc1-5eac-4074-b900-e8be99cb184a"
+										}
+									]
+								},
+								"url": "{{base_url}}/v1/payment_methods/{{payment_method_id}}/attach"
+							},
+							"response": []
 						}
 					],
 					"id": "7b552dec-9cdd-40b6-947d-89a930eac6f5"
