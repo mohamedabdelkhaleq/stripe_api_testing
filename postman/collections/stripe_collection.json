@@ -7678,20 +7678,36 @@
 									"mode": "urlencoded",
 									"urlencoded": []
 								},
+								"url": "{{base_url}}/v1/invoices"
+							},
+							"response": []
+						},
+						{
+							"name": "TC-IE-001:List all invoices",
+							"id": "33e2e3b2-b46a-4d9b-950b-f371f1acd55a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
 								"url": {
-									"raw": "{{base_url}}/v1/invoices/create_preview?={{customer_id}",
+									"raw": "{{base_url}}/v1/invoices?customer={{customer_id}}",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"v1",
-										"invoices",
-										"create_preview"
+										"invoices"
 									],
 									"query": [
 										{
-											"key": "",
-											"value": "{{customer_id}"
+											"key": "customer",
+											"value": "{{customer_id}}"
 										}
 									]
 								}
