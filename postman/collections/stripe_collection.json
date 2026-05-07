@@ -7133,7 +7133,7 @@
 							"response": []
 						},
 						{
-							"name": "TC-IE-003:List paid invoices only",
+							"name": "TC-IE-003:Only paid invoices returned",
 							"event": [
 								{
 									"listen": "test",
@@ -7155,12 +7155,26 @@
 											"\r",
 											"\r",
 											"\r",
-											"pm.test(\"Each subscription has required fields\", function() {\r",
+											"pm.test(\"Each invoice has required fields\", function() {\r",
 											"    response.data.forEach(invoice => {\r",
 											"        pm.expect(invoice.id).to.match(/^in_/);\r",
 											"        pm.expect(invoice.object).to.equal('invoice');\r",
 											"    });\r",
 											"    });\r",
+											"\r",
+											"\r",
+											"\r",
+											"//only paid status\r",
+											"pm.test(\"All invoices have status open\", function() {\r",
+											"pm.expec    \r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
 											""
 										],
 										"type": "text/javascript",
@@ -9295,8 +9309,6 @@
 											"    pm.expect(data.canceled_at).to.exist;\r",
 											"});\r",
 											"\r",
-											"pm.environment.set('canceled_subscription_id', data.id);\r",
-											"\r",
 											""
 										],
 										"type": "text/javascript",
@@ -9309,10 +9321,10 @@
 									"script": {
 										"id": "4b5ceff0-116a-4388-8e38-5716a2275b75",
 										"exec": [
-											"const subscriptionId = pm.environment.get(\"subscription_id\");\r",
+											"const subId = pm.environment.get(\"e2e_subscription_id\");\r",
 											"\r",
-											"if (!subscriptionId) {\r",
-											"    throw new Error(\"subscription_id is missing! Run TC-SUB-001 first.\");\r",
+											"if (!subId) {\r",
+											"    throw new Error(\"e2e_subscription_id is missing! Run 06 first.\");\r",
 											"}\r",
 											""
 										],
@@ -9329,7 +9341,7 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
-								"url": "{{base_url}}/v1/subscriptions/{{subscription_id}}"
+								"url": "{{base_url}}/v1/subscriptions/{{e2e_subscription_id}}"
 							},
 							"response": []
 						},
