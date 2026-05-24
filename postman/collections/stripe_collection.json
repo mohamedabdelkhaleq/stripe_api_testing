@@ -57,6 +57,12 @@
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{api_key}}"
+									}
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
