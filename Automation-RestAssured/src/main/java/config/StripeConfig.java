@@ -15,6 +15,7 @@ public class StripeConfig {
             throw new ExceptionInInitializerError(e);
         }
     }
-    public static String baseUrl() { return PROPS.getProperty("base.url"); }
-    public static String apiKey() { return PROPS.getProperty("api.key"); }
+    public static String baseUrl()        { return PROPS.getProperty("base.url"); }
+    public static String apiKey()         { return PROPS.getProperty("api.key"); }
+    public static String publishableKey() { return PROPS.getProperty("publishable.key"); }
 }

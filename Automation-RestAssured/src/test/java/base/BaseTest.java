@@ -27,14 +27,13 @@ public class BaseTest {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
 
-    // Each test stores IDs of resources it created
+    // track what each test creates so we can clean up after
     protected List<String> createdCustomerIds = new ArrayList<>();
     protected List<String> createdProductIds = new ArrayList<>();
     protected List<String> createdSubscriptionIds = new ArrayList<>();
+
     @AfterMethod
     public void cleanup() {
-
-        // Delete all customers created in this test
         try {
             createdCustomerIds.forEach(id ->
                     given().delete(CUSTOMERS + "/" + id).then().statusCode(200));
@@ -42,7 +41,6 @@ public class BaseTest {
             createdCustomerIds.clear();
         }
 
-        // Cancel all subscriptions created in this test
         try {
             createdSubscriptionIds.forEach(id ->
                     given().delete(SUBSCRIPTIONS + "/" + id));
@@ -50,7 +48,7 @@ public class BaseTest {
             createdSubscriptionIds.clear();
         }
 
-        // Archive all products created in this test
+        // products can't be deleted if they have prices, so we just archive them
         try {
             createdProductIds.forEach(id ->
                     given().contentType(ContentType.URLENC)

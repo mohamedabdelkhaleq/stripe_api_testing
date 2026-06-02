@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.9.dtd">
+<suite name="Stripe API Suite" verbose="1">
+
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+
+    <test name="Authentication">
+        <classes>
+            <class name="auth.AuthTests"/>
+        </classes>
+    </test>
+
+    <test name="Customers">
+        <classes>
+            <class name="customers.CustomerTests"/>
+        </classes>
+    </test>
+
+    <test name="Products">
+        <classes>
+            <class name="products.ProductTests"/>
+        </classes>
+    </test>
+
+    <test name="Prices">
+        <classes>
+            <class name="prices.PriceTests"/>
+        </classes>
+    </test>
+
+    <test name="Subscriptions">
+        <classes>
+            <class name="subscriptions.SubscriptionTests"/>
+        </classes>
+    </test>
+
+</suite>
