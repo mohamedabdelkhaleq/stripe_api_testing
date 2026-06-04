@@ -5,6 +5,7 @@ import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeSuite;
 
@@ -28,9 +29,10 @@ public class BaseTest {
     }
 
     // Each test stores IDs of resources it created
-    protected List<String> createdCustomerIds = new ArrayList<>();
-    protected List<String> createdProductIds = new ArrayList<>();
-    protected List<String> createdSubscriptionIds = new ArrayList<>();
+    protected static List<String> createdCustomerIds = new ArrayList<>();
+    protected static List<String> createdProductIds = new ArrayList<>();
+    protected static List<String> createdSubscriptionIds = new ArrayList<>();
+    protected static List<String> createdPaymentMethodsIds = new ArrayList<>();
     @AfterMethod
     public void cleanup() {
 
@@ -70,7 +72,50 @@ public class BaseTest {
                 .when()
                 .post(endpoint)
                 .then()
-                .statusCode(200)
                 .extract().path(jsonPath);
     }
+    protected Response createAndExtractResponse(String endpoint,
+                                      Map<String, String> body) {
+        return given()
+                .contentType(ContentType.URLENC)
+                .formParams(body)
+                .when()
+                .post(endpoint)
+                .then()
+                .log().all()
+                .extract().response();
+    }
+    protected Response actionOnId(String endpoint, Map<String, String> body , String id,String action) {
+        return given()
+                .contentType(ContentType.URLENC)
+                .formParams(body)
+                .when()
+                .post(endpoint + "/" + id + "/" + action)
+                .then()
+                .log().all()
+                .extract().response();
+    }
+    protected Response actionOnId(String endpoint, String id,String action) {
+        return given()
+                .contentType(ContentType.URLENC)
+                .when()
+                .post(endpoint + "/" + id + "/" + action)
+                .then()
+                .log().all()
+                .extract().response();
+    }
+    protected Response ExtractErrorResponse(String endpoint,
+                                                Map<String, String> body) {
+        return given()
+                .contentType(ContentType.URLENC)
+                .formParams(body)
+                .when()
+                .post(endpoint)
+                .then()
+                .log().all()
+                .statusCode(400)
+                .extract().response();
+    }
+
+
 }

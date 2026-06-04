@@ -1,10 +1,8 @@
 package builders;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CustomerRequestBuilder {
-
     private String email;
     private String name;
     private String phone;
