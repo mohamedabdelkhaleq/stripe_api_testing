@@ -6,6 +6,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeSuite;
 
@@ -27,6 +28,10 @@ public class BaseTest {
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
+    private RequestSpecification setupRequest() {
+        return given().contentType(ContentType.URLENC);
+    }
+
 
     // Each test stores IDs of resources it created
     protected static List<String> createdCustomerIds = new ArrayList<>();
@@ -55,8 +60,8 @@ public class BaseTest {
         // Archive all products created in this test
         try {
             createdProductIds.forEach(id ->
-                    given().contentType(ContentType.URLENC)
-                            .formParam("active", "false")
+                    setupRequest()
+                    .formParam("active", "false")
                             .post(PRODUCTS + "/" + id));
         } finally {
             createdProductIds.clear();
@@ -66,8 +71,7 @@ public class BaseTest {
     protected String createAndExtract(String endpoint,
                                       Map<String, String> body,
                                       String jsonPath) {
-        return given()
-                .contentType(ContentType.URLENC)
+        return  setupRequest()
                 .formParams(body)
                 .when()
                 .post(endpoint)
@@ -76,8 +80,7 @@ public class BaseTest {
     }
     protected Response createAndExtractResponse(String endpoint,
                                       Map<String, String> body) {
-        return given()
-                .contentType(ContentType.URLENC)
+        return  setupRequest()
                 .formParams(body)
                 .when()
                 .post(endpoint)
@@ -85,9 +88,8 @@ public class BaseTest {
                 .log().all()
                 .extract().response();
     }
-    protected Response actionOnId(String endpoint, Map<String, String> body , String id,String action) {
-        return given()
-                .contentType(ContentType.URLENC)
+    protected Response postActionOnId(String endpoint, Map<String, String> body , String id, String action) {
+        return  setupRequest()
                 .formParams(body)
                 .when()
                 .post(endpoint + "/" + id + "/" + action)
@@ -95,9 +97,8 @@ public class BaseTest {
                 .log().all()
                 .extract().response();
     }
-    protected Response actionOnId(String endpoint, String id,String action) {
-        return given()
-                .contentType(ContentType.URLENC)
+    protected Response postActionOnId(String endpoint, String id, String action) {
+        return  setupRequest()
                 .when()
                 .post(endpoint + "/" + id + "/" + action)
                 .then()
@@ -106,8 +107,7 @@ public class BaseTest {
     }
     protected Response ExtractErrorResponse(String endpoint,
                                                 Map<String, String> body) {
-        return given()
-                .contentType(ContentType.URLENC)
+        return  setupRequest()
                 .formParams(body)
                 .when()
                 .post(endpoint)
@@ -116,6 +116,33 @@ public class BaseTest {
                 .statusCode(400)
                 .extract().response();
     }
+    protected Response getResponse(String endpoint) {
+        return  setupRequest()
+                .when()
+                .get(endpoint)
+                .then()
+                .log().all()
+                .extract().response();
+    }
+    protected Response getResponse(String endpoint,String id) {
+        return setupRequest()
+                .when()
+                .get(endpoint.concat("/" + id))
+                .then()
+                .log().all()
+                .extract().response();
+    }
+    protected Response InquireById(String endpoint, String id) {
+        return  setupRequest()
+                .when()
+                .get(endpoint + "?" + id)
+                .then()
+                .log().all()
+                .extract().response();
+
+    }
+
+
 
 
 }

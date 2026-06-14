@@ -47,7 +47,7 @@ public final class StripeConstants {
     public static final String PAYMENT_METHOD_DECLINED = "pm_card_visa_chargeDeclined";
     public static final String PAYMENT_METHOD_DEBIT = "pm_card_visa_debit";
     public static final String PAYMENT_METHOD_VISA = "pm_card_visa";
-    public static final String PAYMENT_METHOD_MASTERCARD = "pm_card_visa_mastercard";
+    public static final String PAYMENT_METHOD_MASTERCARD = "pm_card_mastercard";
     public static final String PAYMENT_METHOD_3DS  = "pm_card_threeDSecure2Required";
 
 

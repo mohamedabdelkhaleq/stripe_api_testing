@@ -4,35 +4,35 @@ import Requestes.ProductRequest;
 
 import java.util.HashMap;
 import java.util.Map;
-public class ProductRequestBuilder {
+public class ProductBuilder {
     private String name;
     private String description;
     private boolean active;
     private Map<String, String> metadata = new HashMap<>();
-    public static ProductRequestBuilder builder() {
-        return new ProductRequestBuilder();
+    public static ProductBuilder builder() {
+        return new ProductBuilder();
     }
-    public ProductRequestBuilder name(String name) {
+    public ProductBuilder name(String name) {
         this.name = name;
         return this;
     }
 
-    public ProductRequestBuilder description(String description) {
+    public ProductBuilder description(String description) {
         this.description = description;
         return this;
     }
 
-    public ProductRequestBuilder active(boolean active) {
+    public ProductBuilder active(boolean active) {
         this.active = active;
         return this;
     }
 
-    public ProductRequestBuilder metadata(String key, String value) {
+    public ProductBuilder metadata(String key, String value) {
         this.metadata.put(key, value);
         return this;
     }
 
-    public ProductRequestBuilder metadata(Map<String, String> metadata) {
+    public ProductBuilder metadata(Map<String, String> metadata) {
         this.metadata = (metadata != null) ? new HashMap<>(metadata) : new HashMap<>();
         return this;
     }

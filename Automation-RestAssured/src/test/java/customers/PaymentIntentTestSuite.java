@@ -17,7 +17,7 @@ public class PaymentIntentTestSuite extends BaseTest {
     String paymentMethodId;
     String paymentIntentId;
     @BeforeClass
-    public void createBaseCustomer() {
+    public void createBaseTest() {
         customerId = createAndExtract(CUSTOMERS,
                 CustomerRequestBuilder.builder()
                         .email("test_" + System.currentTimeMillis() + "@example.com")
@@ -27,12 +27,12 @@ public class PaymentIntentTestSuite extends BaseTest {
                 PaymentMethodBuilder.builder()
                         .type("card")
                         .cardToken("tok_visa")
-                        .build().toCreateParams(), "id");
+                        .build().create(), "id");
         paymentIntentId = createAndExtract(PAYMENT_INTENTS,
                 PaymentIntentRequestBuilder.Builder()
                         .amount("5000")
                         .currency("usd")
-                        .build().toCreateParams(),"id");
+                        .build().create(),"id");
         createdCustomerIds.add(customerId);
         createdPaymentMethodsIds.add(paymentMethodId);
     }
@@ -43,7 +43,7 @@ public class PaymentIntentTestSuite extends BaseTest {
                 PaymentIntentRequestBuilder.Builder()
                         .amount("5000")
                         .currency("usd")
-                        .build().toCreateParams()
+                        .build().create()
         );
         Assert.assertEquals(response.statusCode(), 200);
         assertThat(response.jsonPath().getString("id"), startsWith("pi_"));
@@ -60,8 +60,11 @@ public class PaymentIntentTestSuite extends BaseTest {
                 PaymentIntentRequestBuilder.Builder()
                         .amount("50")
                         .currency("usd")
-                        .build().toCreateParams()
+                        .build().create()
         );
+
+
+
         Assert.assertEquals(response.statusCode(), 200);
         assertThat(response.jsonPath().getString("id"), startsWith("pi_"));
         assertThat(response.jsonPath().getString("object"),startsWith("payment_intent"));
@@ -69,12 +72,14 @@ public class PaymentIntentTestSuite extends BaseTest {
     @Test(description = "TC-PI-003: Confirm payment intent with test card (success)")
     public void ConfirmPaymentIntentWithValidTestcard()
     {
-        Response response = actionOnId(PAYMENT_INTENTS,
+        Response response = postActionOnId(PAYMENT_INTENTS,
                 PaymentIntentRequestBuilder.Builder()
                         .payment_Method(paymentMethodId)
                         .returnUrl("https://www.example.com")
-                        .build().toCreateParams(),paymentIntentId,"confirm"
+                        .build().create(),paymentIntentId,"confirm"
         );
+
+
         Assert.assertEquals(response.statusCode(), 200);
         assertThat(response.jsonPath().getString("status"), startsWith(STATUS_SUCCEEDED));
         assertThat(response.jsonPath().getString("latest_charge"),startsWith("ch_"));
@@ -82,24 +87,28 @@ public class PaymentIntentTestSuite extends BaseTest {
     @Test(description = "TC-PI-004: Confirm payment intent with Declined Card")
     public void ConfirmPaymentIntentWithDeclinedcard()
     {
-        Response response = actionOnId(PAYMENT_INTENTS,
+        Response response = postActionOnId(PAYMENT_INTENTS,
                 PaymentIntentRequestBuilder.Builder()
                         .payment_Method(PAYMENT_METHOD_DECLINED)
                         .returnUrl("https://www.example.com")
-                        .build().toCreateParams(),paymentIntentId,"confirm"
+                        .build().create(),paymentIntentId,"confirm"
         );
+
+
         Assert.assertEquals(response.statusCode(), 402);
         assertThat(response.jsonPath().getString("error.code"), equalTo("card_declined"));
     }
     @Test(description ="TC-PI-005:Confirm Paymentintent with PaymentMethod 3DSecure")
     public void  ConfirmPaymentIntentWithPaymentMethod3DSecure()
     {
-        Response response = actionOnId(PAYMENT_INTENTS,
+        Response response = postActionOnId(PAYMENT_INTENTS,
                 PaymentIntentRequestBuilder.Builder()
                         .payment_Method(PAYMENT_METHOD_3DS)
                         .returnUrl("https://www.example.com")
-                        .build().toCreateParams(),paymentIntentId,"confirm"
+                        .build().create(),paymentIntentId,"confirm"
         );
+
+
         Assert.assertEquals(response.statusCode(), 200);
         assertThat(response.jsonPath().getString("status"), equalTo(STATUS_REQUIERS_ACTIONS));
     }
@@ -107,20 +116,23 @@ public class PaymentIntentTestSuite extends BaseTest {
     @Test(description = "TC-PI-006: Cancel payment intent")
     public void CancelPaymentIntent()
     {
-        Response response = actionOnId(PAYMENT_INTENTS,paymentIntentId,"cancel");
+        Response response = postActionOnId(PAYMENT_INTENTS,paymentIntentId,"cancel");
+
+
+
         Assert.assertEquals(response.statusCode(),200);
         assertThat(response.jsonPath().getString("status"), equalTo(STATUS_CANCELED));
     }
     @Test(description = "TC-PI-007: Cancel already cancelled payment intent")
     public void CancelAlreadyCancelledPaymentIntent()
     {
-        actionOnId(PAYMENT_INTENTS,paymentIntentId,"cancel");
-        Response response = actionOnId(PAYMENT_INTENTS,paymentIntentId,"cancel");
+        postActionOnId(PAYMENT_INTENTS,paymentIntentId,"cancel");
+        Response response = postActionOnId(PAYMENT_INTENTS,paymentIntentId,"cancel");
+
+
         Assert.assertEquals(response.statusCode(),400);
         assertThat(response.jsonPath().getString("error.message"),
                 startsWith("You cannot cancel this PaymentIntent because it has a status of canceled"));
     }
-
-
-
+    
 }

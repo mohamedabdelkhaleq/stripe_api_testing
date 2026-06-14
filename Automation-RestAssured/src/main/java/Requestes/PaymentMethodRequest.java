@@ -20,7 +20,7 @@ public class PaymentMethodRequest {
     public String getCardToken() { return cardToken; }
     public String getCustomer() { return customer; }
 
-    public Map<String, String> toCreateParams() {
+    public Map<String, String> create() {
         Map<String, String> form = new LinkedHashMap<>();
         if (type      != null) form.put("type", type);
         if (cardToken != null) form.put("card[token]",cardToken);

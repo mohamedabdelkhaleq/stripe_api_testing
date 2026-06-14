@@ -30,7 +30,7 @@ public class PaymentMethodTestSuite extends BaseTest {
                 PaymentMethodBuilder.builder()
                         .type("card")
                         .cardToken("tok_visa")
-                        .build().toCreateParams(), "id");
+                        .build().create(), "id");
         createdCustomerIds.add(customerId);
         createdPaymentMethodsIds.add(paymentMethodId);
     }
@@ -40,7 +40,7 @@ public class PaymentMethodTestSuite extends BaseTest {
                 PaymentMethodBuilder.builder()
                         .type("card")
                         .cardToken(CARD_SUCCESS)
-                        .build().toCreateParams());
+                        .build().create());
         createdPaymentMethodsIds.add(response.jsonPath().getString("id"));
         Assert.assertEquals(response.statusCode(),200);
         assertThat(response.jsonPath().getString("id"),startsWith("pm_"));
@@ -48,23 +48,22 @@ public class PaymentMethodTestSuite extends BaseTest {
     }
     @Test(description = "TC-PM-002:attach that payment method to a valid customer")
     public void attachPaymentMethodWithValidCustomer() {
-        Response response = actionOnId(PAYMENT_METHODS,
+        Response response = postActionOnId(PAYMENT_METHODS,
                 PaymentMethodBuilder.builder()
-                        .customer(customerId)
-                        .build().toCreateParams(),paymentMethodId,"attach");
+                        .customer(createdCustomerIds.getLast())
+                        .build().create(),createdPaymentMethodsIds.getLast(),"attach");
 
         Assert.assertEquals(response.statusCode(),200);
         assertThat(response.jsonPath().getString("id"),startsWith("pm_"));
         assertThat(response.jsonPath().getString("object"),equalTo("payment_method"));
         assertThat(response.jsonPath().getString("customer"),equalTo(createdCustomerIds.getLast()));
-
     }
     @Test
     public void attachPaymentMethodWithInvalidCustomer() {
-            Response response = actionOnId(PAYMENT_METHODS,
+            Response response = postActionOnId(PAYMENT_METHODS,
                     PaymentMethodBuilder.builder()
                             .customer(customerId)
-                            .build().toCreateParams(),"xyz123","attach");
+                            .build().create(),"xyz123","attach");
 
             Assert.assertEquals(response.statusCode(),404);
 
@@ -76,7 +75,7 @@ public class PaymentMethodTestSuite extends BaseTest {
                 PaymentMethodBuilder.builder()
                         .type("card")
                         .cardToken(CARD_DECLINED)
-                        .build().toCreateParams());
+                        .build().create());
         Assert.assertEquals(response.statusCode(),200);
         assertThat(response.jsonPath().getString("id"),startsWith("pm_"));
         assertThat(response.jsonPath().getString("object"),startsWith("payment_method"));
@@ -87,7 +86,7 @@ public class PaymentMethodTestSuite extends BaseTest {
                 PaymentMethodBuilder.builder()
                         .type("card")
                         .cardToken(CARD_3DS)
-                        .build().toCreateParams());
+                        .build().create());
         Assert.assertEquals(response.statusCode(),200);
         assertThat(response.jsonPath().getString("id"),startsWith("pm_"));
         assertThat(response.jsonPath().getString("object"),startsWith("payment_method"));

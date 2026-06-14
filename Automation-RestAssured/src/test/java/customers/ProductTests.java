@@ -1,6 +1,6 @@
 package customers;
 import base.BaseTest;
-import builders.ProductRequestBuilder;
+import builders.ProductBuilder;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.Assert;
@@ -14,7 +14,7 @@ public class ProductTests extends BaseTest {
     @Test(description = "TC-CUS-001: Create product with valid name")
     public void createProductWithValidName() {
         Response response = createAndExtractResponse(PRODUCTS,
-                ProductRequestBuilder.builder()
+                ProductBuilder.builder()
                         .name("Test Product " + System.currentTimeMillis())
                         .build().toFormParams());
 
@@ -28,7 +28,7 @@ public class ProductTests extends BaseTest {
     @Test(description = "TC-CUS-002: Create product with name and description")
     public void createProductWithValidNameAndDescription() {
         Response response = createAndExtractResponse(PRODUCTS,
-                ProductRequestBuilder.builder()
+                ProductBuilder.builder()
                         .name("Premium Leather Wallet " + System.currentTimeMillis())
                         .description("Handcrafted wallet made from genuine leather" + System.currentTimeMillis())
                         .build().toFormParams());
@@ -43,7 +43,7 @@ public class ProductTests extends BaseTest {
     @Test(description = "TC-CUS-003:Create product with metadata")
     public void createProductWithMetadata() {
       Response response = createAndExtractResponse(PRODUCTS,
-              ProductRequestBuilder.builder()
+              ProductBuilder.builder()
                       .name("test Product")
                       .metadata("category", "electronics")
                       .metadata("brand", "Acme")
@@ -59,7 +59,7 @@ public class ProductTests extends BaseTest {
     @Test(description = "TC-CUS-004:Create product without name")
     public void CreateProductWithoutName() {
         Response response = ExtractErrorResponse(PRODUCTS,
-                ProductRequestBuilder.builder()
+                ProductBuilder.builder()
                         .metadata("category", "electronics")
                         .metadata("brand", "Acme")
                         .build().toFormParams());
