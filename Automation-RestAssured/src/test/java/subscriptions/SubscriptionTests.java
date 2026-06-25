@@ -59,7 +59,7 @@ public class SubscriptionTests extends BaseTest {
         paymentMethodId = createAndExtract(PAYMENT_METHODS,
                 new java.util.LinkedHashMap<String, String>() {{
                     put("type", "card");
-                    put("card[token]",CARD_SUCCESS);
+                    put("card[token]", CARD_VISA);
                 }}, "id");
 
         given().contentType(ContentType.URLENC)
