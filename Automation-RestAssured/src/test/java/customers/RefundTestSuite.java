@@ -11,7 +11,11 @@ import org.testng.annotations.Test;
 import static constants.StripeConstants.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
+import io.qameta.allure.*;
 
+@Epic("Stripe API")
+@Feature("Refunds")
+@Owner("Mohamed Abdelkhalek")
 public class RefundTestSuite extends BaseTest {
     String decline_chargeId;
     String chargeId ;
@@ -26,7 +30,9 @@ public class RefundTestSuite extends BaseTest {
                         .confirm(true)
                         .build().create(),"latest_charge");
     }
-    @Test(description = "TC-RF-001: Create refund with valid charge id",priority = 1)
+    @Test(description = "TC-RF-001: Create refund with valid charge id", priority = 1)
+    @Story("Create Refund")
+    @Severity(SeverityLevel.CRITICAL)
     public void createRefundWithValidChargeId() {
         Response response = createAndExtractResponse(REFUNDS,
                 RefundCreateParams.builder()
@@ -45,7 +51,9 @@ public class RefundTestSuite extends BaseTest {
         soft.assertAll();
 
     }
-    @Test(description = "TC-RF-002: Create refund with partial amount",priority = 2)
+    @Test(description = "TC-RF-002: Create refund with partial amount", priority = 2)
+    @Story("Create Refund")
+    @Severity(SeverityLevel.NORMAL)
     public void createRefundWithPartialAmount() {
         Response response = createAndExtractResponse(REFUNDS,
                 RefundCreateParams.builder()
@@ -62,6 +70,8 @@ public class RefundTestSuite extends BaseTest {
         soft.assertAll();
     }
     @Test(description = "TC-RF-003: Create refund with reason is duplicate")
+    @Story("Create Refund")
+    @Severity(SeverityLevel.NORMAL)
     public void createRefundWithDuplicateReason() {
         Response response = createAndExtractResponse(REFUNDS,
                 RefundCreateParams.builder()
@@ -79,6 +89,8 @@ public class RefundTestSuite extends BaseTest {
         soft.assertAll();
     }
     @Test(description = "TC-RF-004: Create refund with amount greater than charge")
+    @Story("Negative Scenarios")
+    @Severity(SeverityLevel.CRITICAL)
     public void createRefundWithNegativeAmount() {
         Response response = createAndExtractResponse(REFUNDS,
                 RefundCreateParams.builder()
@@ -96,6 +108,8 @@ public class RefundTestSuite extends BaseTest {
         soft.assertAll();
     }
     @Test(description = "TC-RF-005: Create refund with invalid charge id")
+    @Story("Negative Scenarios")
+    @Severity(SeverityLevel.NORMAL)
     public void createRefundWithInvalidChargeId() {
         Response response = createAndExtractResponse(REFUNDS,
                 RefundCreateParams.builder()
@@ -110,7 +124,9 @@ public class RefundTestSuite extends BaseTest {
         soft.assertThat(response.jsonPath().getString("error.message")).contains("No such charge");
         soft.assertAll();
     }
-    @Test(description = "TC-RF-006: Retrieve List refunds")
+    @Test(description = "TC-RF-006: Retrieve list of refunds")
+    @Story("Retrieve Refunds")
+    @Severity(SeverityLevel.MINOR)
     public void retrieveRefunds() {
         Response response = getResponse(REFUNDS);
 

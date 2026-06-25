@@ -1,9 +1,7 @@
 package constants;
 
 public final class StripeConstants {
-    private StripeConstants() {
-        // Private constructor to prevent instantiation
-    }
+    private StripeConstants() {}
 
     // Endpoints
     public static final String CUSTOMERS = "/customers";
@@ -15,8 +13,7 @@ public final class StripeConstants {
     public static final String PRODUCTS = "/products";
     public static final String PRICES = "/prices";
     public static final String PAYMENT_INTENTS = "/payment_intents";
-
-
+    public static final String ACCOUNT         = "/account";
 
 //    Expected Statuses
     public static final String STATUS_SUCCEEDED = "succeeded";
@@ -35,12 +32,12 @@ public final class StripeConstants {
     public static final String CARD_SUCCESS = "tok_visa";
     public static final String CARD_DECLINED = "tok_visa_chargeDeclined";
     public static final String CARD_INSUFFICIENT = "tok_visa_chargeDeclinedInsufficientFunds";
-
+    // Response Time
+    public static final long MAX_RESPONSE_TIME_MS = 6000L;
     public static final String CARD_3DS = "tok_threeDSecure2Required";
     public static final String CARD_MASTERCARD = "tok_mastercard";
     public static final String CARD_DEBIT = "tok_visa_debit";
-    // Response Time
-    public static final long MAX_RESPONSE_TIME_MS = 3000L;
+
     //currencies
     public static final String USD = "usd";
     public static final String EUR = "eur";

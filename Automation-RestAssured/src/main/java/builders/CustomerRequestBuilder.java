@@ -7,8 +7,7 @@ public class CustomerRequestBuilder {
     private String name;
     private String phone;
     private String description;
-    private String metadataOrderId;
-    private String metadataPriority;
+    private final Map<String, String> metadata = new LinkedHashMap<>();
 
     public static CustomerRequestBuilder builder() {
         return new CustomerRequestBuilder();
@@ -26,21 +25,19 @@ public class CustomerRequestBuilder {
     public CustomerRequestBuilder description(String description) {
         this.description = description; return this;
     }
-    public CustomerRequestBuilder metadataOrderId(String orderId) {
-        this.metadataOrderId = orderId; return this;
-    }
-    public CustomerRequestBuilder metadataPriority(String priority) {
-        this.metadataPriority = priority; return this;
+
+    // use metadata(key, value) for any field e.g. order_id, tier, last_purchase
+    public CustomerRequestBuilder metadata(String key, String value) {
+        this.metadata.put("metadata[" + key + "]", value); return this;
     }
 
     public Map<String, String> build() {
         Map<String, String> form = new LinkedHashMap<>();
-        if (email            != null) form.put("email",              email);
-        if (name             != null) form.put("name",               name);
-        if (phone            != null) form.put("phone",              phone);
-        if (description      != null) form.put("description",        description);
-        if (metadataOrderId  != null) form.put("metadata[order_id]", metadataOrderId);
-        if (metadataPriority != null) form.put("metadata[priority]", metadataPriority);
+        if (email       != null) form.put("email",       email);
+        if (name        != null) form.put("name",        name);
+        if (phone       != null) form.put("phone",       phone);
+        if (description != null) form.put("description", description);
+        form.putAll(metadata);
         return form;
     }
 }

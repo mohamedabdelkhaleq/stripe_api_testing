@@ -14,6 +14,11 @@ import org.testng.annotations.Test;
 import static constants.StripeConstants.*;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import io.qameta.allure.*;
+
+@Epic("Stripe API")
+@Feature("Charges")
+@Owner("Mohamed Abdelkhalek")
 
 public class ChargesTests extends BaseTest {
     String customerId;
@@ -45,7 +50,10 @@ public class ChargesTests extends BaseTest {
                         .build(), "id");
 
     }
+
     @Test(description = "TC-CH-001: Get charge with valid payment intent")
+    @Story("Retrieve Charges")
+    @Severity(SeverityLevel.CRITICAL)
     public void getChargeWithValidPaymentIntent()
     {
         Response response = getResponse(CHARGES, chargeId);
@@ -65,6 +73,8 @@ public class ChargesTests extends BaseTest {
         soft.assertAll();
     }
     @Test(description = "TC-CH-002: Get charge with invalid payment intent")
+    @Story("Retrieve Charges")
+    @Severity(SeverityLevel.NORMAL)
     public void getChargesWithInvalidPaymentIntent()
     {
         Response response = getResponse(CHARGES,decline_chargeId);
@@ -81,6 +91,8 @@ public class ChargesTests extends BaseTest {
         soft.assertAll();
     }
     @Test(description = "TC-CH-003: Get charge with non-existent charge ID")
+    @Story("Negative Scenarios")
+    @Severity(SeverityLevel.NORMAL)
     public void getChargeWithNonExistentChargeId()
         {
 
@@ -92,7 +104,9 @@ public class ChargesTests extends BaseTest {
             soft.assertAll();
 
         }
-    @Test(description = "TC-CH-004: Get charge for Specific Customer")
+    @Test(description = "TC-CH-004: Get charge for specific customer")
+    @Story("Retrieve Charges")
+    @Severity(SeverityLevel.MINOR)
     public void getChargeForSpecificCustomer()
     {
         Response response = InquireById(CHARGES,customerId);

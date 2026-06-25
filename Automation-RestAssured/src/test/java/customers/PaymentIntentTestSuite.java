@@ -13,7 +13,10 @@ import org.testng.annotations.Test;
 import static constants.StripeConstants.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
-
+import io.qameta.allure.*;
+@Epic("Stripe API Automation")
+@Feature("Payment Intents")
+@Owner("Mohamed Abdelkhalek")
 public class PaymentIntentTestSuite extends BaseTest {
     String customerId;
     String paymentMethodId;
@@ -31,7 +34,12 @@ public class PaymentIntentTestSuite extends BaseTest {
                         .cardToken("tok_visa")
                         .build().create(), "id");
     }
-    @Test(description = "TC-PI-001: Create payment intent with valid amount and currency",priority = 1)
+    @Test(
+            description = "TC-PI-001: Create payment intent with valid amount and currency",
+            priority = 1
+    )
+    @Story("Create Payment Intent")
+    @Severity(SeverityLevel.CRITICAL)
     public void CreateValidPaymentIntent()
     {
         Response response = createAndExtractResponse(PAYMENT_INTENTS,
@@ -53,7 +61,12 @@ public class PaymentIntentTestSuite extends BaseTest {
         soft.assertAll();
 
     }
-    @Test(description = "TC-PI-002:Create payment intent with minimum amount ($0.50)",priority = 3)
+    @Test(
+            description = "TC-PI-002: Create payment intent with minimum amount ($0.50)",
+            priority = 3
+    )
+    @Story("Create Payment Intent")
+    @Severity(SeverityLevel.NORMAL)
     public void CreatePaymentIntentWithMinimumamount()
     {
         Response response = createAndExtractResponse(PAYMENT_INTENTS,
@@ -72,8 +85,13 @@ public class PaymentIntentTestSuite extends BaseTest {
         soft.assertThat(response.jsonPath().getString("currency")).isEqualTo(USD);
         soft.assertAll();
     }
-    @Test(description = "TC-PI-003: Confirm payment intent with test card (success)",
-            dependsOnMethods ="CreateValidPaymentIntent",priority = 2)
+    @Test(
+            description = "TC-PI-003: Confirm payment intent with test card (success)",
+            dependsOnMethods = "CreateValidPaymentIntent",
+            priority = 2
+    )
+    @Story("Confirm Payment Intent")
+    @Severity(SeverityLevel.BLOCKER)
     public void ConfirmPaymentIntentWithValidTestcard()
     {
         Response response = postActionOnId(PAYMENT_INTENTS,
@@ -92,7 +110,12 @@ public class PaymentIntentTestSuite extends BaseTest {
         soft.assertThat(response.jsonPath().getString("latest_charge")).startsWith("ch_");
         soft.assertAll();
     }
-    @Test(description = "TC-PI-004: Confirm payment intent with Declined Card",priority = 4)
+    @Test(
+            description = "TC-PI-004: Confirm payment intent with declined card",
+            priority = 4
+    )
+    @Story("Negative Scenarios")
+    @Severity(SeverityLevel.CRITICAL)
     public void ConfirmPaymentIntentWithDeclinedcard()
     {
         Response response = createAndExtractResponse(PAYMENT_INTENTS,
@@ -112,8 +135,13 @@ public class PaymentIntentTestSuite extends BaseTest {
         soft.assertThat(response.jsonPath().getString("error.code")).isEqualTo(STATUS_CARD_DECLINE);
         soft.assertAll();
     }
-    @Test(description ="TC-PI-005:Confirm Paymentintent with PaymentMethod 3DSecure",
-            dependsOnMethods ="CreateValidPaymentIntent",priority = 5)
+    @Test(
+            description = "TC-PI-005: Confirm PaymentIntent with 3D Secure payment method",
+            dependsOnMethods = "CreateValidPaymentIntent",
+            priority = 5
+    )
+    @Story("Authentication Flows")
+    @Severity(SeverityLevel.CRITICAL)
     public void  ConfirmPaymentIntentWithPaymentMethod3DSecure()
     {
         Response response = createAndExtractResponse(PAYMENT_INTENTS,
@@ -134,8 +162,13 @@ public class PaymentIntentTestSuite extends BaseTest {
         soft.assertAll();
     }
 
-    @Test(description = "TC-PI-006: Cancel payment intent",
-    dependsOnMethods = "CreatePaymentIntentWithMinimumamount",priority = 6)
+    @Test(
+            description = "TC-PI-006: Cancel payment intent",
+            dependsOnMethods = "CreatePaymentIntentWithMinimumamount",
+            priority = 6
+    )
+    @Story("Cancel Payment Intent")
+    @Severity(SeverityLevel.NORMAL)
     public void CancelPaymentIntent()
     {
         Response response = postActionOnId(PAYMENT_INTENTS,paymentIntentId,"cancel");
@@ -148,10 +181,13 @@ public class PaymentIntentTestSuite extends BaseTest {
         soft.assertAll();
 
     }
-    @Test(description = "TC-PI-007: Cancel already cancelled payment intent",
-    dependsOnMethods = {
-            "CreatePaymentIntentWithMinimumamount"
-    },priority = 7)
+    @Test(
+            description = "TC-PI-007: Cancel already cancelled payment intent",
+            dependsOnMethods = "CreatePaymentIntentWithMinimumamount",
+            priority = 7
+    )
+    @Story("Negative Scenarios")
+    @Severity(SeverityLevel.MINOR)
     public void CancelAlreadyCancelledPaymentIntent()
     {
         postActionOnId(PAYMENT_INTENTS,paymentIntentId,"cancel");

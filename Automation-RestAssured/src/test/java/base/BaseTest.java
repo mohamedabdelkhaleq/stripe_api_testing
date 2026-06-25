@@ -60,7 +60,7 @@ public class BaseTest {
             createdSubscriptionIds.clear();
         }
 
-        // Archive all products created in this test
+        // products can't be deleted if they have prices, so we just archive them
         try {
             createdProductIds.forEach(id ->
                     setupRequest()
