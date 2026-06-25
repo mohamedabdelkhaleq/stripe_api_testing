@@ -36,3 +36,7 @@ public class PriceRequestBuilder {
         return form;
     }
 }
+        form.putAll(metadata);
+        return form;
+    }
+}

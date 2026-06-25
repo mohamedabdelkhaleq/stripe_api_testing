@@ -42,9 +42,13 @@ public class BaseTest {
 
 
     @AfterSuite
-    public void cleanup() {
+    // track what each test creates so we can clean up after
+    protected List<String> createdCustomerIds = new ArrayList<>();
+    protected List<String> createdProductIds = new ArrayList<>();
+    protected List<String> createdSubscriptionIds = new ArrayList<>();
 
-        // Delete all customers created in this test
+    @AfterMethod
+    public void cleanup() {
         try {
             createdCustomerIds.forEach(id ->
                     given().delete(CUSTOMERS + "/" + id).then().statusCode(200));
@@ -52,7 +56,6 @@ public class BaseTest {
             createdCustomerIds.clear();
         }
 
-        // Cancel all subscriptions created in this test
         try {
             createdSubscriptionIds.forEach(id ->
                     given().delete(SUBSCRIPTIONS + "/" + id));
