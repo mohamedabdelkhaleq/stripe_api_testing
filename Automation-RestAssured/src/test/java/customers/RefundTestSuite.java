@@ -4,6 +4,7 @@ import base.BaseTest;
 import builders.PaymentIntentRequestBuilder;
 import builders.RefundCreateParams;
 import io.restassured.response.Response;
+import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -18,15 +19,14 @@ public class RefundTestSuite extends BaseTest {
     public void beforeSuite() {
         chargeId = createAndExtract(PAYMENT_INTENTS,
                 PaymentIntentRequestBuilder.Builder()
-                        .amount("5000")
+                        .amount("5500")
                         .currency("usd")
                         .payment_Method(PAYMENT_METHOD_MASTERCARD)
                         .returnUrl("https://example.com")
                         .confirm(true)
                         .build().create(),"latest_charge");
-
     }
-    @Test(description = "TC-RF-001: Create refund with valid charge id")
+    @Test(description = "TC-RF-001: Create refund with valid charge id",priority = 1)
     public void createRefundWithValidChargeId() {
         Response response = createAndExtractResponse(REFUNDS,
                 RefundCreateParams.builder()
@@ -37,12 +37,15 @@ public class RefundTestSuite extends BaseTest {
 
 
         assertThat(response.statusCode(), is(200));
-        assertThat(response.path("status"), equalTo(STATUS_SUCCEEDED));
-        assertThat(response.path("id"), startsWith("re_"));
-        assertThat(response.path("object"), equalTo("refund"));
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.jsonPath().getString("status")).isEqualTo(STATUS_SUCCEEDED);
+        soft.assertThat(response.jsonPath().getString("id")).startsWith("re_");
+        soft.assertThat(response.jsonPath().getString("object")).isEqualTo("refund");
+        soft.assertAll();
 
     }
-    @Test(description = "TC-RF-002: Create refund with partial amount")
+    @Test(description = "TC-RF-002: Create refund with partial amount",priority = 2)
     public void createRefundWithPartialAmount() {
         Response response = createAndExtractResponse(REFUNDS,
                 RefundCreateParams.builder()
@@ -53,7 +56,10 @@ public class RefundTestSuite extends BaseTest {
 
 
         assertThat(response.statusCode(), is(200));
-        assertThat(response.path("status"), equalTo(STATUS_SUCCEEDED));
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.jsonPath().getString("status")).isEqualTo(STATUS_SUCCEEDED);
+        soft.assertAll();
     }
     @Test(description = "TC-RF-003: Create refund with reason is duplicate")
     public void createRefundWithDuplicateReason() {
@@ -67,8 +73,10 @@ public class RefundTestSuite extends BaseTest {
 
 
         assertThat(response.statusCode(), is(200));
-        assertThat(response.path("status"), equalTo(STATUS_SUCCEEDED));
-        assertThat(response.path("reason"), equalTo("duplicate"));
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.jsonPath().getString("status")).isEqualTo(STATUS_SUCCEEDED);
+        soft.assertThat(response.jsonPath().getString("reason")).isEqualTo("duplicate");
+        soft.assertAll();
     }
     @Test(description = "TC-RF-004: Create refund with amount greater than charge")
     public void createRefundWithNegativeAmount() {
@@ -80,9 +88,12 @@ public class RefundTestSuite extends BaseTest {
         );
 
 
-
         assertThat(response.statusCode(), is(400));
-        assertThat(response.path("error.message"),containsString("is greater than charge"));
+
+        SoftAssertions soft = new SoftAssertions();
+
+        soft.assertThat(response.jsonPath().getString("error.message")).contains("is greater than charge");
+        soft.assertAll();
     }
     @Test(description = "TC-RF-005: Create refund with invalid charge id")
     public void createRefundWithInvalidChargeId() {
@@ -93,9 +104,11 @@ public class RefundTestSuite extends BaseTest {
                         .build().create()
         );
 
-
         assertThat(response.statusCode(), is(404));
-        assertThat(response.path("error.message"),containsString("No such charge"));
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.jsonPath().getString("error.message")).contains("No such charge");
+        soft.assertAll();
     }
     @Test(description = "TC-RF-006: Retrieve List refunds")
     public void retrieveRefunds() {
@@ -103,7 +116,10 @@ public class RefundTestSuite extends BaseTest {
 
 
         assertThat(response.statusCode(), is(200));
-        assertThat(response.path("data.status[0]"), equalTo(STATUS_SUCCEEDED));
-        assertThat(response.path("object"), equalTo("list"));
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.jsonPath().getString("data.status[0]")).isEqualTo(STATUS_SUCCEEDED);
+        soft.assertThat(response.jsonPath().getString("object")).isEqualTo("list");
+        soft.assertAll();
     }
 }

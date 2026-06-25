@@ -7,7 +7,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ public class BaseTest {
                 RestAssured.preemptive().basic(StripeConfig.apiKey(), "");
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+
     }
     private RequestSpecification setupRequest() {
         return given().contentType(ContentType.URLENC);
@@ -38,7 +39,9 @@ public class BaseTest {
     protected static List<String> createdProductIds = new ArrayList<>();
     protected static List<String> createdSubscriptionIds = new ArrayList<>();
     protected static List<String> createdPaymentMethodsIds = new ArrayList<>();
-    @AfterMethod
+
+
+    @AfterSuite
     public void cleanup() {
 
         // Delete all customers created in this test
@@ -92,7 +95,7 @@ public class BaseTest {
         return  setupRequest()
                 .formParams(body)
                 .when()
-                .post(endpoint + "/" + id + "/" + action)
+                .post(String.format("%s/%s/%s",endpoint,id,action))
                 .then()
                 .log().all()
                 .extract().response();
@@ -105,8 +108,8 @@ public class BaseTest {
                 .log().all()
                 .extract().response();
     }
-    protected Response ExtractErrorResponse(String endpoint,
-                                                Map<String, String> body) {
+    protected Response extractErrorResponse(String endpoint,
+                                            Map<String, String> body) {
         return  setupRequest()
                 .formParams(body)
                 .when()

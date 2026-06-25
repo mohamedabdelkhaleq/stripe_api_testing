@@ -7,6 +7,7 @@ import builders.CustomerRequestBuilder;
 import builders.PaymentIntentRequestBuilder;
 
 import io.restassured.response.Response;
+import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -52,13 +53,16 @@ public class ChargesTests extends BaseTest {
 
 
 
-
         assertThat(response.statusCode(), equalTo(200));
-        assertThat(response.path("object"),equalTo("charge"));
-        assertThat(chargesRequest.getId(), startsWith("ch_"));
-        assertThat(chargesRequest.getStatus(), equalTo(STATUS_SUCCEEDED));
-        assertThat(chargesRequest.getAmount(), equalTo("5000"));
-        assertThat(chargesRequest.isPaid(), equalTo(true));
+
+        SoftAssertions soft = new SoftAssertions();
+
+        soft.assertThat(response.jsonPath().getString("object")).isEqualTo("charge");
+        soft.assertThat(chargesRequest.getId()).startsWith("ch_");
+        soft.assertThat(chargesRequest.getStatus()).isEqualTo(STATUS_SUCCEEDED);
+        soft.assertThat(chargesRequest.getAmount()).isEqualTo("5000");
+        soft.assertThat(chargesRequest.isPaid()).isEqualTo(true);
+        soft.assertAll();
     }
     @Test(description = "TC-CH-002: Get charge with invalid payment intent")
     public void getChargesWithInvalidPaymentIntent()
@@ -66,28 +70,38 @@ public class ChargesTests extends BaseTest {
         Response response = getResponse(CHARGES,decline_chargeId);
         ChargesRequest chargesRequest = response.body().as(ChargesRequest.class);
 
-
         assertThat(response.statusCode(), equalTo(200));
-        assertThat(response.path("object"),equalTo("charge"));
-        assertThat(response.path("failure_code"),equalTo("card_declined"));
-        assertThat(chargesRequest.getStatus(), equalTo(STATUS_FAILED));
 
+        SoftAssertions soft = new SoftAssertions();
 
+        soft.assertThat(response.jsonPath().getString("object")).isEqualTo("charge");
+        soft.assertThat(chargesRequest.getId()).startsWith("ch_");
+        soft.assertThat(chargesRequest.getStatus()).isEqualTo(STATUS_FAILED);
+        soft.assertThat(response.jsonPath().getString("failure_code")).isEqualTo(STATUS_CARD_DECLINE);
+        soft.assertAll();
     }
     @Test(description = "TC-CH-003: Get charge with non-existent charge ID")
     public void getChargeWithNonExistentChargeId()
         {
-        Response response = getResponse(CHARGES, chargeId);
+
+            Response response = getResponse(CHARGES, "ivalid_charge");
+            assertThat(response.statusCode(), equalTo(404));
+
+            SoftAssertions soft = new SoftAssertions();
+            soft.assertThat(response.jsonPath().getString("error.message")).contains("No such charge");
+            soft.assertAll();
+
         }
-    @Test(description = "TC-CH-004: Get charge for Spacific Customer")
-    public void getChargeForSpacificCustomer()
+    @Test(description = "TC-CH-004: Get charge for Specific Customer")
+    public void getChargeForSpecificCustomer()
     {
         Response response = InquireById(CHARGES,customerId);
 
-        assertThat(response.statusCode(), equalTo(200));
-        assertThat(response.path("object"),equalTo("list"));
+        assertThat(response.statusCode(),equalTo(200));
 
-
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.jsonPath().getString("object")).isEqualTo("list");
+        soft.assertAll();
     }
 
 

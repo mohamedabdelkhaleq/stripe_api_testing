@@ -1,0 +1,1 @@
+{"uuid":"ff5633fc-c4e1-4425-a2ea-6d10453db614","name":"customers.ChargesTests","children":["387c44f0-e4c3-4288-9e92-91f36b149729"],"befores":[{"name":"createBaseTest","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1782420144147,"stop":1782420151714}],"afters":[],"start":1782420144112,"stop":1782420153483}

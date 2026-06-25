@@ -28,6 +28,8 @@ public final class StripeConstants {
     public static final String STATUS_REQUIERS_ACTIONS = "requires_action";
     public static final String STATUS_REQUIRES_PAYMENT_METHOD = "requires_payment_method";
     public static final String STATUS_REFUNDS = "refunds";
+    public static final String STATUS_REFUND_SUCCEEDED = "refund_succeeded";
+    public static final String STATUS_CARD_DECLINE = "card_declined";
 
     // Card Tokens — needed for Subscriptions
     public static final String CARD_SUCCESS = "tok_visa";
