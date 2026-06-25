@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.9.dtd">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Stripe API Suite" verbose="1">
 
     <listeners>
@@ -36,4 +36,21 @@
         </classes>
     </test>
 
+
+    <test name="API Tests">
+        <classes>
+            <class name="customers.ChargesTests"/>
+            <class name="customers.CustomerTests"/>
+            <class name="customers.InvoiceTestSuite"/>
+            <class name="customers.PaymentIntentTestSuite"/>
+            <class name="customers.PaymentMethodTestSuite"/>
+            <class name="customers.RefundTestSuite"/>
+        </classes>
+    </test>
+
+
 </suite>
+
+
+
+
