@@ -7,6 +7,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -42,12 +43,6 @@ public class BaseTest {
 
 
     @AfterSuite
-    // track what each test creates so we can clean up after
-    protected List<String> createdCustomerIds = new ArrayList<>();
-    protected List<String> createdProductIds = new ArrayList<>();
-    protected List<String> createdSubscriptionIds = new ArrayList<>();
-
-    @AfterMethod
     public void cleanup() {
         try {
             createdCustomerIds.forEach(id ->

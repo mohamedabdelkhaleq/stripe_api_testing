@@ -28,6 +28,7 @@ public final class StripeConstants {
     public static final String STATUS_REFUND_SUCCEEDED = "refund_succeeded";
     public static final String STATUS_CARD_DECLINE = "card_declined";
 
+
     // Card Tokens — needed for Subscriptions
     public static final String CARD_SUCCESS = "tok_visa";
     public static final String CARD_DECLINED = "tok_visa_chargeDeclined";
@@ -48,11 +49,6 @@ public final class StripeConstants {
     public static final String PAYMENT_METHOD_VISA = "pm_card_visa";
     public static final String PAYMENT_METHOD_MASTERCARD = "pm_card_mastercard";
     public static final String PAYMENT_METHOD_3DS  = "pm_card_threeDSecure2Required";
+    public static final String CARD_VISA =  "tok_visa";
 
-
-    // test card tokens
-    public static final String CARD_VISA     = "tok_visa";
-    public static final String CARD_DECLINED = "tok_visa_chargeDeclined";
-
-    public static final long MAX_RESPONSE_TIME_MS = 6000L;
 }

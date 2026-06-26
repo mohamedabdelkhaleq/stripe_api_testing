@@ -1,11 +1,9 @@
 package builders;
 
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PriceRequestBuilder {
-
     private String unitAmount;
     private String currency;
     private String productId;
@@ -21,8 +19,8 @@ public class PriceRequestBuilder {
     public PriceRequestBuilder product(String productId) { this.productId = productId; return this; }
     public PriceRequestBuilder recurringInterval(String interval) { this.recurringInterval = interval; return this; }
     public PriceRequestBuilder active(Boolean active) { this.active = active; return this; }
+    public PriceRequestBuilder product_data(String productData) { this.product_data = productData; return this; }
     public PriceRequestBuilder metadata(String key, String value) { this.metadata.put("metadata[" + key + "]", value); return this; }
-    public PriceRequestBuilder product_data(String name) { this.product_data = name; return this; }
 
     public Map<String, String> build() {
         Map<String, String> form = new LinkedHashMap<>();
@@ -31,12 +29,10 @@ public class PriceRequestBuilder {
         if (productId != null)         form.put("product", productId);
         if (recurringInterval != null) form.put("recurring[interval]", recurringInterval);
         if (active != null)            form.put("active", String.valueOf(active));
-        if (product_data != null) form.put("product_data[name]", product_data);
+        if (product_data != null) form.put("product_data", product_data);
         form.putAll(metadata);
         return form;
     }
+
 }
-        form.putAll(metadata);
-        return form;
-    }
-}
+
