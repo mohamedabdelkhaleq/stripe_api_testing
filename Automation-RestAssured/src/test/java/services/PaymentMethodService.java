@@ -32,8 +32,9 @@ public class PaymentMethodService extends BaseTest {
         LogsManager.info("Valid Payment Method Created");
         return response.jsonPath().getString("id");
     }
+
     public void attach(String customerId,
-                        String paymentMethodId) {
+                       String paymentMethodId) {
         LogsManager.info("Attaching Valid Payment Method");
         Response response =
                 postActionOnId(
@@ -56,6 +57,7 @@ public class PaymentMethodService extends BaseTest {
         LogsManager.info("Attached Payment Method");
 
     }
+
     public String createInvalid() {
         LogsManager.info("Creating Invalid Payment Method");
         Response response = createAndExtractResponse(
@@ -78,5 +80,28 @@ public class PaymentMethodService extends BaseTest {
 
         LogsManager.info("Invalid Payment Method Created");
         return response.jsonPath().getString("id");
+    }
+
+    public void attachInvalid(String customerId,
+                              String paymentMethodId) {
+        LogsManager.info("Attaching invalid Payment Method");
+        Response response =
+                postActionOnId(
+                        PAYMENT_METHODS,
+                        PaymentMethodBuilder.builder()
+                                .customer(customerId)
+                                .build()
+                                .create(),
+                        paymentMethodId,
+                        "attach");
+
+        Assert.assertEquals(response.statusCode(), 402);
+
+        SoftAssertions soft = new SoftAssertions();
+
+        soft.assertThat(response.jsonPath().getString("error.code")).isEqualTo("card_declined");
+        soft.assertAll();
+        LogsManager.info("Attached Payment Method");
+
     }
 }

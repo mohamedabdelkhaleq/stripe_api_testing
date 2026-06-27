@@ -1,5 +1,6 @@
 package base;
 
+import builders.SubscriptionRequestBuilder;
 import config.StripeConfig;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -17,6 +18,8 @@ import java.util.Map;
 
 import static constants.StripeConstants.*;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.lessThan;
 
 
 public class BaseTest {
@@ -30,7 +33,7 @@ public class BaseTest {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
     }
-    private RequestSpecification setupRequest() {
+    protected RequestSpecification setupRequest() {
         return given().contentType(ContentType.URLENC);
     }
 
@@ -77,6 +80,7 @@ public class BaseTest {
                 .when()
                 .post(endpoint)
                 .then()
+                .time(lessThan(MAX_RESPONSE_TIME_MS))
                 .extract().path(jsonPath);
     }
     protected Response createAndExtractResponse(String endpoint,
@@ -86,6 +90,7 @@ public class BaseTest {
                 .when()
                 .post(endpoint)
                 .then()
+                .time(lessThan(MAX_RESPONSE_TIME_MS))
                 .log().all()
                 .extract().response();
     }
@@ -95,6 +100,7 @@ public class BaseTest {
                 .when()
                 .post(String.format("%s/%s/%s",endpoint,id,action))
                 .then()
+                .time(lessThan(MAX_RESPONSE_TIME_MS))
                 .log().all()
                 .extract().response();
     }
@@ -103,6 +109,7 @@ public class BaseTest {
                 .when()
                 .post(endpoint + "/" + id + "/" + action)
                 .then()
+                .time(lessThan(MAX_RESPONSE_TIME_MS))
                 .log().all()
                 .extract().response();
     }
@@ -113,8 +120,18 @@ public class BaseTest {
                 .when()
                 .post(endpoint)
                 .then()
+                .time(lessThan(MAX_RESPONSE_TIME_MS))
                 .log().all()
                 .statusCode(400)
+                .extract().response();
+    }
+    protected Response PostForId(String endpoint,Map<String, String> body, String id) {
+               return setupRequest()
+                .formParams(body)
+                .when().post(SUBSCRIPTIONS + "/" + id)
+                .then()
+                .statusCode(200)
+                .time(lessThan(MAX_RESPONSE_TIME_MS))
                 .extract().response();
     }
     protected Response getResponse(String endpoint) {
@@ -122,6 +139,7 @@ public class BaseTest {
                 .when()
                 .get(endpoint)
                 .then()
+                .time(lessThan(MAX_RESPONSE_TIME_MS))
                 .log().all()
                 .extract().response();
     }
@@ -130,6 +148,7 @@ public class BaseTest {
                 .when()
                 .get(endpoint.concat("/" + id))
                 .then()
+                .time(lessThan(MAX_RESPONSE_TIME_MS))
                 .log().all()
                 .extract().response();
     }
@@ -138,9 +157,19 @@ public class BaseTest {
                 .when()
                 .get(endpoint + "?" + id)
                 .then()
+                .time(lessThan(MAX_RESPONSE_TIME_MS))
                 .log().all()
                 .extract().response();
 
+
+    }
+    protected Response deleteById(String endpoint, String id) {
+              return   setupRequest()
+                .when().delete(endpoint + "/" + id)
+                .then()
+                .statusCode(200)
+                .time(lessThan(MAX_RESPONSE_TIME_MS))
+                .extract().response();
     }
 
 

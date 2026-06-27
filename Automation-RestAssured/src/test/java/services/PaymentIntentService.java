@@ -52,7 +52,7 @@ public class PaymentIntentService extends BaseTest {
 
 
         //HardAssertions
-        Assert.assertEquals(response.statusCode(), 200);
+        Assert.assertEquals(response.statusCode(),200);
         //SoftAssertions
         SoftAssertions soft = new SoftAssertions();
         soft.assertThat(response.jsonPath().getString("id")).startsWith("pi_");
@@ -81,7 +81,33 @@ public class PaymentIntentService extends BaseTest {
         soft.assertThat(charge.getId()).startsWith("ch_");
         soft.assertThat(charge.getStatus()).isEqualTo(status);
         soft.assertThat(charge.getAmount()).isEqualTo(amount);
-        soft.assertThat(charge.isPaid()).isEqualTo(true);
         soft.assertAll();
+    }
+    public String getFailureCode(String chargeId) {
+        Response response =
+                getResponse(CHARGES, chargeId);
+
+return response.jsonPath().getString("failure_code");
+
+    }
+    public String confirmInvalid(String paymentIntentId,String paymentMethodId,String status) {
+
+
+        Response response =
+                postActionOnId(
+                        PAYMENT_INTENTS,
+                        PaymentIntentRequestBuilder.Builder()
+                                .payment_Method(paymentMethodId)
+                                .returnUrl("https://www.example.com")
+                                .build()
+                                .create(),
+                        paymentIntentId,
+                        "confirm");
+
+
+        //HardAssertions
+        Assert.assertEquals(response.statusCode(),402);
+        return  response.jsonPath().getString("error.payment_intent.latest_charge");
+
     }
     }

@@ -28,6 +28,23 @@ public class ProductAndPriceService extends BaseTest {
 
         return response.jsonPath().getString("id");
     }
+    public String createPrice(String productID,String recurringInterval)
+    {
+
+        Response response = createAndExtractResponse(PRICES,
+                PriceRequestBuilder.builder()
+                        .currency("usd")
+                        .unitAmount(1000)
+                        .product(productID)
+                        .recurringInterval(recurringInterval)
+                        .build());
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.statusCode()).isEqualTo(200);
+        soft.assertThat(response.jsonPath().getString("id")).startsWith("price_");
+        soft.assertAll();
+        return response.jsonPath().getString("id");
+    }
     public void createPrice()
     {
 
